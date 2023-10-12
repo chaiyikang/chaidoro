@@ -4,7 +4,7 @@ import cat from "./img/cat.jpg";
 import { Stats } from "./components/Stats";
 import { ToDoList } from "./components/ToDoList";
 import { Music } from "./components/Music";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import useTimeState from "./hooks/useTimeState";
 
 function App() {
@@ -27,24 +27,24 @@ function Pomodoro() {
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const currentTimeStamp = useTimeState();
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
-	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+	const secondsLeftCache = useRef(settings.pomodoroLengthSec);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const displaySeconds = timerRunning
 		? Math.round((timeStampEnd - currentTimeStamp) / 1000)
-		: secondsLeftCache;
+		: secondsLeftCache.current;
 
 	// * EFFECTS //
 
 	useEffect(() => {
 		if (!timerRunning) return;
-		setSecondsLeftCache(displaySeconds);
+		secondsLeftCache.current = displaySeconds;
 	}, [displaySeconds, timerRunning]);
 
 	// * EVENT HANDLERS //
 	function startTimer() {
-		setTimeStampEnd(new Date().getTime() + settings.pomodoroLengthSec * 1000);
+		setTimeStampEnd(new Date().getTime() + secondsLeftCache.current * 1000);
 	}
 	function pauseTimer() {
 		setTimeStampEnd(undefined);
