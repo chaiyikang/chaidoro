@@ -35,7 +35,7 @@ function Pomodoro() {
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const displaySeconds = timerRunning
-		? Math.round((timeStampEnd - currentTimeStamp) / 1000)
+		? Math.floor((timeStampEnd - currentTimeStamp) / 1000)
 		: undefined;
 
 	// * EFFECTS //
