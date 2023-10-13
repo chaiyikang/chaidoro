@@ -20,34 +20,52 @@ function App() {
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
+	shortBreakLengthSec: 5 * 60,
+	longBreakLengthSec: 15 * 60,
 };
+
 function settingsReducer(state, action) {}
 
 function Pomodoro() {
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const currentTimeStamp = useTimeState();
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
-	const secondsLeftCache = useRef(settings.pomodoroLengthSec);
+	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const displaySeconds = timerRunning
 		? Math.round((timeStampEnd - currentTimeStamp) / 1000)
-		: secondsLeftCache.current;
+		: undefined;
 
 	// * EFFECTS //
 
 	useEffect(() => {
 		if (!timerRunning) return;
-		secondsLeftCache.current = displaySeconds;
+		setSecondsLeftCache(displaySeconds);
 	}, [displaySeconds, timerRunning]);
 
 	// * EVENT HANDLERS //
-	function startTimer() {
-		setTimeStampEnd(new Date().getTime() + secondsLeftCache.current * 1000);
+	function handlePause() {
+		pauseTimer();
 	}
+
+	function handleStart() {
+		startTimer();
+	}
+
+	function handleType(event) {
+		pauseTimer();
+		const type = event.target.value;
+		setSecondsLeftCache(settings[`${type}LengthSec`]);
+	}
+
+	// * UTILITY //
 	function pauseTimer() {
 		setTimeStampEnd(undefined);
+	}
+	function startTimer() {
+		setTimeStampEnd(new Date().getTime() + secondsLeftCache * 1000);
 	}
 
 	return (
@@ -57,9 +75,15 @@ function Pomodoro() {
 					<h2 className="card-title text-center text-4xl font-bold">[current task]</h2>
 					<div className="divider"></div>
 					<div className="flex items-center justify-around mt-4">
-						<button className="badge badge-primary">Pomodoro</button>
-						<button className="badge badge-secondary">Short Break</button>
-						<button className="badge badge-secondary">Long Break</button>
+						<button onClick={handleType} value="pomodoro" className="badge badge-primary">
+							Pomodoro
+						</button>
+						<button onClick={handleType} value="shortBreak" className="badge badge-secondary">
+							Short Break
+						</button>
+						<button onClick={handleType} value="longBreak" className="badge badge-secondary">
+							Long Break
+						</button>
 					</div>
 					<img src={cat} className="w-12 h-12 mx-auto mt-4" />
 					<div className="flex items-center justify-center mt-4">
@@ -67,12 +91,14 @@ function Pomodoro() {
 							{new Date(currentTimeStamp).toLocaleTimeString()}
 						</span>
 					</div>
-					<span className="text-5xl font-mono block">{displaySeconds}</span>
+					<span className="text-5xl font-mono block">
+						{timerRunning ? displaySeconds : secondsLeftCache}
+					</span>
 					<div className="flex items-center justify-center mt-4">
-						<button onClick={startTimer} className="btn btn-circle btn-lg btn-primary mr-4">
+						<button onClick={handleStart} className="btn btn-circle btn-lg btn-primary mr-4">
 							{"\u25B6"}
 						</button>
-						<button onClick={pauseTimer} className="btn btn-circle btn-lg btn-secondary ml-4">
+						<button onClick={handlePause} className="btn btn-circle btn-lg btn-secondary ml-4">
 							{"\u23F8"}
 						</button>
 					</div>
