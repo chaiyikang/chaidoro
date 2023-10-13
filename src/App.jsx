@@ -24,7 +24,10 @@ const initialSettings = {
 	longBreakLengthSec: 15 * 60,
 };
 
-function settingsReducer(state, action) {}
+function settingsReducer(state, action) {
+	const   x = 5;
+	
+}
 
 function Pomodoro() {
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
@@ -34,16 +37,17 @@ function Pomodoro() {
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
-	const displaySeconds = timerRunning
-		? Math.floor((timeStampEnd - currentTimeStamp) / 1000)
+	const runningSeconds = timerRunning
+		? Math.round((timeStampEnd - currentTimeStamp) / 1000)
 		: undefined;
+	const displayedSeconds = runningSeconds || secondsLeftCache;
 
 	// * EFFECTS //
 
 	useEffect(() => {
 		if (!timerRunning) return;
-		setSecondsLeftCache(displaySeconds);
-	}, [displaySeconds, timerRunning]);
+		setSecondsLeftCache(runningSeconds);
+	}, [runningSeconds, timerRunning]);
 
 	// * EVENT HANDLERS //
 	function handlePause() {
@@ -65,14 +69,14 @@ function Pomodoro() {
 		setTimeStampEnd(undefined);
 	}
 	function startTimer() {
-		setTimeStampEnd(new Date().getTime() + secondsLeftCache * 1000);
+		setTimeStampEnd(currentTimeStamp + secondsLeftCache * 1000);
 	}
 
 	return (
-		<div className="h-screen flex flex-col items-center justify-center bg-base-200 relative">
-			<div className="card shadow-lg w-96">
+		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200">
+			<div className="shadow-lg card w-96">
 				<div className="card-body">
-					<h2 className="card-title text-center text-4xl font-bold">[current task]</h2>
+					<h2 className="text-4xl font-bold text-center card-title ">[current task]</h2>
 					<div className="divider"></div>
 					<div className="flex items-center justify-around mt-4">
 						<button onClick={handleType} value="pomodoro" className="badge badge-primary">
@@ -87,18 +91,29 @@ function Pomodoro() {
 					</div>
 					<img src={cat} className="w-12 h-12 mx-auto mt-4" />
 					<div className="flex items-center justify-center mt-4">
-						<span className="text-5xl font-mono">
+						<span className="font-mono text-5xl">
 							{new Date(currentTimeStamp).toLocaleTimeString()}
 						</span>
 					</div>
-					<span className="text-5xl font-mono block">
-						{timerRunning ? displaySeconds : secondsLeftCache}
+					<span className="font-mono text-6xl countdown">
+  						<span style={{"--value":16}}></span>
+					</span>
+
+
+					<span className="block font-mono text-5xl text-center ">
+						{Math.floor(displayedSeconds / 60)
+							.toString()
+							.padStart(2, 0)}
+						:
+						{Math.round(displayedSeconds % 60)
+							.toString()
+							.padStart(2, 0)}
 					</span>
 					<div className="flex items-center justify-center mt-4">
-						<button onClick={handleStart} className="btn btn-circle btn-lg btn-primary mr-4">
+						<button onClick={handleStart} className="mr-4 btn btn-circle btn-lg btn-primary">
 							{"\u25B6"}
 						</button>
-						<button onClick={handlePause} className="btn btn-circle btn-lg btn-secondary ml-4">
+						<button onClick={handlePause} className="ml-4 btn btn-circle btn-lg btn-secondary">
 							{"\u23F8"}
 						</button>
 					</div>
