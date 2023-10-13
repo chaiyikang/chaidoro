@@ -19,28 +19,39 @@ function App() {
 }
 
 const initialSettings = {
-	pomodoroLengthSec: 25 * 60,
-	shortBreakLengthSec: 5 * 60,
-	longBreakLengthSec: 15 * 60,
+	pomodoroLengthSec: 5,
+	shortBreakLengthSec: 2,
+	longBreakLengthSec: 3,
+	interval: 4,
 };
 
-function settingsReducer(state, action) {
-	const   x = 5;
-	
-}
+function settingsReducer(state, action) {}
 
 function Pomodoro() {
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const currentTimeStamp = useTimeState();
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+	const [activeType, setActiveType] = useState("pomodoro");
+	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const runningSeconds = timerRunning
-		? Math.round((timeStampEnd - currentTimeStamp) / 1000)
+		? Math.round((timeStampEnd - currentTimeStamp) / 1000) >= 0
+			? Math.round((timeStampEnd - currentTimeStamp) / 1000)
+			: -1
 		: undefined;
 	const displayedSeconds = runningSeconds || secondsLeftCache;
+
+	const pomodoroCycleDisplay = Math.ceil((workSetsCompleted + 1) / settings.interval);
+	const pomodoroRepDisplay = (workSetsCompleted % settings.interval) + 1;
+	const breakCycleDisplay =
+		workSetsCompleted % settings.interval !== 0 || workSetsCompleted === 0
+			? Math.floor(workSetsCompleted / settings.interval) + 1
+			: workSetsCompleted / settings.interval;
+	const breakRepDisplay =
+		workSetsCompleted === 0 ? 1 : workSetsCompleted % 4 === 0 ? 4 : workSetsCompleted % 4;
 
 	// * EFFECTS //
 
@@ -48,6 +59,35 @@ function Pomodoro() {
 		if (!timerRunning) return;
 		setSecondsLeftCache(runningSeconds);
 	}, [runningSeconds, timerRunning]);
+
+	useEffect(
+		function handleTimerEnded() {
+			if (!timerRunning) return;
+			if (runningSeconds >= 0) return;
+			pauseTimer();
+			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
+			let nextType;
+			if (activeType !== "pomodoro") {
+				nextType = "pomodoro";
+			} else if ((workSetsCompleted + 1) % settings.interval === 0) {
+				nextType = "longBreak";
+			} else {
+				nextType = "shortBreak";
+			}
+			setActiveType(nextType);
+			// setSecondsLeftCache(settings[`${nextType}LengthSec`]);
+			setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
+		},
+		[
+			settings,
+			runningSeconds,
+			timerRunning,
+			activeType,
+			workSetsCompleted,
+			currentTimeStamp,
+			secondsLeftCache,
+		],
+	);
 
 	// * EVENT HANDLERS //
 	function handlePause() {
@@ -61,7 +101,7 @@ function Pomodoro() {
 	function handleType(event) {
 		pauseTimer();
 		const type = event.target.value;
-		setSecondsLeftCache(settings[`${type}LengthSec`]);
+		initType(type);
 	}
 
 	// * UTILITY //
@@ -72,11 +112,29 @@ function Pomodoro() {
 		setTimeStampEnd(currentTimeStamp + secondsLeftCache * 1000);
 	}
 
+	function initType(type) {
+		setActiveType(type);
+		setSecondsLeftCache(settings[`${type}LengthSec`]);
+	}
+
+	function getNextType() {
+		if (activeType !== "pomodoro") return "pomodoro";
+		if ((workSetsCompleted + 1) % settings.interval === 0) return "longBreak";
+		return "shortBreak";
+	}
+
 	return (
 		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200">
 			<div className="shadow-lg card w-96">
 				<div className="card-body">
-					<h2 className="text-4xl font-bold text-center card-title ">[current task]</h2>
+					<h2 className="text-4xl font-bold text-center card-title ">
+						[current task] - {activeType}
+					</h2>
+					<h2 className="text-4xl font-bold text-center card-title ">
+						{activeType === "pomodoro"
+							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
+							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
+					</h2>
 					<div className="divider"></div>
 					<div className="flex items-center justify-around mt-4">
 						<button onClick={handleType} value="pomodoro" className="badge badge-primary">
@@ -95,20 +153,25 @@ function Pomodoro() {
 							{new Date(currentTimeStamp).toLocaleTimeString()}
 						</span>
 					</div>
-					<span className="font-mono text-6xl countdown">
-  						<span style={{"--value":16}}></span>
-					</span>
-
-
-					<span className="block font-mono text-5xl text-center ">
-						{Math.floor(displayedSeconds / 60)
-							.toString()
-							.padStart(2, 0)}
-						:
-						{Math.round(displayedSeconds % 60)
-							.toString()
-							.padStart(2, 0)}
-					</span>
+					<div className="flex items-center justify-center mt-4">
+						<span className="countdown font-mono text-6xl">
+							<span
+								style={{
+									"--value": Math.floor(displayedSeconds / 60)
+										.toString()
+										.padStart(2, 0),
+								}}
+							></span>
+							:
+							<span
+								style={{
+									"--value": Math.round(displayedSeconds % 60)
+										.toString()
+										.padStart(2, 0),
+								}}
+							></span>
+						</span>
+					</div>
 					<div className="flex items-center justify-center mt-4">
 						<button onClick={handleStart} className="mr-4 btn btn-circle btn-lg btn-primary">
 							{"\u25B6"}
