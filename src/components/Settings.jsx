@@ -14,8 +14,47 @@ export function Settings() {
 						{/* if there is a button in form, it will close the modal */}
 						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 					</form>
-					<h3 className="font-bold text-lg">Hello!</h3>
-					<p className="py-4">Press ESC key or click on ✕ button to close</p>
+					<h3 className="font-bold text-lg">Settings</h3>
+					<div className="py-4">
+						<div className="form-control">
+							<label className="label">
+								<span className="label-text">Pomodoro length (minutes)</span>
+							</label>
+							<input type="number" min="1" max="60" className="input input-bordered" />
+						</div>
+						<div className="form-control">
+							<label className="label">
+								<span className="label-text">Short break length (minutes)</span>
+							</label>
+							<input type="number" min="1" max="15" className="input input-bordered" />
+						</div>
+						<div className="form-control">
+							<label className="label">
+								<span className="label-text">Long break length (minutes)</span>
+							</label>
+							<input type="number" min="15" max="60" className="input input-bordered" />
+						</div>
+						<div className="form-control">
+							<label className="label">
+								<span className="label-text">Long break interval (pomodoros)</span>
+							</label>
+							<input type="number" min="1" max="10" className="input input-bordered" />
+						</div>
+						<div className="form-control mt-4">
+							<label className="cursor-pointer label">
+								<span className="label-text">Auto start breaks</span>
+								<input type="checkbox" checked={true} className="toggle toggle-primary" />
+								<span className="toggle-mark"></span>
+							</label>
+						</div>
+						<div className="form-control mt-4">
+							<label className="cursor-pointer label">
+								<span className="label-text">Auto start pomodoro</span>
+								<input type="checkbox" checked={true} className="toggle toggle-primary" />
+								<span className="toggle-mark"></span>
+							</label>
+						</div>
+					</div>
 				</div>
 				<form method="dialog" className="modal-backdrop">
 					<button className="cursor-default">close</button>
