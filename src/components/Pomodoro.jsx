@@ -104,6 +104,9 @@ export function Pomodoro({ settings }) {
 						[current task] - {activeType}
 					</h2>
 					<h2 className="text-3xl font-bold text-center card-title ">
+						{settings.pomodoroLengthSec / 60}
+					</h2>
+					<h2 className="text-3xl font-bold text-center card-title ">
 						{activeType === "pomodoro"
 							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
 							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
