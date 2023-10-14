@@ -7,7 +7,42 @@ export default {
 	},
 	plugins: [require("daisyui")],
 	daisyui: {
-		themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
+		themes: [
+			"light",
+			"dark",
+			"cupcake",
+			"bumblebee",
+			"emerald",
+			"corporate",
+			"synthwave",
+			"retro",
+			"cyberpunk",
+			"valentine",
+			"halloween",
+			"garden",
+			"forest",
+			"aqua",
+			"lofi",
+			"pastel",
+			"fantasy",
+			"wireframe",
+			{
+				black: {
+					...require("daisyui/src/theming/themes")["[data-theme=black]"],
+					"--rounded-badge": "1.9rem",
+				},
+			},
+			"luxury",
+			"dracula",
+			"cmyk",
+			"autumn",
+			"business",
+			"acid",
+			"lemonade",
+			"night",
+			"coffee",
+			"winter",
+		], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
 		darkTheme: "dark", // name of one of the included themes for dark mode
 		base: true, // applies background color and foreground color for root element by default
 		styled: true, // include daisyUI colors and design decisions for all components

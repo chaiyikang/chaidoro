@@ -97,13 +97,13 @@ export function Pomodoro({ settings }) {
 	}
 
 	return (
-		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200">
+		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200 ">
 			<div className="shadow-lg card w-96">
 				<div className="card-body">
-					<h2 className="text-4xl font-bold text-center card-title ">
+					<h2 className="text-3xl font-bold text-center card-title ">
 						[current task] - {activeType}
 					</h2>
-					<h2 className="text-4xl font-bold text-center card-title ">
+					<h2 className="text-3xl font-bold text-center card-title ">
 						{activeType === "pomodoro"
 							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
 							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
@@ -122,12 +122,12 @@ export function Pomodoro({ settings }) {
 					</div>
 					<img src={cat} className="w-12 h-12 mx-auto mt-4" />
 					<div className="flex items-center justify-center mt-4">
-						<span className="font-mono text-5xl">
+						<span className="font-mono text-4xl">
 							{new Date(currentTimeStamp).toLocaleTimeString()}
 						</span>
 					</div>
 					<div className="flex items-center justify-center mt-4">
-						<span className="countdown font-mono text-6xl">
+						<span className="countdown font-mono text-4xl">
 							<span
 								style={{
 									"--value": Math.floor(displayedSeconds / 60)
