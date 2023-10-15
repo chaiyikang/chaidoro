@@ -2,15 +2,20 @@ import cat from "../img/cat.jpg";
 import { useEffect, useState } from "react";
 import useTimeState from "../hooks/useTimeState";
 
-export function Pomodoro({ settings }) {
-	const currentTimeStamp = useTimeState();
-	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
-	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
-	const [activeType, setActiveType] = useState("pomodoro");
+export function Pomodoro({
+	settings,
+	timeStampEnd,
+	setTimeStampEnd,
+	timerRunning,
+	activeType,
+	setActiveType,
+	currentTimeStamp,
+	secondsLeftCache,
+	setSecondsLeftCache,
+}) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
 	// * DERIVED STATE //
-	const timerRunning = Boolean(timeStampEnd);
 	const runningSeconds = timerRunning
 		? Math.round((timeStampEnd - currentTimeStamp) / 1000) >= 0
 			? Math.round((timeStampEnd - currentTimeStamp) / 1000)
@@ -31,13 +36,13 @@ export function Pomodoro({ settings }) {
 	useEffect(() => {
 		if (!timerRunning) return;
 		setSecondsLeftCache(runningSeconds);
-	}, [runningSeconds, timerRunning]);
+	}, [runningSeconds, timerRunning, setSecondsLeftCache]);
 
 	useEffect(
 		function handleTimerEnded() {
 			if (!timerRunning) return;
 			if (runningSeconds >= 0) return;
-			pauseTimer();
+			setTimeStampEnd(undefined); // pause timer
 			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
 			let nextType;
 			if (activeType !== "pomodoro") {
@@ -59,6 +64,8 @@ export function Pomodoro({ settings }) {
 			workSetsCompleted,
 			currentTimeStamp,
 			secondsLeftCache,
+			setTimeStampEnd,
+			setActiveType,
 		],
 	);
 

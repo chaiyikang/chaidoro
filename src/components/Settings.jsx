@@ -18,7 +18,16 @@ const validationConfigInterval = {
 	},
 };
 
-export function Settings({ settings, dispatchSettings }) {
+export function Settings({
+	settings,
+	dispatchSettings,
+	timerRunning,
+	setTimeStampEnd,
+	activeType,
+	currentTimeStamp,
+	secondsLeftCache,
+	setSecondsLeftCache,
+}) {
 	const {
 		register,
 		handleSubmit,
@@ -35,6 +44,7 @@ export function Settings({ settings, dispatchSettings }) {
 	});
 
 	function onSubmit(data) {
+		applyUpdatedLength(data);
 		dispatchSettings({
 			payload: {
 				pomodoroLengthSec: +data.pomodoroLengthMin * 60,
@@ -45,6 +55,24 @@ export function Settings({ settings, dispatchSettings }) {
 				autoBreaks: true,
 			},
 		});
+	}
+
+	function applyUpdatedLength(updatedSettings) {
+		const timerWasRunning = timerRunning;
+		if (timerWasRunning) setTimeStampEnd(undefined); // pause timer
+		// if no change in activeType length, no time diffing required
+		if (+updatedSettings[`${activeType}LengthMin`] * 60 === settings[`${activeType}LengthSec`]) {
+			return timerRunning ? setTimeStampEnd(currentTimeStamp + secondsLeftCache * 1000) : true;
+		}
+		const elapsedSeconds = settings[`${activeType}LengthSec`] - secondsLeftCache;
+		const updatedSeconds = +updatedSettings[`${activeType}LengthMin`] * 60 - elapsedSeconds;
+		// guard clause in case duration was reduced such that current time left would be negative
+		if (updatedSeconds < 1) {
+			setSecondsLeftCache(1);
+			return timerRunning ? setTimeStampEnd(currentTimeStamp + 1 * 1000) : true;
+		}
+		setSecondsLeftCache(updatedSeconds);
+		return timerRunning ? setTimeStampEnd(currentTimeStamp + updatedSeconds * 1000) : true;
 	}
 
 	return (
