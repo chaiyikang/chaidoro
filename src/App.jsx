@@ -19,8 +19,6 @@ const initialSettings = {
 };
 
 function settingsReducer(state, action) {
-	console.log("🚀 ~ file: App.jsx:21 ~ settingsReducer ~ state:", state);
-	console.log("🚀 ~ file: App.jsx:22 ~ settingsReducer ~ payload:", action.payload);
 	return { ...state, ...action.payload };
 }
 

@@ -5,7 +5,6 @@ const validationConfigLengths = {
 	required: "Please input desired duration",
 	min: { value: 0.1, message: "Duration must be at least 0.1 minutes" },
 	validate: function (value) {
-		console.log(`handleSubmit: ${typeof value}`);
 		return Math.sign(+value) === 1 || "Please input a number";
 	},
 };
@@ -144,11 +143,7 @@ export function Settings({
 						<div className="form-control mt-4">
 							<label className="cursor-pointer label">
 								<span className="label-text">Auto start breaks</span>
-								<input
-									{...register("autoBreaks", { required: true })}
-									type="checkbox"
-									className="toggle"
-								/>
+								<input {...register("autoBreaks")} type="checkbox" className="toggle" />
 								<span className="toggle-mark"></span>
 							</label>
 						</div>
@@ -157,11 +152,7 @@ export function Settings({
 						<div className="form-control mt-4">
 							<label className="cursor-pointer label">
 								<span className="label-text">Auto start pomodoro</span>
-								<input
-									{...register("autoPomodoro", { required: true })}
-									type="checkbox"
-									className="toggle"
-								/>
+								<input {...register("autoPomodoro")} type="checkbox" className="toggle" />
 								<span className="toggle-mark"></span>
 							</label>
 						</div>

@@ -1,6 +1,5 @@
 import cat from "../img/cat.jpg";
 import { useEffect, useState } from "react";
-import useTimeState from "../hooks/useTimeState";
 
 export function Pomodoro({
 	settings,
@@ -40,8 +39,7 @@ export function Pomodoro({
 
 	useEffect(
 		function handleTimerEnded() {
-			if (!timerRunning) return;
-			if (runningSeconds >= 0) return;
+			if (!timerRunning || runningSeconds >= 0) return;
 			setTimeStampEnd(undefined); // pause timer
 			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
 			let nextType;
@@ -53,8 +51,14 @@ export function Pomodoro({
 				nextType = "shortBreak";
 			}
 			setActiveType(nextType);
-			// setSecondsLeftCache(settings[`${nextType}LengthSec`]);
-			setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
+			if (
+				(nextType === "pomodoro" && settings.autoPomodoro) ||
+				(nextType !== "pomodoro" && settings.autoBreaks)
+			) {
+				setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
+			} else {
+				setSecondsLeftCache(settings[`${nextType}LengthSec`]);
+			}
 		},
 		[
 			settings,
@@ -66,6 +70,7 @@ export function Pomodoro({
 			secondsLeftCache,
 			setTimeStampEnd,
 			setActiveType,
+			setSecondsLeftCache,
 		],
 	);
 
@@ -82,6 +87,19 @@ export function Pomodoro({
 		pauseTimer();
 		const type = event.target.value;
 		initType(type);
+	}
+
+	function handleSkip() {
+		pauseTimer();
+		const nextType = getNextType();
+		initType(nextType);
+
+		if (
+			(nextType === "pomodoro" && settings.autoPomodoro) ||
+			(nextType !== "pomodoro" && settings.autoBreaks)
+		) {
+			setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
+		}
 	}
 
 	// * UTILITY //
@@ -108,7 +126,7 @@ export function Pomodoro({
 			<div className="shadow-lg card w-96">
 				<div className="card-body">
 					<h2 className="text-3xl font-bold text-center card-title ">
-						[current task] - {activeType}
+						[current task] - {activeType} - nextType: {getNextType()}
 					</h2>
 					<h2 className="text-3xl font-bold text-center card-title ">
 						{settings.pomodoroLengthSec / 60}
@@ -161,6 +179,9 @@ export function Pomodoro({
 						</button>
 						<button onClick={handlePause} className="ml-4 btn btn-circle btn-lg btn-secondary">
 							{"\u23F8"}
+						</button>
+						<button onClick={handleSkip} className="ml-8 btn btn-circle btn-lg btn-secondary">
+							{"\u23ED"}
 						</button>
 					</div>
 				</div>
