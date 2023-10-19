@@ -151,7 +151,7 @@ export function Pomodoro({
 	}
 
 	return (
-		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200 ">
+		<div className="relative flex flex-col items-center justify-center h-screen bg-transparent ">
 			<div className="shadow-lg card w-96">
 				<div className="card-body">
 					<h2 className="text-m font-bold text-center card-title ">

@@ -7,6 +7,7 @@ import { useReducer, useState } from "react";
 import { Pomodoro } from "./components/Pomodoro";
 import { Settings } from "./components/Settings";
 import useTimeState from "./hooks/useTimeState";
+import { Background } from "./components/background";
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -38,6 +39,7 @@ function App() {
 
 	return (
 		<>
+			<Background />
 			<Pomodoro
 				settings={settings}
 				timeStampEnd={timeStampEnd}
@@ -52,8 +54,8 @@ function App() {
 				stats={stats}
 				setStats={setStats}
 			/>
-			<Stats totalTimeFocused={totalTimeFocused} stats={stats} />
-			{/* <Music /> */}
+			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} />
+			<Music />
 			<ToDoList toDos={toDos} setToDos={setToDos} />
 			<Settings
 				settings={settings}
@@ -64,7 +66,7 @@ function App() {
 				currentTimeStamp={currentTimeStamp}
 				secondsLeftCache={secondsLeftCache}
 				setSecondsLeftCache={setSecondsLeftCache}
-			/>
+			/> */}
 		</>
 	);
 }
