@@ -32,7 +32,9 @@ function App() {
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
-	const totalTimeFocused = stats.reduce((acc, curr) => acc + curr.lengthSec, 0);
+	const totalTimeFocused = stats.reduce((acc, curr) => {
+		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
+	}, 0);
 
 	return (
 		<>
