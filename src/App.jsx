@@ -3,11 +3,10 @@ import "daisyui";
 import { Stats } from "./components/Stats";
 import { ToDoList } from "./components/ToDoList";
 import { Music } from "./components/Music";
-import { useReducer, useRef, useState } from "react";
+import { useReducer, useState } from "react";
 import { Pomodoro } from "./components/Pomodoro";
 import { Settings } from "./components/Settings";
 import useTimeState from "./hooks/useTimeState";
-import { set } from "react-hook-form";
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -28,9 +27,12 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState();
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+	const [toDos, setToDos] = useState([]);
+	const [stats, setStats] = useState([]);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
+	const totalTimeFocused = stats.reduce((acc, curr) => acc + curr.lengthSec, 0);
 
 	return (
 		<>
@@ -44,10 +46,13 @@ function App() {
 				currentTimeStamp={currentTimeStamp}
 				secondsLeftCache={secondsLeftCache}
 				setSecondsLeftCache={setSecondsLeftCache}
+				toDos={toDos}
+				stats={stats}
+				setStats={setStats}
 			/>
-			<Stats />
-			<Music />
-			<ToDoList />
+			<Stats totalTimeFocused={totalTimeFocused} stats={stats} />
+			{/* <Music /> */}
+			<ToDoList toDos={toDos} setToDos={setToDos} />
 			<Settings
 				settings={settings}
 				dispatchSettings={dispatchSettings}

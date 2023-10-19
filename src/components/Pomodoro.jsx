@@ -11,6 +11,9 @@ export function Pomodoro({
 	currentTimeStamp,
 	secondsLeftCache,
 	setSecondsLeftCache,
+	toDos,
+	stats,
+	setStats,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -31,11 +34,38 @@ export function Pomodoro({
 	const breakRepDisplay =
 		workSetsCompleted === 0 ? 1 : workSetsCompleted % 4 === 0 ? 4 : workSetsCompleted % 4;
 
+	const activeTask =
+		activeType === "pomodoro"
+			? toDos.filter(task => task.active)[0]?.text ?? "No task selected"
+			: "break";
+	const lastTask = stats.at(-1)?.task;
+
 	// * EFFECTS //
-	useEffect(() => {
-		if (!timerRunning) return;
-		setSecondsLeftCache(runningSeconds);
-	}, [runningSeconds, timerRunning, setSecondsLeftCache]);
+	useEffect(
+		function cacheSecondsLeft() {
+			if (!timerRunning) return;
+			setSecondsLeftCache(runningSeconds);
+		},
+		[runningSeconds, timerRunning, setSecondsLeftCache],
+	);
+
+	useEffect(
+		function updateStats() {
+			if (!timerRunning) return;
+			if (activeTask === lastTask) {
+				setStats(old => [
+					...old.slice(0, -1),
+					{ ...old.at(-1), lengthSec: old.at(-1).lengthSec + 1 },
+				]);
+			} else {
+				setStats(old => [
+					...old,
+					{ task: activeTask, lengthSec: 0, timeStampStarted: currentTimeStamp },
+				]);
+			}
+		},
+		[runningSeconds, timerRunning, activeTask, lastTask, setStats, currentTimeStamp],
+	);
 
 	useEffect(
 		function handleTimerEnded() {
@@ -51,13 +81,12 @@ export function Pomodoro({
 				nextType = "shortBreak";
 			}
 			setActiveType(nextType);
+			setSecondsLeftCache(settings[`${nextType}LengthSec`]);
 			if (
 				(nextType === "pomodoro" && settings.autoPomodoro) ||
 				(nextType !== "pomodoro" && settings.autoBreaks)
 			) {
 				setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
-			} else {
-				setSecondsLeftCache(settings[`${nextType}LengthSec`]);
 			}
 		},
 		[
@@ -125,11 +154,9 @@ export function Pomodoro({
 		<div className="relative flex flex-col items-center justify-center h-screen bg-base-200 ">
 			<div className="shadow-lg card w-96">
 				<div className="card-body">
-					<h2 className="text-3xl font-bold text-center card-title ">
-						[current task] - {activeType} - nextType: {getNextType()}
-					</h2>
-					<h2 className="text-3xl font-bold text-center card-title ">
-						{settings.pomodoroLengthSec / 60}
+					<h2 className="text-m font-bold text-center card-title ">
+						{activeTask}
+						{/* - {activeType} - nextType: {getNextType()} */}
 					</h2>
 					<h2 className="text-3xl font-bold text-center card-title ">
 						{activeType === "pomodoro"
