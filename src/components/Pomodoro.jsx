@@ -164,7 +164,7 @@ export function Pomodoro({
 							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
 					</h2>
 					<div className="divider"></div>
-					<div className="flex items-center justify-around mt-4">
+					<div className="flex items-center justify-around mt-4"> 
 						<button onClick={handleType} value="pomodoro" className="badge badge-primary">
 							Pomodoro
 						</button>
