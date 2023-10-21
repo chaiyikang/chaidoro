@@ -151,38 +151,36 @@ export function Pomodoro({
 	}
 
 	return (
-		<div className="relative flex flex-col items-center justify-center h-screen bg-transparent ">
-			<div className="shadow-lg card w-96">
-				<div className="card-body">
-					<h2 className="text-m font-bold text-center card-title ">
+		<div className="relative flex flex-col items-center justify-center h-screen bg-transparent">
+			<div className="">
+				<div className="">
+					<h2 className="">
 						{activeTask}
 						{/* - {activeType} - nextType: {getNextType()} */}
 					</h2>
-					<h2 className="text-3xl font-bold text-center card-title ">
-						{activeType === "pomodoro"
+					<h2 className="">
+						{activeType === ""
 							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
 							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
 					</h2>
-					<div className="divider"></div>
-					<div className="flex items-center justify-around mt-4"> 
-						<button onClick={handleType} value="pomodoro" className="badge badge-primary">
+					<div className=""></div>
+					<div className="">
+						<button onClick={handleType} value="pomodoro" className="">
 							Pomodoro
 						</button>
-						<button onClick={handleType} value="shortBreak" className="badge badge-secondary">
+						<button onClick={handleType} value="shortBreak" className="">
 							Short Break
 						</button>
-						<button onClick={handleType} value="longBreak" className="badge badge-secondary">
+						<button onClick={handleType} value="longBreak" className="">
 							Long Break
 						</button>
 					</div>
-					<img src={cat} className="w-12 h-12 mx-auto mt-4" />
-					<div className="flex items-center justify-center mt-4">
-						<span className="font-mono text-4xl">
-							{new Date(currentTimeStamp).toLocaleTimeString()}
-						</span>
+					<img src={cat} className="" />
+					<div className="">
+						<span className="">{new Date(currentTimeStamp).toLocaleTimeString()}</span>
 					</div>
-					<div className="flex items-center justify-center mt-4">
-						<span className="countdown font-mono text-4xl">
+					<div className="">
+						<span className="">
 							<span
 								style={{
 									"--value": Math.floor(displayedSeconds / 60)
@@ -200,14 +198,14 @@ export function Pomodoro({
 							></span>
 						</span>
 					</div>
-					<div className="flex items-center justify-center mt-4">
-						<button onClick={handleStart} className="mr-4 btn btn-circle btn-lg btn-primary">
+					<div className="">
+						<button onClick={handleStart} className="">
 							{"\u25B6"}
 						</button>
-						<button onClick={handlePause} className="ml-4 btn btn-circle btn-lg btn-secondary">
+						<button onClick={handlePause} className="">
 							{"\u23F8"}
 						</button>
-						<button onClick={handleSkip} className="ml-8 btn btn-circle btn-lg btn-secondary">
+						<button onClick={handleSkip} className="">
 							{"\u23ED"}
 						</button>
 					</div>
