@@ -151,7 +151,7 @@ export function Pomodoro({
 	}
 
 	return (
-		<div className="relative flex flex-col items-center justify-center h-screen bg-transparent">
+		<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black h-3/6 w-1/6">
 			<div className="">
 				<div className="">
 					<h2 className="">
@@ -175,10 +175,10 @@ export function Pomodoro({
 							Long Break
 						</button>
 					</div>
-					<img src={cat} className="" />
-					<div className="">
+					{/* <img src={cat} className="" /> */}
+					{/* <div className="">
 						<span className="">{new Date(currentTimeStamp).toLocaleTimeString()}</span>
-					</div>
+					</div> */}
 					<div className="">
 						<span className="">
 							<span

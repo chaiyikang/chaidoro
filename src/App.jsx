@@ -7,7 +7,8 @@ import { useReducer, useState } from "react";
 import { Pomodoro } from "./components/Pomodoro";
 import { Settings } from "./components/Settings";
 import useTimeState from "./hooks/useTimeState";
-import { Background } from "./components/background";
+import { Background } from "./components/Background";
+import PomodoroButton from "./components/PomodoroButton";
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -37,23 +38,29 @@ function App() {
 		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
 	}, 0);
 
+	// * UI opening state //
+	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(false);
+
 	return (
 		<>
 			<Background />
-			<Pomodoro
-				settings={settings}
-				timeStampEnd={timeStampEnd}
-				setTimeStampEnd={setTimeStampEnd}
-				timerRunning={timerRunning}
-				activeType={activeType}
-				setActiveType={setActiveType}
-				currentTimeStamp={currentTimeStamp}
-				secondsLeftCache={secondsLeftCache}
-				setSecondsLeftCache={setSecondsLeftCache}
-				toDos={toDos}
-				stats={stats}
-				setStats={setStats}
-			/>
+			{pomodoroIsOpen && (
+				<Pomodoro
+					settings={settings}
+					timeStampEnd={timeStampEnd}
+					setTimeStampEnd={setTimeStampEnd}
+					timerRunning={timerRunning}
+					activeType={activeType}
+					setActiveType={setActiveType}
+					currentTimeStamp={currentTimeStamp}
+					secondsLeftCache={secondsLeftCache}
+					setSecondsLeftCache={setSecondsLeftCache}
+					toDos={toDos}
+					stats={stats}
+					setStats={setStats}
+				/>
+			)}
+			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
 			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} />
 			<Music />
 			<ToDoList toDos={toDos} setToDos={setToDos} />
