@@ -3,52 +3,22 @@
 export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		extend: {},
-	},
-	plugins: [require("daisyui")],
-	daisyui: {
-		themes: [
-			"light",
-			"dark",
-			"cupcake",
-			"bumblebee",
-			"emerald",
-			"corporate",
-			"synthwave",
-			"retro",
-			"cyberpunk",
-			"valentine",
-			"halloween",
-			"garden",
-			"forest",
-			"aqua",
-			"lofi",
-			"pastel",
-			"fantasy",
-			"wireframe",
-			{
-				black: {
-					...require("daisyui/src/theming/themes")["[data-theme=black]"],
-					"--rounded-badge": "1.9rem",
-				},
-			},
-			"luxury",
-			"dracula",
-			"cmyk",
-			"autumn",
-			"business",
-			"acid",
-			"lemonade",
-			"night",
-			"coffee",
-			"winter",
-		], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-		darkTheme: "dark", // name of one of the included themes for dark mode
-		base: true, // applies background color and foreground color for root element by default
-		styled: true, // include daisyUI colors and design decisions for all components
-		utils: true, // adds responsive and modifier utility classes
-		rtl: false, // rotate style direction from left-to-right to right-to-left. You also need to add dir="rtl" to your html tag and install `tailwindcss-flip` plugin for Tailwind CSS.
-		prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-		logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+		extend: {
+			fontFamily: { roboto: ["Roboto", "sans-serif", "serif"] },
+		},
+		fontSize: {
+			xs: "0.579rem",
+			sm: "0.694rem",
+			base: "0.833rem",
+			xl: "1rem",
+			"2xl": "1.2rem",
+			"3xl": "1.44rem",
+			"4xl": "1.728rem",
+			"5xl": "2.074rem",
+			"6xl": "2.488rem",
+			"7xl": "2.987rem",
+			"8xl": "3.584rem",
+			icon: "3.2rem",
+		},
 	},
 };

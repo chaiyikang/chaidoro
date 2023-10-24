@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .toggle {
-	--rounded-badge: 1.9rem;
-} */
+.material-symbols-outlined {
+	font-variation-settings:
+		"FILL" 0,
+		"wght" 400,
+		"GRAD" 0,
+		"opsz" 48;
+}
+
+.filled-icon {
+	font-variation-settings: "FILL" 1;
+}
+
+@keyframes pulse {
+	0% {
+		font-variation-settings: "wght" 100;
+	}
+	50% {
+		font-variation-settings: "wght" 700;
+	}
+	100% {
+		font-variation-settings: "wght" 100;
+	}
+}
+.material-symbols-outlined.pulse {
+	animation: pulse 3s infinite;
+}

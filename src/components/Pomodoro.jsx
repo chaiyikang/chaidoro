@@ -1,5 +1,6 @@
-import cat from "../img/cat.jpg";
 import { useEffect, useState } from "react";
+import ProgressDot from "./ProgressDot";
+import ControlButton from "./ControlButton";
 
 export function Pomodoro({
 	settings,
@@ -36,8 +37,11 @@ export function Pomodoro({
 
 	const activeTask =
 		activeType === "pomodoro"
-			? toDos.filter(task => task.active)[0]?.text ?? "No task selected"
-			: "break";
+			? "Pomodoro: " + (toDos.filter(task => task.active)[0]?.text ?? "No task selected")
+			: activeType === "shortBreak"
+			? "Short Break"
+			: "Long Break";
+
 	const lastTask = stats.at(-1)?.task;
 
 	// * EFFECTS //
@@ -151,65 +155,52 @@ export function Pomodoro({
 	}
 
 	return (
-		<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black h-3/6 w-1/6">
-			<div className="">
-				<div className="">
-					<h2 className="">
-						{activeTask}
-						{/* - {activeType} - nextType: {getNextType()} */}
-					</h2>
-					<h2 className="">
-						{activeType === ""
-							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
-							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
-					</h2>
-					<div className=""></div>
-					<div className="">
-						<button onClick={handleType} value="pomodoro" className="">
-							Pomodoro
-						</button>
-						<button onClick={handleType} value="shortBreak" className="">
-							Short Break
-						</button>
-						<button onClick={handleType} value="longBreak" className="">
-							Long Break
-						</button>
-					</div>
-					{/* <img src={cat} className="" /> */}
-					{/* <div className="">
-						<span className="">{new Date(currentTimeStamp).toLocaleTimeString()}</span>
-					</div> */}
-					<div className="">
-						<span className="">
-							<span
-								style={{
-									"--value": Math.floor(displayedSeconds / 60)
-										.toString()
-										.padStart(2, 0),
-								}}
-							></span>
-							:
-							<span
-								style={{
-									"--value": Math.round(displayedSeconds % 60)
-										.toString()
-										.padStart(2, 0),
-								}}
-							></span>
-						</span>
-					</div>
-					<div className="">
-						<button onClick={handleStart} className="">
-							{"\u25B6"}
-						</button>
-						<button onClick={handlePause} className="">
-							{"\u23F8"}
-						</button>
-						<button onClick={handleSkip} className="">
-							{"\u23ED"}
-						</button>
-					</div>
-				</div>
+		<div className="grid grid-cols-3 grid-rows-5 gap-0 justify-items-center items-center absolute opacity-75 font-roboto font-light top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 text-slate-400 w-4/5 h-4/5">
+			<div className="col-span-3">
+				<h2 className="text-5xl">{activeTask}</h2>
+			</div>
+			<div className="row-start-2 justify-self-end text-3xl">
+				<button onClick={handleType} value="pomodoro" className="">
+					Pomodoro
+				</button>
+			</div>
+			<div className="row-start-2 text-3xl">
+				<button onClick={handleType} value="shortBreak" className="">
+					Short Break
+				</button>
+			</div>
+			<div className="row-start-2 text-3xl justify-self-start">
+				<button onClick={handleType} value="longBreak" className="">
+					Long Break
+				</button>
+			</div>
+			<div className="col-span-3">
+				<time className="">
+					<span className="text-8xl">
+						{Math.floor(displayedSeconds / 60)
+							.toString()
+							.padStart(2, 0)}
+						:
+						{Math.round(displayedSeconds % 60)
+							.toString()
+							.padStart(2, 0)}
+					</span>
+				</time>
+			</div>
+			<div className="col-span-3 row-start-4 self-start">
+				{/* <h2 className="">
+					{activeType === ""
+						? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
+						: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
+				</h2> */}
+				{new Array(settings.interval).fill("").map((_, index) => (
+					<ProgressDot key={index} filled={pomodoroRepDisplay >= index + 1} />
+				))}
+			</div>
+			<div className="col-span-3 row-start-5">
+				<ControlButton handler={handleStart}>play_arrow</ControlButton>
+				<ControlButton handler={handlePause}>pause</ControlButton>
+				<ControlButton handler={handleSkip}>skip_next</ControlButton>
 			</div>
 		</div>
 	);

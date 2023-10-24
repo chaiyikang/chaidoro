@@ -39,7 +39,7 @@ function App() {
 	}, 0);
 
 	// * UI opening state //
-	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(false);
+	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 
 	return (
 		<>
@@ -61,9 +61,9 @@ function App() {
 				/>
 			)}
 			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
-			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} />
-			<Music />
-			<ToDoList toDos={toDos} setToDos={setToDos} />
+			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} /> */}
+			{/* <Music /> */}
+			{/* <ToDoList toDos={toDos} setToDos={setToDos} /> */}
 			<Settings
 				settings={settings}
 				dispatchSettings={dispatchSettings}
@@ -73,7 +73,7 @@ function App() {
 				currentTimeStamp={currentTimeStamp}
 				secondsLeftCache={secondsLeftCache}
 				setSecondsLeftCache={setSecondsLeftCache}
-			/> */}
+			/>
 		</>
 	);
 }
