@@ -200,7 +200,7 @@ export function Pomodoro({
 			<div className="col-span-3 row-start-5">
 				<ControlButton handler={handleStart}>play_arrow</ControlButton>
 				<ControlButton handler={handlePause}>pause</ControlButton>
-				<ControlButton handler={handleSkip}>skip_next</ControlButton>
+				{timerRunning && <ControlButton handler={handleSkip}>skip_next</ControlButton>}
 			</div>
 		</div>
 	);
