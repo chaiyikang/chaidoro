@@ -4,9 +4,9 @@ function PomodoroButton({ setPomodoroIsOpen }) {
 			onClick={() => {
 				setPomodoroIsOpen(curr => !curr);
 			}}
-			className="absolute bottom-0 right-0"
+			className="absolute bottom-12 right-0"
 		>
-			<span className="material-symbols-outlined">timer</span>
+			<span className="material-symbols-outlined text-slate-400 text-7xl">timer</span>
 		</button>
 	);
 }

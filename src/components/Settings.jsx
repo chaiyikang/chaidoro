@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const validationConfigLengths = {
@@ -27,6 +27,7 @@ export function Settings({
 	secondsLeftCache,
 	setSecondsLeftCache,
 }) {
+	const [open, setOpen] = useState(false);
 	const {
 		register,
 		handleSubmit,
@@ -74,91 +75,89 @@ export function Settings({
 		return timerRunning ? setTimeStampEnd(currentTimeStamp + updatedSeconds * 1000) : true;
 	}
 
+	function submitAndClose() {
+		handleSubmit(onSubmit)();
+		setOpen(false);
+	}
+
 	return (
 		<>
-			<Modal handleSubmit={handleSubmit} onSubmit={onSubmit}>
-				<form
-					onSubmit={() => {
-						handleSubmit(onSubmit)();
-					}}
-					method="dialog"
-					noValidate
-					data-theme="black"
-				>
-					<h3 className="font-bold text-lg">Settings</h3>
-					<div className="py-4">
+			<Modal submitAndClose={submitAndClose} setOpen={setOpen} open={open}>
+				<form onSubmit={submitAndClose} noValidate>
+					<h3 className="">Settings</h3>
+					<div className="">
 						{/* //* POMODORO LENGTH  */}
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Pomodoro length (minutes)</span>
+						<div className="">
+							<label className="">
+								<span className="">Pomodoro length (minutes)</span>
 							</label>
 							<input
 								{...register("pomodoroLengthMin", validationConfigLengths)}
 								type="number"
-								className="input input-bordered"
+								className=""
 							/>
-							<span className="text-red-700 text-xs">{errors?.pomodoroLengthMin?.message}</span>
+							<span className="text-red-700 ">{errors?.pomodoroLengthMin?.message}</span>
 						</div>
 
 						{/* //* SHORTBREAK LENGTH  */}
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Short break length (minutes)</span>
+						<div className="">
+							<label className="">
+								<span className="">Short break length (minutes)</span>
 							</label>
 							<input
 								{...register("shortBreakLengthMin", validationConfigLengths)}
 								type="number"
-								className="input input-bordered"
+								className=""
 							/>
-							<span className="text-red-700 text-xs">{errors?.shortBreakLengthMin?.message}</span>
+							<span className="text-red-700">{errors?.shortBreakLengthMin?.message}</span>
 						</div>
 
 						{/* //* LONG BREAK LENGTH  */}
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Long break length (minutes)</span>
+						<div className="">
+							<label className="">
+								<span className="">Long break length (minutes)</span>
 							</label>
 							<input
 								{...register("longBreakLengthMin", validationConfigLengths)}
 								type="number"
-								className="input input-bordered"
+								className=""
 							/>
-							<span className="text-red-700 text-xs">{errors?.longBreakLengthMin?.message}</span>
+							<span className="text-red-700">{errors?.longBreakLengthMin?.message}</span>
 						</div>
 
 						{/* //* INTERVAL  */}
-						<div className="form-control">
+						<div className="">
 							<label className="label">
-								<span className="label-text">Long break interval (pomodoros)</span>
+								<span className="">Long break interval (pomodoros)</span>
 							</label>
 							<input
 								{...register("interval", validationConfigInterval)}
 								type="number"
-								className="input input-bordered"
+								className=""
 							/>
-							<span className="text-red-700 text-xs">{errors?.interval?.message}</span>
+							<span className="text-red-700">{errors?.interval?.message}</span>
 						</div>
 
 						{/* //* AUTO BREAKS  */}
-						<div className="form-control mt-4">
-							<label className="cursor-pointer label">
-								<span className="label-text">Auto start breaks</span>
-								<input {...register("autoBreaks")} type="checkbox" className="toggle" />
-								<span className="toggle-mark"></span>
+						<div className="">
+							<label className="">
+								<span className="">Auto start breaks</span>
+								<input {...register("autoBreaks")} type="checkbox" className="" />
+								<span className=""></span>
 							</label>
 						</div>
 
 						{/* //* AUTO POMODORO  */}
-						<div className="form-control mt-4">
-							<label className="cursor-pointer label">
-								<span className="label-text">Auto start pomodoro</span>
-								<input {...register("autoPomodoro")} type="checkbox" className="toggle" />
-								<span className="toggle-mark"></span>
+						<div className="">
+							<label className="">
+								<span className="">Auto start pomodoro</span>
+								<input {...register("autoPomodoro")} type="checkbox" className="" />
+								<span className=""></span>
 							</label>
 						</div>
 					</div>
-					<div className="flex justify-end">
-						<button type="submit" className="btn">
+					<div className="">
+						<button type="submit" className="">
 							ok
 						</button>
 					</div>
@@ -168,41 +167,59 @@ export function Settings({
 	);
 }
 
-function Modal({ children, handleSubmit, onSubmit }) {
-	const modal = useRef(null);
-
+function Modal({ children, submitAndClose, setOpen, open }) {
 	return (
 		<>
-			{/* You can open the modal using document.getElementById('ID').showModal() method */}
-			<button className="btn absolute bottom-0 right-0" onClick={() => modal.current.showModal()}>
-				Settings
+			<button className="absolute bottom-0 right-0" onClick={() => setOpen(curr => !curr)}>
+				<span className="material-symbols-outlined text-7xl">settings</span>
 			</button>
-			<dialog ref={modal} className="modal">
-				<div className="modal-box">
-					<form method="dialog">
-						{/* if there is a button in form, it will close the modal */}
-						<button
-							onClick={() => {
-								handleSubmit(onSubmit)();
-							}}
-							className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-						>
-							✕
+			{open && (
+				<>
+					<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10">
+						<button onClick={submitAndClose} className="absolute right-1 top-1">
+							<span className="material-symbols-outlined">close</span>
 						</button>
-					</form>
-					{children}
-				</div>
-				<form method="dialog" className="modal-backdrop">
-					<button
-						onClick={() => {
-							handleSubmit(onSubmit)();
-						}}
-						className="cursor-default"
-					>
-						close
-					</button>
-				</form>
-			</dialog>
+						{children}
+					</div>
+					<div
+						onClick={submitAndClose}
+						className="fixed h-screen w-screen top-0 left-0 bg-black/70 z-0"
+					></div>
+				</>
+			)}
 		</>
 	);
+
+	// return (
+	// 	<>
+	// 		{/* You can open the modal using document.getElementById('ID').showModal() method */}
+	// 		<button className="btn absolute bottom-0 right-0" onClick={() => modal.current.showModal()}>
+	// 			Settings
+	// 		</button>
+	// 		<dialog ref={modal} className="modal">
+	// 			<div className="modal-box">
+	// 				<form method="dialog">
+	// 					{/* if there is a button in form, it will close the modal */}
+	// 					<button
+	// 						onClick={() => {
+	// 							handleSubmit(onSubmit)();
+	// 						}}
+	// 						className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+	// 					>
+	// 						✕
+	// 					</button>
+	// 				</form>
+	// 				{children}
+	// 			</div>
+	// 			<form method="dialog" className="modal-backdrop">
+	// 				<button
+	// 					onClick={() => {
+	// 						handleSubmit(onSubmit)();
+	// 					}}
+	// 					className="cursor-default"
+	// 				></button>
+	// 			</form>
+	// 		</dialog>
+	// 	</>
+	// );
 }

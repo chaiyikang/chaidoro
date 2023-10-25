@@ -11,7 +11,7 @@ export function Background() {
 			>
 				<source src={bgVideo} type="video/mp4" />
 			</video>
-			<div className="-z-1 absolute top-0 left-0 w-screen h-screen bg-black/30" />
+			{/* <div className="-z-1 absolute top-0 left-0 w-screen h-screen bg-black/30" /> */}
 		</>
 	);
 }

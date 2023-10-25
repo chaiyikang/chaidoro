@@ -38,29 +38,23 @@ function App() {
 		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
 	}, 0);
 
-	// * UI opening state //
-	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
-
 	return (
-		<>
+		<div className="font-roboto font-light text-slate-400">
 			<Background />
-			{pomodoroIsOpen && (
-				<Pomodoro
-					settings={settings}
-					timeStampEnd={timeStampEnd}
-					setTimeStampEnd={setTimeStampEnd}
-					timerRunning={timerRunning}
-					activeType={activeType}
-					setActiveType={setActiveType}
-					currentTimeStamp={currentTimeStamp}
-					secondsLeftCache={secondsLeftCache}
-					setSecondsLeftCache={setSecondsLeftCache}
-					toDos={toDos}
-					stats={stats}
-					setStats={setStats}
-				/>
-			)}
-			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
+			<Pomodoro
+				settings={settings}
+				timeStampEnd={timeStampEnd}
+				setTimeStampEnd={setTimeStampEnd}
+				timerRunning={timerRunning}
+				activeType={activeType}
+				setActiveType={setActiveType}
+				currentTimeStamp={currentTimeStamp}
+				secondsLeftCache={secondsLeftCache}
+				setSecondsLeftCache={setSecondsLeftCache}
+				toDos={toDos}
+				stats={stats}
+				setStats={setStats}
+			/>
 			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} /> */}
 			{/* <Music /> */}
 			{/* <ToDoList toDos={toDos} setToDos={setToDos} /> */}
@@ -74,7 +68,7 @@ function App() {
 				secondsLeftCache={secondsLeftCache}
 				setSecondsLeftCache={setSecondsLeftCache}
 			/>
-		</>
+		</div>
 	);
 }
 
