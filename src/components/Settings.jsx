@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import ToggleSwitch from "./toggleswitch";
 
 const validationConfigLengths = {
 	required: "Please input desired duration",
@@ -134,23 +135,13 @@ export function Settings({
 							Long Break Interval (Pomodoros)
 						</SettingRow>
 
-						{/* //* AUTO BREAKS  */}
-						<div className="flex justify-evenly my-2">
-							<label className="">
-								<span className="text-xl mr-4">Auto start breaks</span>
-								<input {...register("autoBreaks")} type="checkbox" className="ml-8" />
-								<span className=""></span>
-							</label>
-						</div>
+						<ToggleSettingRow>
+							<ToggleSwitch register={register} settingName="autoBreaks" />
+						</ToggleSettingRow>
 
-						{/* //* AUTO POMODORO  */}
-						<div className="flex justify-evenly my-2">
-							<label className="">
-								<span className="text-xl">Auto start pomodoro</span>
-								<input {...register("autoPomodoro")} type="checkbox" className="ml-8" />
-								<span className=""></span>
-							</label>
-						</div>
+						<ToggleSettingRow>
+							<ToggleSwitch register={register} settingName="autoPomodoro" />
+						</ToggleSettingRow>
 					</div>
 
 					<div className="flex justify-end">
@@ -163,6 +154,16 @@ export function Settings({
 		</>
 	);
 }
+
+function ToggleSettingRow({ children }) {
+	return (
+		<div className="flex justify-evenly my-2">
+			<span className="text-xl mr-4">Auto start breaks</span>
+			{children}
+		</div>
+	);
+}
+
 function SettingRow({ register, settingName, children, errorMessage, config }) {
 	return (
 		<div className="flex justify-evenly my-2">
