@@ -43,7 +43,7 @@ export function Settings({
 	const {
 		register,
 		handleSubmit,
-		reset,
+		reset: reactHookFormResetForm,
 		formState: { errors },
 	} = useForm({
 		defaultValues,
@@ -51,10 +51,9 @@ export function Settings({
 
 	useEffect(
 		function updateForm() {
-			alert("useEffect triggered");
-			reset(defaultValues);
+			reactHookFormResetForm(defaultValues);
 		},
-		[reset, defaultValues],
+		[reactHookFormResetForm, defaultValues],
 	);
 
 	function onSubmit(data) {
@@ -73,6 +72,7 @@ export function Settings({
 	}
 
 	function onError(error) {
+		reactHookFormResetForm(defaultValues);
 		setOpen(false);
 		console.error(error);
 	}
@@ -154,8 +154,8 @@ export function Settings({
 					</div>
 
 					<div className="flex justify-end">
-						<button type="submit" className="mr-2	">
-							<span className="material-symbols-outlined">done_outline</span>
+						<button type="submit" className="mr-2">
+							<span className="material-symbols-outlined">check</span>
 						</button>
 					</div>
 				</form>
