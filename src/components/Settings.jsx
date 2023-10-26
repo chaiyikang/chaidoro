@@ -84,78 +84,60 @@ export function Settings({
 		<>
 			<Modal submitAndClose={submitAndClose} setOpen={setOpen} open={open}>
 				<form onSubmit={submitAndClose} noValidate>
-					<h3 className="">Settings</h3>
+					<h1 className="text-4xl">Settings</h1>
 					<div className="">
-						{/* //* POMODORO LENGTH  */}
-						<div className="">
-							<label className="">
-								<span className="">Pomodoro length (minutes)</span>
-							</label>
-							<input
-								{...register("pomodoroLengthMin", validationConfigLengths)}
-								type="number"
-								className=""
-							/>
-							<span className="text-red-700 ">{errors?.pomodoroLengthMin?.message}</span>
-						</div>
-
-						{/* //* SHORTBREAK LENGTH  */}
-						<div className="">
-							<label className="">
-								<span className="">Short break length (minutes)</span>
-							</label>
-							<input
-								{...register("shortBreakLengthMin", validationConfigLengths)}
-								type="number"
-								className=""
-							/>
-							<span className="text-red-700">{errors?.shortBreakLengthMin?.message}</span>
-						</div>
-
-						{/* //* LONG BREAK LENGTH  */}
-						<div className="">
-							<label className="">
-								<span className="">Long break length (minutes)</span>
-							</label>
-							<input
-								{...register("longBreakLengthMin", validationConfigLengths)}
-								type="number"
-								className=""
-							/>
-							<span className="text-red-700">{errors?.longBreakLengthMin?.message}</span>
-						</div>
-
-						{/* //* INTERVAL  */}
-						<div className="">
-							<label className="label">
-								<span className="">Long break interval (pomodoros)</span>
-							</label>
-							<input
-								{...register("interval", validationConfigInterval)}
-								type="number"
-								className=""
-							/>
-							<span className="text-red-700">{errors?.interval?.message}</span>
-						</div>
+						<SettingRow
+							register={register}
+							settingName="pomodoroLengthMin"
+							errorMessage={errors?.pomodoroLengthMin?.message}
+							config={validationConfigLengths}
+						>
+							Pomodoro Length (minutes)
+						</SettingRow>
+						<SettingRow
+							register={register}
+							settingName="shortBreakLengthMin"
+							errorMessage={errors?.shortBreakLengthMin?.message}
+							config={validationConfigLengths}
+						>
+							Short Break Length (minutes)
+						</SettingRow>
+						<SettingRow
+							register={register}
+							settingName="longBreakLengthMin"
+							errorMessage={errors?.longBreakLengthMin?.message}
+							config={validationConfigLengths}
+						>
+							Long Break Length (minutes)
+						</SettingRow>
+						<SettingRow
+							register={register}
+							settingName="interval"
+							errorMessage={errors?.interval?.message}
+							config={validationConfigInterval}
+						>
+							Long Break Interval (Pomodoros)
+						</SettingRow>
 
 						{/* //* AUTO BREAKS  */}
-						<div className="">
+						<div className="flex">
 							<label className="">
-								<span className="">Auto start breaks</span>
-								<input {...register("autoBreaks")} type="checkbox" className="" />
+								<span className="justify-self-start">Auto start breaks</span>
+								<input {...register("autoBreaks")} type="checkbox" className="ml-8" />
 								<span className=""></span>
 							</label>
 						</div>
 
 						{/* //* AUTO POMODORO  */}
-						<div className="">
+						<div className="flex">
 							<label className="">
-								<span className="">Auto start pomodoro</span>
-								<input {...register("autoPomodoro")} type="checkbox" className="" />
+								<span className="justify-self-start">Auto start pomodoro</span>
+								<input {...register("autoPomodoro")} type="checkbox" className="ml-8" />
 								<span className=""></span>
 							</label>
 						</div>
 					</div>
+
 					<div className="">
 						<button type="submit" className="">
 							ok
@@ -164,6 +146,22 @@ export function Settings({
 				</form>
 			</Modal>
 		</>
+	);
+}
+function SettingRow({ register, settingName, children, errorMessage, config }) {
+	return (
+		<div className="flex my-2">
+			<label className="">
+				<span className="text-xl">{children}</span>
+			</label>
+			<input
+				{...register(settingName, config)}
+				type="text"
+				inputMode="numeric"
+				className="bg-transparent border border-slate-400 rounded-xl text-xl px-4 w-1/6"
+			/>
+			<span className="text-red-700 ">{errorMessage}</span>
+		</div>
 	);
 }
 
@@ -175,7 +173,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 			</button>
 			{open && (
 				<>
-					<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10">
+					<div className="fixed top-1/2 left-1/2 w-auto h-auto p-7.5 -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10 text-base">
 						<button onClick={submitAndClose} className="absolute right-1 top-1">
 							<span className="material-symbols-outlined">close</span>
 						</button>
