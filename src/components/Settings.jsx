@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 const validationConfigLengths = {
@@ -28,22 +28,37 @@ export function Settings({
 	setSecondsLeftCache,
 }) {
 	const [open, setOpen] = useState(false);
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
-		defaultValues: {
+	const defaultValues = useMemo(
+		() => ({
 			pomodoroLengthMin: Math.round(settings.pomodoroLengthSec / 60),
 			shortBreakLengthMin: Math.round(settings.shortBreakLengthSec / 60),
 			longBreakLengthMin: Math.round(settings.longBreakLengthSec / 60),
 			interval: settings.interval,
 			autoPomodoro: settings.autoPomodoro,
 			autoBreaks: settings.autoBreaks,
-		},
+		}),
+		[settings],
+	);
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues,
 	});
 
+	useEffect(
+		function updateForm() {
+			alert("useEffect triggered");
+			reset(defaultValues);
+		},
+		[reset, defaultValues],
+	);
+
 	function onSubmit(data) {
+		setOpen(false);
 		applyUpdatedLength(data);
 		dispatchSettings({
 			payload: {
@@ -55,6 +70,11 @@ export function Settings({
 				autoBreaks: true,
 			},
 		});
+	}
+
+	function onError(error) {
+		setOpen(false);
+		console.error(error);
 	}
 
 	function applyUpdatedLength(updatedSettings) {
@@ -75,16 +95,11 @@ export function Settings({
 		return timerRunning ? setTimeStampEnd(currentTimeStamp + updatedSeconds * 1000) : true;
 	}
 
-	function submitAndClose() {
-		handleSubmit(onSubmit)();
-		setOpen(false);
-	}
-
 	return (
 		<>
-			<Modal submitAndClose={submitAndClose} setOpen={setOpen} open={open}>
-				<form onSubmit={submitAndClose} noValidate>
-					<h1 className="text-4xl">Settings</h1>
+			<Modal submitAndClose={handleSubmit(onSubmit, onError)} setOpen={setOpen} open={open}>
+				<form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+					<h1 className="text-4xl flex justify-center">Settings</h1>
 					<div className="">
 						<SettingRow
 							register={register}
@@ -120,27 +135,27 @@ export function Settings({
 						</SettingRow>
 
 						{/* //* AUTO BREAKS  */}
-						<div className="flex">
+						<div className="flex justify-evenly my-2">
 							<label className="">
-								<span className="justify-self-start">Auto start breaks</span>
+								<span className="text-xl mr-4">Auto start breaks</span>
 								<input {...register("autoBreaks")} type="checkbox" className="ml-8" />
 								<span className=""></span>
 							</label>
 						</div>
 
 						{/* //* AUTO POMODORO  */}
-						<div className="flex">
+						<div className="flex justify-evenly my-2">
 							<label className="">
-								<span className="justify-self-start">Auto start pomodoro</span>
+								<span className="text-xl">Auto start pomodoro</span>
 								<input {...register("autoPomodoro")} type="checkbox" className="ml-8" />
 								<span className=""></span>
 							</label>
 						</div>
 					</div>
 
-					<div className="">
-						<button type="submit" className="">
-							ok
+					<div className="flex justify-end">
+						<button type="submit" className="mr-2	">
+							<span className="material-symbols-outlined">done_outline</span>
 						</button>
 					</div>
 				</form>
@@ -150,7 +165,7 @@ export function Settings({
 }
 function SettingRow({ register, settingName, children, errorMessage, config }) {
 	return (
-		<div className="flex my-2">
+		<div className="flex justify-evenly my-2">
 			<label className="">
 				<span className="text-xl">{children}</span>
 			</label>
@@ -158,9 +173,10 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 				{...register(settingName, config)}
 				type="text"
 				inputMode="numeric"
+				autoComplete="off"
 				className="bg-transparent border border-slate-400 rounded-xl text-xl px-4 w-1/6"
 			/>
-			<span className="text-red-700 ">{errorMessage}</span>
+			{/* <span className="text-red-700 ">{errorMessage}</span> */}
 		</div>
 	);
 }
