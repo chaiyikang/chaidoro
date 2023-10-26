@@ -67,7 +67,7 @@ export function Settings({
 				longBreakLengthSec: +data.longBreakLengthMin * 60,
 				interval: +data.interval,
 				autoPomodoro: Boolean(data.autoPomodoro),
-				autoBreaks: true,
+				autoBreaks: Boolean(data.autoPomodoro),
 			},
 		});
 	}
@@ -135,12 +135,12 @@ export function Settings({
 							Long Break Interval (Pomodoros)
 						</SettingRow>
 
-						<ToggleSettingRow>
-							<ToggleSwitch register={register} settingName="autoBreaks" />
+						<ToggleSettingRow register={register} settingName={"autoBreaks"}>
+							Auto Start Breaks
 						</ToggleSettingRow>
 
-						<ToggleSettingRow>
-							<ToggleSwitch register={register} settingName="autoPomodoro" />
+						<ToggleSettingRow register={register} settingName={"autoPomodoro"}>
+							Auto Start Pomodoro
 						</ToggleSettingRow>
 					</div>
 
@@ -155,11 +155,11 @@ export function Settings({
 	);
 }
 
-function ToggleSettingRow({ children }) {
+function ToggleSettingRow({ children, settingName, register }) {
 	return (
 		<div className="flex justify-evenly my-2">
-			<span className="text-xl mr-4">Auto start breaks</span>
-			{children}
+			<span className="text-xl mr-4">{children}</span>
+			<ToggleSwitch register={register} settingName={settingName} />
 		</div>
 	);
 }
