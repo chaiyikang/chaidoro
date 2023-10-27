@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import ToggleSwitch from "./toggleswitch";
+import toast, { Toaster } from "react-hot-toast";
 
 const validationConfigLengths = {
 	required: "Please input desired duration",
@@ -13,8 +14,13 @@ const validationConfigLengths = {
 const validationConfigInterval = {
 	required: "Please input desired interval length",
 	min: { value: 1, message: "Interval length must at least be 1." },
+	max: {
+		value: 20,
+		message:
+			"Interval length exceeded 20. If you don't want long breaks, set the long break duration to be the short break duration.",
+	},
 	validate: function (value) {
-		return Number.isInteger(+value) || "Please input a whole number";
+		return Number.isInteger(+value) || "Please input a whole number for the interval";
 	},
 };
 
@@ -75,7 +81,17 @@ export function Settings({
 	function onError(error) {
 		reactHookFormResetForm(defaultValues);
 		setOpen(false);
-		console.error(error);
+		function formatSettingName(name) {
+			if (name === "pomodoroLengthMin") return "Pomodoro Length";
+			if (name === "shortBreakLengthMin") return "Short Break Length";
+			if (name === "longBreakLengthMin") return "Long Break Length";
+			if (name === "interval") return "Interval";
+		}
+
+		// Object.values(error).map(err => toast.error(err.message));
+		Object.entries(error).map(([setting, errObj]) =>
+			toast.error(`${formatSettingName(setting)}: ${errObj.message}`),
+		);
 	}
 
 	function applyUpdatedLength(updatedSettings) {
@@ -100,7 +116,7 @@ export function Settings({
 		<>
 			<Modal submitAndClose={handleSubmit(onSubmit, onError)} setOpen={setOpen} open={open}>
 				<form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-					<h1 className="text-4xl flex justify-center">Settings</h1>
+					<h1 className="text-4xl flex justify-start">Settings</h1>
 					<div className="">
 						<SettingRow
 							register={register}
@@ -108,7 +124,7 @@ export function Settings({
 							errorMessage={errors?.pomodoroLengthMin?.message}
 							config={validationConfigLengths}
 						>
-							Pomodoro Length (minutes)
+							Pomodoro Length
 						</SettingRow>
 						<SettingRow
 							register={register}
@@ -116,7 +132,7 @@ export function Settings({
 							errorMessage={errors?.shortBreakLengthMin?.message}
 							config={validationConfigLengths}
 						>
-							Short Break Length (minutes)
+							Short Break Length
 						</SettingRow>
 						<SettingRow
 							register={register}
@@ -124,7 +140,7 @@ export function Settings({
 							errorMessage={errors?.longBreakLengthMin?.message}
 							config={validationConfigLengths}
 						>
-							Long Break Length (minutes)
+							Long Break Length
 						</SettingRow>
 						<SettingRow
 							register={register}
@@ -132,7 +148,7 @@ export function Settings({
 							errorMessage={errors?.interval?.message}
 							config={validationConfigInterval}
 						>
-							Long Break Interval (Pomodoros)
+							Long Break Interval
 						</SettingRow>
 
 						<ToggleSettingRow register={register} settingName={"autoBreaks"}>
@@ -144,8 +160,8 @@ export function Settings({
 						</ToggleSettingRow>
 					</div>
 
-					<div className="flex justify-end">
-						<button type="submit" className="mr-2">
+					<div className="absolute bottom-0 right-0">
+						<button type="submit" className="align-bottom">
 							<span className="material-symbols-outlined">check</span>
 						</button>
 					</div>
@@ -157,7 +173,7 @@ export function Settings({
 
 function ToggleSettingRow({ children, settingName, register }) {
 	return (
-		<div className="flex justify-evenly my-2">
+		<div className="flex justify-between my-2">
 			<span className="text-xl mr-4">{children}</span>
 			<ToggleSwitch register={register} settingName={settingName} />
 		</div>
@@ -166,7 +182,7 @@ function ToggleSettingRow({ children, settingName, register }) {
 
 function SettingRow({ register, settingName, children, errorMessage, config }) {
 	return (
-		<div className="flex justify-evenly my-2">
+		<div className="flex justify-between my-2">
 			<label className="">
 				<span className="text-xl">{children}</span>
 			</label>
@@ -175,7 +191,7 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 				type="text"
 				inputMode="numeric"
 				autoComplete="off"
-				className="bg-transparent border border-slate-400 rounded-xl text-xl px-4 w-1/6"
+				className="bg-transparent text-center border border-slate-400 rounded-xl text-xl px-4 w-14 h-7"
 			/>
 			{/* <span className="text-red-700 ">{errorMessage}</span> */}
 		</div>
@@ -190,7 +206,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 			</button>
 			{open && (
 				<>
-					<div className="fixed top-1/2 left-1/2 w-auto h-auto p-7.5 -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10 text-base">
+					<div className="fixed top-1/2 left-1/2 w-auto h-auto px-7  py-4  -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10 text-base">
 						<button onClick={submitAndClose} className="absolute right-1 top-1">
 							<span className="material-symbols-outlined">close</span>
 						</button>

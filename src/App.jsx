@@ -9,6 +9,7 @@ import { Settings } from "./components/Settings";
 import useTimeState from "./hooks/useTimeState";
 import { Background } from "./components/Background";
 import PomodoroButton from "./components/PomodoroButton";
+import { Toaster } from "react-hot-toast";
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -40,6 +41,7 @@ function App() {
 
 	return (
 		<div className="font-roboto font-light text-slate-400">
+			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }} />
 			<Background />
 			<Pomodoro
 				settings={settings}

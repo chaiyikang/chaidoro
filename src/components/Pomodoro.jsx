@@ -161,7 +161,7 @@ export function Pomodoro({
 	return (
 		<>
 			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
-			<div className="grid grid-cols-3 grid-rows-5 gap-0 justify-items-center items-center absolute opacity-75  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 w-1/2 h-1/2">
+			<div className="grid grid-cols-3 grid-rows-5 gap-0 justify-items-center items-center absolute opacity-75  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 w-1/2 h-1/2 rounded-xl">
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>
