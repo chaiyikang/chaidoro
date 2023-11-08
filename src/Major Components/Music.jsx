@@ -7,7 +7,7 @@ export function Music() {
 					alt="Album cover"
 					className="object-cover w-full h-full rounded-lg"
 				/>
-				<div className="absolute inset-0 bg-gradient-to-tr from-purple-400 to-transparent rounded-lg opacity-75"></div>
+				<div className="absolute inset-0 rounded-lg opacity-75 bg-gradient-to-tr from-purple-400 to-transparent"></div>
 			</div>
 			<div className="flex flex-col">
 				<h3 className="text-lg font-semibold text-white">lofi 🎧 for study, chill, and</h3>

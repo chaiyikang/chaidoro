@@ -1,14 +1,14 @@
 import "tailwindcss/tailwind.css";
 import "daisyui";
-import { Stats } from "./components/Stats";
-import { ToDoList } from "./components/ToDoList";
-import { Music } from "./components/Music";
+import { Stats } from "./Major Components/Stats";
+import { ToDoList } from "./Major Components/ToDoList";
+import { Music } from "./Major Components/Music";
 import { useReducer, useState } from "react";
-import { Pomodoro } from "./components/Pomodoro";
-import { Settings } from "./components/Settings";
+import { Pomodoro } from "./Major Components/Pomodoro";
+import { Settings } from "./Major Components/Settings";
 import useTimeState from "./hooks/useTimeState";
-import { Background } from "./components/Background";
-import PomodoroButton from "./components/PomodoroButton";
+import { Background } from "./Major Components/Background";
+import PomodoroButton from "./Low Level Components/PomodoroButton";
 import { Toaster } from "react-hot-toast";
 
 const initialSettings = {
@@ -28,7 +28,7 @@ function App() {
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const [activeType, setActiveType] = useState("pomodoro");
-	const currentTimeStamp = useTimeState();
+	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
@@ -40,9 +40,12 @@ function App() {
 	}, 0);
 
 	return (
-		<div className="font-roboto font-light text-slate-400">
+		<div className="select-none font-roboto font-light text-slate-400">
 			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }} />
 			<Background />
+			<Stats totalTimeFocused={totalTimeFocused} stats={stats} />
+			{/* <Music /> */}
+			<ToDoList toDos={toDos} setToDos={setToDos} />
 			<Pomodoro
 				settings={settings}
 				timeStampEnd={timeStampEnd}
@@ -57,9 +60,6 @@ function App() {
 				stats={stats}
 				setStats={setStats}
 			/>
-			{/* <Stats totalTimeFocused={totalTimeFocused} stats={stats} /> */}
-			{/* <Music /> */}
-			{/* <ToDoList toDos={toDos} setToDos={setToDos} /> */}
 			<Settings
 				settings={settings}
 				dispatchSettings={dispatchSettings}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import ProgressDot from "./ProgressDot";
-import ControlButton from "./ControlButton";
-import PomodoroButton from "./PomodoroButton";
+import ProgressDot from "../Low Level Components/ProgressDot";
+import ControlButton from "../Low Level Components/ControlButton";
+import PomodoroButton from "../Low Level Components/PomodoroButton";
 
 export function Pomodoro({
 	settings,
@@ -89,6 +89,7 @@ export function Pomodoro({
 			setActiveType(nextType);
 			setSecondsLeftCache(settings[`${nextType}LengthSec`]);
 			if (
+				// auto start the next timer
 				(nextType === "pomodoro" && settings.autoPomodoro) ||
 				(nextType !== "pomodoro" && settings.autoBreaks)
 			) {
@@ -130,6 +131,7 @@ export function Pomodoro({
 		initType(nextType);
 
 		if (
+			// auto start next timer
 			(nextType === "pomodoro" && settings.autoPomodoro) ||
 			(nextType !== "pomodoro" && settings.autoBreaks)
 		) {
@@ -161,7 +163,7 @@ export function Pomodoro({
 	return (
 		<>
 			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
-			<div className="grid grid-cols-3 grid-rows-5 gap-0 justify-items-center items-center absolute opacity-75  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 w-1/2 h-1/2 rounded-xl">
+			<div className="absolute left-1/2 top-1/2 grid h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-5 items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>
@@ -175,7 +177,7 @@ export function Pomodoro({
 						Short Break
 					</button>
 				</div>
-				<div className="row-start-2 text-3xl justify-self-start">
+				<div className="row-start-2 justify-self-start text-3xl">
 					<button onClick={handleType} value="longBreak" className="">
 						Long Break
 					</button>

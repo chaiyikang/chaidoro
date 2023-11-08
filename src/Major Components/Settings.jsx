@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import ToggleSwitch from "./toggleswitch";
+import ToggleSwitch from "../Low Level Components/ToggleSwitch";
 import toast, { Toaster } from "react-hot-toast";
 
 const validationConfigLengths = {
@@ -73,7 +73,7 @@ export function Settings({
 				longBreakLengthSec: +data.longBreakLengthMin * 60,
 				interval: +data.interval,
 				autoPomodoro: Boolean(data.autoPomodoro),
-				autoBreaks: Boolean(data.autoPomodoro),
+				autoBreaks: Boolean(data.autoBreaks),
 			},
 		});
 	}
@@ -116,7 +116,7 @@ export function Settings({
 		<>
 			<Modal submitAndClose={handleSubmit(onSubmit, onError)} setOpen={setOpen} open={open}>
 				<form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-					<h1 className="text-4xl flex justify-start">Settings</h1>
+					<h1 className="flex justify-start text-4xl">Settings</h1>
 					<div className="">
 						<SettingRow
 							register={register}
@@ -151,11 +151,11 @@ export function Settings({
 							Long Break Interval
 						</SettingRow>
 
-						<ToggleSettingRow register={register} settingName={"autoBreaks"}>
+						<ToggleSettingRow register={register} settingName={"autoBreaks"} id="breaks">
 							Auto Start Breaks
 						</ToggleSettingRow>
 
-						<ToggleSettingRow register={register} settingName={"autoPomodoro"}>
+						<ToggleSettingRow register={register} settingName={"autoPomodoro"} id="pomodoro">
 							Auto Start Pomodoro
 						</ToggleSettingRow>
 					</div>
@@ -171,18 +171,18 @@ export function Settings({
 	);
 }
 
-function ToggleSettingRow({ children, settingName, register }) {
+function ToggleSettingRow({ children, settingName, register, id }) {
 	return (
-		<div className="flex justify-between my-2">
-			<span className="text-xl mr-4">{children}</span>
-			<ToggleSwitch register={register} settingName={settingName} />
+		<div className="my-2 flex justify-between">
+			<span className="mr-4 text-xl">{children}</span>
+			<ToggleSwitch register={register} settingName={settingName} id={id} />
 		</div>
 	);
 }
 
 function SettingRow({ register, settingName, children, errorMessage, config }) {
 	return (
-		<div className="flex justify-between my-2">
+		<div className="my-2 flex justify-between">
 			<label className="">
 				<span className="text-xl">{children}</span>
 			</label>
@@ -191,7 +191,7 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 				type="text"
 				inputMode="numeric"
 				autoComplete="off"
-				className="bg-transparent text-center border border-slate-400 rounded-xl text-xl px-4 w-14 h-7"
+				className="h-7 w-14 rounded-xl border border-slate-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none"
 			/>
 			{/* <span className="text-red-700 ">{errorMessage}</span> */}
 		</div>
@@ -206,7 +206,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 			</button>
 			{open && (
 				<>
-					<div className="fixed top-1/2 left-1/2 w-auto h-auto px-7  py-4  -translate-x-1/2 -translate-y-1/2 bg-slate-900 z-10 text-base">
+					<div className="fixed left-1/2 top-1/2 z-10 h-auto w-auto -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-7 py-4 text-base">
 						<button onClick={submitAndClose} className="absolute right-1 top-1">
 							<span className="material-symbols-outlined">close</span>
 						</button>
@@ -214,7 +214,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 					</div>
 					<div
 						onClick={submitAndClose}
-						className="fixed h-screen w-screen top-0 left-0 bg-black/70 z-0"
+						className="fixed left-0 top-0 z-0 h-screen w-screen bg-black/70"
 					></div>
 				</>
 			)}
@@ -224,7 +224,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 	// return (
 	// 	<>
 	// 		{/* You can open the modal using document.getElementById('ID').showModal() method */}
-	// 		<button className="btn absolute bottom-0 right-0" onClick={() => modal.current.showModal()}>
+	// 		<button className="absolute bottom-0 right-0 btn" onClick={() => modal.current.showModal()}>
 	// 			Settings
 	// 		</button>
 	// 		<dialog ref={modal} className="modal">
@@ -235,7 +235,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 	// 						onClick={() => {
 	// 							handleSubmit(onSubmit)();
 	// 						}}
-	// 						className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+	// 						className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
 	// 					>
 	// 						✕
 	// 					</button>
