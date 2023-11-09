@@ -1,4 +1,5 @@
-export function Stats({ totalTimeFocused, stats }) {
+export function Stats({ totalTimeFocused, stats, statsIsOpen }) {
+	if (!statsIsOpen) return;
 	return (
 		<ul className="text-base-content absolute left-0 top-0 h-screen w-3/12 overflow-y-auto bg-slate-900 p-4 opacity-75 ">
 			<li>

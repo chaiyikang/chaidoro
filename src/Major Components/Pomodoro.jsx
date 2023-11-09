@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ProgressDot from "../Low Level Components/ProgressDot";
 import ControlButton from "../Low Level Components/ControlButton";
-import PomodoroButton from "../Low Level Components/PomodoroButton";
 
 export function Pomodoro({
 	settings,
@@ -196,10 +195,10 @@ export function Pomodoro({
 				</div>
 				<div className="col-span-3 row-start-4 self-start">
 					{/* <h2 className="">
-					{activeType === ""
-						? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
-						: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
-				</h2> */}
+						{activeType === ""
+							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
+							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
+					</h2> */}
 					{new Array(settings.interval).fill("").map((_, index) => (
 						<ProgressDot key={index} filled={pomodoroRepDisplay >= index + 1} />
 					))}

@@ -8,7 +8,6 @@ import { Pomodoro } from "./Major Components/Pomodoro";
 import { Settings } from "./Major Components/Settings";
 import useTimeState from "./hooks/useTimeState";
 import { Background } from "./Major Components/Background";
-import PomodoroButton from "./Low Level Components/PomodoroButton";
 import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./Major Components/spinningToolBar";
 
@@ -35,6 +34,8 @@ function App() {
 	const [stats, setStats] = useState([]);
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
+	const [statsIsOpen, setStatsIsOpen] = useState(false);
+	const [toDoIsOpen, setToDoIsOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -47,12 +48,19 @@ function App() {
 			<SpinningToolBar
 				setSettingsIsOpen={setSettingsIsOpen}
 				setPomodoroIsOpen={setPomodoroIsOpen}
+				setStatsIsOpen={setStatsIsOpen}
+				setToDoIsOpen={setToDoIsOpen}
 			/>
 			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }} />
 			<Background />
-			<Stats totalTimeFocused={totalTimeFocused} stats={stats} />
+			<Stats
+				totalTimeFocused={totalTimeFocused}
+				stats={stats}
+				toDoIsOpen={toDoIsOpen}
+				statsIsOpen={statsIsOpen}
+			/>
 			{/* <Music /> */}
-			<ToDoList toDos={toDos} setToDos={setToDos} />
+			<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
 			<Pomodoro
 				settings={settings}
 				timeStampEnd={timeStampEnd}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../Low Level Components/Button";
 
-export function ToDoList({ toDos, setToDos }) {
+export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 	const [input, setInput] = useState("");
 	function handleNewTaskInputChange(e) {
 		setInput(e.target.value);
@@ -38,6 +38,8 @@ export function ToDoList({ toDos, setToDos }) {
 	function handleClear() {
 		setToDos([]);
 	}
+
+	if (!toDoIsOpen) return;
 
 	return (
 		<div className=" w-70 absolute right-0 top-0 min-h-full bg-slate-900 p-4 opacity-75">
