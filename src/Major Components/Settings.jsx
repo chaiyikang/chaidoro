@@ -38,9 +38,9 @@ export function Settings({
 }) {
 	const defaultValues = useMemo(
 		() => ({
-			pomodoroLengthMin: Math.round(settings.pomodoroLengthSec / 60),
-			shortBreakLengthMin: Math.round(settings.shortBreakLengthSec / 60),
-			longBreakLengthMin: Math.round(settings.longBreakLengthSec / 60),
+			pomodoroLengthMin: +(settings.pomodoroLengthSec / 60).toFixed(1),
+			shortBreakLengthMin: +(settings.shortBreakLengthSec / 60).toFixed(1),
+			longBreakLengthMin: +(settings.longBreakLengthSec / 60).toFixed(1),
 			interval: settings.interval,
 			autoPomodoro: settings.autoPomodoro,
 			autoBreaks: settings.autoBreaks,
