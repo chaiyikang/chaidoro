@@ -33,8 +33,9 @@ export function Settings({
 	currentTimeStamp,
 	secondsLeftCache,
 	setSecondsLeftCache,
+	settingsIsOpen,
+	setSettingsIsOpen,
 }) {
-	const [open, setOpen] = useState(false);
 	const defaultValues = useMemo(
 		() => ({
 			pomodoroLengthMin: Math.round(settings.pomodoroLengthSec / 60),
@@ -64,7 +65,7 @@ export function Settings({
 	);
 
 	function onSubmit(data) {
-		setOpen(false);
+		setSettingsIsOpen(false);
 		applyUpdatedLength(data);
 		dispatchSettings({
 			payload: {
@@ -80,7 +81,7 @@ export function Settings({
 
 	function onError(error) {
 		reactHookFormResetForm(defaultValues);
-		setOpen(false);
+		setSettingsIsOpen(false);
 		function formatSettingName(name) {
 			if (name === "pomodoroLengthMin") return "Pomodoro Length";
 			if (name === "shortBreakLengthMin") return "Short Break Length";
@@ -114,7 +115,11 @@ export function Settings({
 
 	return (
 		<>
-			<Modal submitAndClose={handleSubmit(onSubmit, onError)} setOpen={setOpen} open={open}>
+			<Modal
+				submitAndClose={handleSubmit(onSubmit, onError)}
+				settingsIsOpen={settingsIsOpen}
+				open={open}
+			>
 				<form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
 					<h1 className="flex justify-start text-4xl">Settings</h1>
 					<div className="">
@@ -198,15 +203,12 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 	);
 }
 
-function Modal({ children, submitAndClose, setOpen, open }) {
+function Modal({ children, submitAndClose, settingsIsOpen }) {
 	return (
 		<>
-			<button className="absolute bottom-0 right-0" onClick={() => setOpen(curr => !curr)}>
-				<span className="material-symbols-outlined text-7xl">settings</span>
-			</button>
-			{open && (
+			{settingsIsOpen && (
 				<>
-					<div className="fixed left-1/2 top-1/2 z-10 h-auto w-auto -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-7 py-4 text-base">
+					<div className="fixed left-1/2 top-1/2 z-50 h-auto w-auto -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-7 py-4 text-base">
 						<button onClick={submitAndClose} className="absolute right-1 top-1">
 							<span className="material-symbols-outlined">close</span>
 						</button>
@@ -214,7 +216,7 @@ function Modal({ children, submitAndClose, setOpen, open }) {
 					</div>
 					<div
 						onClick={submitAndClose}
-						className="fixed left-0 top-0 z-0 h-screen w-screen bg-black/70"
+						className="fixed left-0 top-0 z-[49] h-screen w-screen bg-black/70"
 					></div>
 				</>
 			)}

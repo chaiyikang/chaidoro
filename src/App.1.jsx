@@ -1,31 +1,14 @@
-import "tailwindcss/tailwind.css";
-import "daisyui";
 import { Stats } from "./Major Components/Stats";
 import { ToDoList } from "./Major Components/ToDoList";
-import { Music } from "./Major Components/Music";
 import { useReducer, useState } from "react";
 import { Pomodoro } from "./Major Components/Pomodoro";
 import { Settings } from "./Major Components/Settings";
 import useTimeState from "./hooks/useTimeState";
 import { Background } from "./Major Components/Background";
-import PomodoroButton from "./Low Level Components/PomodoroButton";
 import { Toaster } from "react-hot-toast";
-import SpinningToolBar from "./Major Components/spinningToolBar";
+import { settingsReducer, initialSettings } from "./App";
 
-const initialSettings = {
-	pomodoroLengthSec: 25 * 60,
-	shortBreakLengthSec: 5 * 60,
-	longBreakLengthSec: 15 * 60,
-	interval: 4,
-	autoPomodoro: true,
-	autoBreaks: true,
-};
-
-function settingsReducer(state, action) {
-	return { ...state, ...action.payload };
-}
-
-function App() {
+export function App() {
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const [activeType, setActiveType] = useState("pomodoro");
@@ -33,8 +16,7 @@ function App() {
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
-	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
-	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
+	const [spinnerOpen, setSpinnerOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -44,10 +26,25 @@ function App() {
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">
-			<SpinningToolBar
-				setSettingsIsOpen={setSettingsIsOpen}
-				setPomodoroIsOpen={setPomodoroIsOpen}
-			/>
+			<div className="spinnerContainer absolute bottom-2 right-[25rem] z-10">
+				<div className="relative grid h-[10rem]  w-[10rem] place-items-center ">
+					<span
+						className="material-symbols-outlined text-7xl"
+						onClick={() => setSpinnerOpen(old => !old)}
+					>
+						grid_view
+					</span>
+					<span
+						className={`material-symbols-outlined text-7xl ${
+							spinnerOpen
+								? "z-1 visible absolute top-2/4 -translate-y-2/4 translate-x-[120%] -rotate-90 opacity-100 transition-all delay-[0s] duration-[0.5s] ease-[ease]"
+								: "z-1 left-2/6 invisible absolute top-2/4 -translate-y-2/4 opacity-0 transition-all delay-[0s] duration-[0.5s] ease-[ease]"
+						}`}
+					>
+						settings
+					</span>
+				</div>
+			</div>
 			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }} />
 			<Background />
 			<Stats totalTimeFocused={totalTimeFocused} stats={stats} />
@@ -66,8 +63,6 @@ function App() {
 				toDos={toDos}
 				stats={stats}
 				setStats={setStats}
-				pomodoroIsOpen={pomodoroIsOpen}
-				setPomodoroIsOpen={setPomodoroIsOpen}
 			/>
 			<Settings
 				settings={settings}
@@ -78,11 +73,7 @@ function App() {
 				currentTimeStamp={currentTimeStamp}
 				secondsLeftCache={secondsLeftCache}
 				setSecondsLeftCache={setSecondsLeftCache}
-				settingsIsOpen={settingsIsOpen}
-				setSettingsIsOpen={setSettingsIsOpen}
 			/>
 		</div>
 	);
 }
-
-export default App;

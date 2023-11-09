@@ -4,7 +4,7 @@ export function Background() {
 	return (
 		<>
 			<video
-				className="absolute top-0 left-0 object-cover w-screen h-screen bg-fixed -z-2"
+				className="absolute left-0 top-0 -z-10 h-screen w-screen bg-fixed object-cover"
 				autoPlay
 				loop
 				muted

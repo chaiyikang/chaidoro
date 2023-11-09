@@ -16,9 +16,9 @@ export function Pomodoro({
 	toDos,
 	stats,
 	setStats,
+	pomodoroIsOpen,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
-	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 
 	// * DERIVED STATE //
 	const runningSeconds = timerRunning
@@ -158,12 +158,11 @@ export function Pomodoro({
 		return "shortBreak";
 	}
 
-	if (!pomodoroIsOpen) return <PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />;
+	if (!pomodoroIsOpen) return;
 
 	return (
 		<>
-			<PomodoroButton setPomodoroIsOpen={setPomodoroIsOpen} />
-			<div className="absolute left-1/2 top-1/2 grid h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-5 items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
+			<div className="absolute left-1/2 top-1/2 z-10 grid h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-5 items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>
@@ -206,8 +205,8 @@ export function Pomodoro({
 					))}
 				</div>
 				<div className="col-span-3 row-start-5">
-					<ControlButton handler={handleStart}>play_arrow</ControlButton>
-					<ControlButton handler={handlePause}>pause</ControlButton>
+					{!timerRunning && <ControlButton handler={handleStart}>play_arrow</ControlButton>}
+					{timerRunning && <ControlButton handler={handlePause}>pause</ControlButton>}
 					{timerRunning && <ControlButton handler={handleSkip}>skip_next</ControlButton>}
 				</div>
 			</div>
