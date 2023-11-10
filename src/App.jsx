@@ -45,12 +45,6 @@ function App() {
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">
-			<SpinningToolBar
-				setSettingsIsOpen={setSettingsIsOpen}
-				setPomodoroIsOpen={setPomodoroIsOpen}
-				setStatsIsOpen={setStatsIsOpen}
-				setToDoIsOpen={setToDoIsOpen}
-			/>
 			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }} />
 			<Background />
 			<Stats
@@ -76,6 +70,12 @@ function App() {
 				setStats={setStats}
 				pomodoroIsOpen={pomodoroIsOpen}
 				setPomodoroIsOpen={setPomodoroIsOpen}
+			/>
+			<SpinningToolBar
+				setSettingsIsOpen={setSettingsIsOpen}
+				setPomodoroIsOpen={setPomodoroIsOpen}
+				setStatsIsOpen={setStatsIsOpen}
+				setToDoIsOpen={setToDoIsOpen}
 			/>
 			<Settings
 				settings={settings}
