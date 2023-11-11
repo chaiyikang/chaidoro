@@ -10,6 +10,7 @@ import useTimeState from "./hooks/useTimeState";
 import { Background } from "./MajorComponents/Background";
 import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./MajorComponents/spinningToolBar";
+//
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,
