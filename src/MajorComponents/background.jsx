@@ -1,4 +1,5 @@
 import bgVideo from "../videos/outside_sun.mp4";
+//
 
 export function Background() {
 	return (
