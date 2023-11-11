@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ProgressDot from "../Low Level Components/ProgressDot";
-import ControlButton from "../Low Level Components/ControlButton";
+import ProgressDot from "../LowLevelComponents/ProgressDot";
+import ControlButton from "../LowLevelComponents/ControlButton";
 import useSound from "use-sound";
 import clickSfx from "../sounds/click.mp3";
 import alertSfx from "../sounds/alert.mp3";
