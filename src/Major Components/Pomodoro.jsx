@@ -145,7 +145,6 @@ export function Pomodoro({
 
 	// * EVENT HANDLERS //
 	function handlePause() {
-		new Notification("hi");
 		clickSound();
 		if (!timerRunning) return;
 		pauseTimer();
