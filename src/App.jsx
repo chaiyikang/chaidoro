@@ -9,7 +9,7 @@ import { Settings } from "./MajorComponents/Settings";
 import useTimeState from "./hooks/useTimeState";
 import { Background } from "./MajorComponents/background.jsx";
 import { Toaster } from "react-hot-toast";
-import SpinningToolBar from "./MajorComponents/spinningToolBar";
+import SpinningToolBar from "./MajorComponents/SpinningToolBar";
 //
 
 const initialSettings = {
