@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import ProgressDot from "../Low Level Components/ProgressDot";
 import ControlButton from "../Low Level Components/ControlButton";
+import useSound from "use-sound";
+import clickSfx from "../sounds/click.mp3";
+import alertSfx from "../sounds/alert.mp3";
+import timerEndedSfx from "../sounds/timerEnded.mp3";
 
 export function Pomodoro({
 	settings,
@@ -27,14 +31,14 @@ export function Pomodoro({
 		: undefined;
 	const displayedSeconds = runningSeconds || secondsLeftCache;
 
-	const pomodoroCycleDisplay = Math.ceil((workSetsCompleted + 1) / settings.interval);
+	// const pomodoroCycleDisplay = Math.ceil((workSetsCompleted + 1) / settings.interval);
 	const pomodoroRepDisplay = (workSetsCompleted % settings.interval) + 1;
-	const breakCycleDisplay =
-		workSetsCompleted % settings.interval !== 0 || workSetsCompleted === 0
-			? Math.floor(workSetsCompleted / settings.interval) + 1
-			: workSetsCompleted / settings.interval;
-	const breakRepDisplay =
-		workSetsCompleted === 0 ? 1 : workSetsCompleted % 4 === 0 ? 4 : workSetsCompleted % 4;
+	// const breakCycleDisplay =
+	// 	workSetsCompleted % settings.interval !== 0 || workSetsCompleted === 0
+	// 		? Math.floor(workSetsCompleted / settings.interval) + 1
+	// 		: workSetsCompleted / settings.interval;
+	// const breakRepDisplay =
+	// 	workSetsCompleted === 0 ? 1 : workSetsCompleted % 4 === 0 ? 4 : workSetsCompleted % 4;
 
 	const activeTask =
 		activeType === "pomodoro"
@@ -44,6 +48,11 @@ export function Pomodoro({
 			: "Long Break";
 
 	const lastTask = stats.at(-1)?.task;
+
+	// * SOUND //
+	const [clickSound] = useSound(clickSfx);
+	const [alertSound] = useSound(alertSfx);
+	const [timerEndedSound] = useSound(timerEndedSfx);
 
 	// * EFFECTS //
 	useEffect(
@@ -73,8 +82,20 @@ export function Pomodoro({
 	);
 
 	useEffect(
+		function timerEndingNotification() {
+			if (!timerRunning) return;
+			if (runningSeconds !== 5 * 60) return;
+			// in case total length is 5 minutes from the start
+			if (settings[`${activeType}LengthSec`] === 5 * 60) return;
+			alertSound();
+		},
+		[timerRunning, runningSeconds, alertSound, activeType, settings],
+	);
+
+	useEffect(
 		function handleTimerEnded() {
 			if (!timerRunning || runningSeconds >= 0) return;
+			timerEndedSound();
 			setTimeStampEnd(undefined); // pause timer
 			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
 			let nextType;
@@ -106,15 +127,20 @@ export function Pomodoro({
 			setTimeStampEnd,
 			setActiveType,
 			setSecondsLeftCache,
+			timerEndedSound,
 		],
 	);
 
 	// * EVENT HANDLERS //
 	function handlePause() {
+		clickSound();
+		if (!timerRunning) return;
 		pauseTimer();
 	}
 
 	function handleStart() {
+		clickSound();
+		if (timerRunning) return;
 		startTimer();
 	}
 
@@ -125,6 +151,7 @@ export function Pomodoro({
 	}
 
 	function handleSkip() {
+		clickSound();
 		pauseTimer();
 		const nextType = getNextType();
 		initType(nextType);
@@ -204,8 +231,11 @@ export function Pomodoro({
 					))}
 				</div>
 				<div className="col-span-3 row-start-5">
-					{!timerRunning && <ControlButton handler={handleStart}>play_arrow</ControlButton>}
-					{timerRunning && <ControlButton handler={handlePause}>pause</ControlButton>}
+					<ControlButton handler={timerRunning ? handlePause : handleStart}>
+						{timerRunning ? "pause" : "play_arrow"}
+					</ControlButton>
+					{/* {<ControlButton handler={handleStart}>play_arrow</ControlButton>}
+					{<ControlButton handler={handlePause}>pause</ControlButton>} */}
 					{timerRunning && <ControlButton handler={handleSkip}>skip_next</ControlButton>}
 				</div>
 			</div>

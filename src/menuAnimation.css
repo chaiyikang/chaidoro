@@ -14,7 +14,7 @@
 div:hover + .menu-toggler + label,
 div:hover + .menu-toggler + label:before,
 div:hover + .menu-toggler + label:after {
-	background: white;
+	background: #64748b;
 }
 .menu-toggler:checked + label,
 div:hover + .menu-toggler:checked + label {
@@ -39,7 +39,7 @@ div:hover + .menu-toggler:checked + label {
 	display: block;
 	z-index: 1;
 	border-radius: 2.5px;
-	background: rgba(255, 255, 255, 0.7);
+	background: #94a3b8;
 	transition:
 		transform 0.5s,
 		top 0.5s;
@@ -58,7 +58,7 @@ div:hover + .menu-toggler:checked + label {
 	display: block;
 	z-index: 1;
 	border-radius: 2.5px;
-	background: rgba(255, 255, 255, 0.7);
+	background: #94a3b8;
 	transition:
 		transform 0.5s,
 		top 0.5s;
