@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ControlButton from "../Low Level Components/ControlButton";
+import ControlButton from "../LowLevelComponents/ControlButton";
 
 function SpinningToolBar({ setSettingsIsOpen, setPomodoroIsOpen, setStatsIsOpen, setToDoIsOpen }) {
 	const [spinnerOpen, setSpinnerOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import ToggleSwitch from "../Low Level Components/ToggleSwitch";
+import ToggleSwitch from "../LowLevelComponents/ToggleSwitch";
 import toast, { Toaster } from "react-hot-toast";
 
 const validationConfigLengths = {

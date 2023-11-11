@@ -1,15 +1,15 @@
 import "tailwindcss/tailwind.css";
 import "daisyui";
-import { Stats } from "./Major Components/Stats";
-import { ToDoList } from "./Major Components/ToDoList";
-import { Music } from "./Major Components/Music";
+import { Stats } from "./MajorComponents/Stats";
+import { ToDoList } from "./MajorComponents/ToDoList";
+import { Music } from "./MajorComponents/Music";
 import { useEffect, useReducer, useState } from "react";
-import { Pomodoro } from "./Major Components/Pomodoro";
-import { Settings } from "./Major Components/Settings";
+import { Pomodoro } from "./MajorComponents/Pomodoro";
+import { Settings } from "./MajorComponents/Settings";
 import useTimeState from "./hooks/useTimeState";
-import { Background } from "./Major Components/Background";
+import { Background } from "./MajorComponents/Background";
 import { Toaster } from "react-hot-toast";
-import SpinningToolBar from "./Major Components/spinningToolBar";
+import SpinningToolBar from "./MajorComponents/spinningToolBar";
 
 const initialSettings = {
 	pomodoroLengthSec: 25 * 60,

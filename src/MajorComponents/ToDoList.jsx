@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../Low Level Components/Button";
+import Button from "../LowLevelComponents/Button";
 
 export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 	const [input, setInput] = useState("");
