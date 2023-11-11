@@ -3,7 +3,7 @@ import "daisyui";
 import { Stats } from "./Major Components/Stats";
 import { ToDoList } from "./Major Components/ToDoList";
 import { Music } from "./Major Components/Music";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { Pomodoro } from "./Major Components/Pomodoro";
 import { Settings } from "./Major Components/Settings";
 import useTimeState from "./hooks/useTimeState";
@@ -42,6 +42,12 @@ function App() {
 	const totalTimeFocused = stats.reduce((acc, curr) => {
 		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
 	}, 0);
+
+	useEffect(function requestNotificationPermission() {
+		if (Notification.permission !== "granted") {
+			Notification.requestPermission();
+		}
+	}, []);
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">

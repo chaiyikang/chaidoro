@@ -6,6 +6,12 @@ import clickSfx from "../sounds/click.mp3";
 import alertSfx from "../sounds/alert.mp3";
 import timerEndedSfx from "../sounds/timerEnded.mp3";
 
+function formatIntervalString(camelCase) {
+	const spacedString = camelCase.replace(/([A-Z])/g, " $1");
+	const displayType = spacedString.charAt(0).toUpperCase() + spacedString.slice(1);
+	return displayType;
+}
+
 export function Pomodoro({
 	settings,
 	timeStampEnd,
@@ -88,6 +94,9 @@ export function Pomodoro({
 			// in case total length is 5 minutes from the start
 			if (settings[`${activeType}LengthSec`] === 5 * 60) return;
 			alertSound();
+			new Notification(`${formatIntervalString(activeType)}`, {
+				body: "5 minutes left!",
+			});
 		},
 		[timerRunning, runningSeconds, alertSound, activeType, settings],
 	);
@@ -95,7 +104,6 @@ export function Pomodoro({
 	useEffect(
 		function handleTimerEnded() {
 			if (!timerRunning || runningSeconds >= 0) return;
-			timerEndedSound();
 			setTimeStampEnd(undefined); // pause timer
 			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
 			let nextType;
@@ -115,6 +123,10 @@ export function Pomodoro({
 			) {
 				setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
 			}
+			timerEndedSound();
+			const notificationMessage =
+				nextType === "pomodoro" ? "Time to work!" : `Time for a ${formatIntervalString(nextType)}!`;
+			new Notification("Timer Ended!", { body: notificationMessage });
 		},
 		[
 			settings,
@@ -133,6 +145,7 @@ export function Pomodoro({
 
 	// * EVENT HANDLERS //
 	function handlePause() {
+		new Notification("hi");
 		clickSound();
 		if (!timerRunning) return;
 		pauseTimer();
