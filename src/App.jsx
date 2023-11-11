@@ -7,7 +7,7 @@ import { useEffect, useReducer, useState } from "react";
 import { Pomodoro } from "./MajorComponents/Pomodoro";
 import { Settings } from "./MajorComponents/Settings";
 import useTimeState from "./hooks/useTimeState";
-import { Background } from "./MajorComponents/Background";
+import { Background } from "./MajorComponents/background.jsx";
 import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./MajorComponents/spinningToolBar";
 //
