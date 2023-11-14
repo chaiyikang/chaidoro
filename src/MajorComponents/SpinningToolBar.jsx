@@ -9,7 +9,13 @@ function SpinningToolBar({ setSettingsIsOpen, setPomodoroIsOpen, setStatsIsOpen,
 				className="absolute z-50 h-[50px] w-[75px]"
 				onClick={() => setSpinnerOpen(old => !old)}
 			></div>
-			<input checked={spinnerOpen} className="menu-toggler" id="menu-toggler" type="checkbox" />
+			<input
+				checked={spinnerOpen}
+				readOnly
+				className="menu-toggler"
+				id="menu-toggler"
+				type="checkbox"
+			/>
 			<label className="spinnerOpen" htmlFor="menu-toggler" />
 			<ul>
 				<li className="menu-item">

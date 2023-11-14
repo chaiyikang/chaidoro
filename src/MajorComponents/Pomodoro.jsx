@@ -166,7 +166,7 @@ export function Pomodoro({
 	function handleSkip() {
 		clickSound();
 		pauseTimer();
-		// getUserData().then(data => console.log(data));
+		getUserData().then(data => console.log(data));
 		const nextType = getNextType();
 		initType(nextType);
 
