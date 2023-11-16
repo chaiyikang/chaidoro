@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import supabase from "./supabase";
 
 export async function getUserData(userId = 2) {
@@ -24,3 +25,29 @@ export async function updateUserData(userId, columnName, payload) {
 	// console.log("🚀 ~ file: supabaseUserData.js:25 ~ updateUserData ~ data:", data);
 	return data;
 }
+
+// export function useRetrieveOrUpdate(
+// 	columnName,
+// 	applyRetreivedDataCallback,
+// 	renders,
+// 	updateRendersCallback,
+// 	state
+// ) {
+// 	useEffect(function retrieveOrUpdate() {
+// 		async function asyncRetrieve() {
+// 			const userData = await getUserData();
+// 			if (!userData) return;
+// 			const { [columnName]: data } = userData;
+// 			applyRetreivedDataCallback(data);
+// 		}
+// 		async function updateSupabase() {
+// 			if (renders < 2) {
+// 				// ! accounting for double render during development
+// 				updateRendersCallback();
+// 				asyncRetrieve();
+// 				return;
+// 			}
+// 			updateSupabase();
+// 		}
+// 	}, []);
+// }

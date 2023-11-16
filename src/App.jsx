@@ -55,11 +55,59 @@ function App() {
 	}, 0);
 
 	// * REFS //
-	const firstRender = useRef({ statsRenders: 0, toDoRenders: 0, settingsRenders: 0 }); // so that empty stats are not uploaded on initial render
+	const firstRender = useRef({
+		statsRenders: 0,
+		toDoRenders: 0,
+		settingsRenders: 0,
+		activeTypeRenders: 0,
+		secondsLeftCacheRenders: 0,
+	}); // so that empty stats are not uploaded on initial render
 
 	// * EFFECTS //
+
 	useEffect(
-		function retrieveSettings() {
+		function retrieveOrUpdateSecondsLeftCache() {
+			async function asyncRetrieveSecondsLeftCache() {
+				const userData = await getUserData();
+				if (!userData) return;
+				const { seconds_left: secondsLeftCache } = userData;
+				setSecondsLeftCache(secondsLeftCache);
+			}
+			async function updateSecondsLeftCacheSupabase() {
+				await updateUserData(2, "seconds_left", secondsLeftCache);
+			}
+			if (firstRender.current.secondsLeftCacheRenders < 2) {
+				// ! accounting for double render during development
+				firstRender.current.secondsLeftCacheRenders++;
+				asyncRetrieveSecondsLeftCache();
+				return;
+			}
+			updateSecondsLeftCacheSupabase();
+		},
+		[secondsLeftCache],
+	);
+
+	useEffect(function retrieveOrUpdateActiveType() {
+		async function asyncRetrieveActiveType() {
+			const userData = await getUserData();
+			if (!userData) return;
+			const { active_type: activeType } = userData;
+			setActiveType(activeType);
+		}
+		async function updateActiveTypeSupabase() {
+			await updateUserData(2, "active_type", activeType);
+		}
+		if (firstRender.current.activeTypeRenders < 2) {
+			// ! accounting for double render during development
+			firstRender.current.activeTypeRenders++;
+			asyncRetrieveActiveType();
+			return;
+		}
+		updateActiveTypeSupabase();
+	});
+
+	useEffect(
+		function retrieveOrUpdateSettings() {
 			async function asyncRetrieveSettings() {
 				const userData = await getUserData();
 				if (!userData) return;
@@ -70,8 +118,8 @@ function App() {
 						...settings,
 					},
 				});
-				setActiveType("pomodoro");
-				setSecondsLeftCache(settings[`pomodoroLengthSec`]);
+				// setActiveType("pomodoro");
+				// setSecondsLeftCache(settings[`pomodoroLengthSec`]);
 			}
 			async function updateSettingsSupabase() {
 				await updateUserData(2, "settings", settings);
