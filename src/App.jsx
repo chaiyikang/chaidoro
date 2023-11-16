@@ -3,7 +3,7 @@ import "daisyui";
 import { Stats } from "./MajorComponents/Stats";
 import { ToDoList } from "./MajorComponents/ToDoList";
 import { Music } from "./MajorComponents/Music";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { Pomodoro } from "./MajorComponents/Pomodoro";
 import { Settings } from "./MajorComponents/Settings";
 import useTimeState from "./hooks/useTimeState";
@@ -12,7 +12,7 @@ import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./MajorComponents/SpinningToolBar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getUserData } from "./services/supabaseUserData.js";
+import { getUserData, updateUserData } from "./services/supabaseUserData.js";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -54,45 +54,86 @@ function App() {
 		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
 	}, 0);
 
+	// * REFS //
+	const firstRender = useRef({ statsRenders: 0, toDoRenders: 0, settingsRenders: 0 }); // so that empty stats are not uploaded on initial render
+
 	// * EFFECTS //
-	useEffect(function retrieveSettings() {
-		async function asyncRetrieveSettings() {
-			const userData = await getUserData();
-			if (!userData) return;
-			const { settings } = userData;
-			console.log(settings);
-			dispatchSettings({
-				payload: {
-					...settings,
-				},
-			});
-			setActiveType("pomodoro");
-			setSecondsLeftCache(settings[`pomodoroLengthSec`]);
-		}
-		asyncRetrieveSettings();
-	}, []);
+	useEffect(
+		function retrieveSettings() {
+			async function asyncRetrieveSettings() {
+				const userData = await getUserData();
+				if (!userData) return;
+				const { settings } = userData;
+				// console.log(settings);
+				dispatchSettings({
+					payload: {
+						...settings,
+					},
+				});
+				setActiveType("pomodoro");
+				setSecondsLeftCache(settings[`pomodoroLengthSec`]);
+			}
+			async function updateSettingsSupabase() {
+				await updateUserData(2, "settings", settings);
+			}
 
-	useEffect(function retrieveToDos() {
-		async function asyncRetrieveToDos() {
-			const userData = await getUserData();
-			if (!userData) return;
-			const { to_do_list: toDoList } = userData;
-			console.log(toDoList);
-			setToDos(toDoList);
-		}
-		asyncRetrieveToDos();
-	}, []);
+			if (firstRender.current.settingsRenders < 2) {
+				// ! accounting for double render during development
+				firstRender.current.settingsRenders++;
+				asyncRetrieveSettings();
+				return;
+			}
+			updateSettingsSupabase();
+		},
+		[settings],
+	);
 
-	useEffect(function retrieveStats() {
-		async function asyncRetrieveStats() {
-			const userData = await getUserData();
-			if (!userData) return;
-			const { stats } = userData;
-			console.log(stats);
-			setStats(stats);
-		}
-		asyncRetrieveStats();
-	}, []);
+	useEffect(
+		function retrieveOrUpdateToDos() {
+			async function asyncRetrieveToDos() {
+				const userData = await getUserData();
+				if (!userData) return;
+				const { to_do_list: toDoList } = userData;
+				setToDos(toDoList);
+			}
+			async function updateToDosSupabase() {
+				await updateUserData(2, "to_do_list", toDos);
+			}
+			if (firstRender.current.toDoRenders < 2) {
+				// ! accounting for double render during development
+				firstRender.current.toDoRenders++;
+				asyncRetrieveToDos();
+				return;
+			}
+			updateToDosSupabase();
+		},
+		[toDos],
+	);
+
+	useEffect(
+		function retrieveOrUpdateStats() {
+			async function asyncRetrieveStats() {
+				const userData = await getUserData();
+				if (!userData) return;
+				const { stats } = userData;
+				setStats(stats);
+			}
+
+			async function asyncUpdateStats() {
+				updateUserData(2, "stats", stats);
+			}
+
+			if (firstRender.current.statsRenders < 2) {
+				// ! accounting for double render during development
+				firstRender.current.statsRenders++;
+				asyncRetrieveStats();
+				return;
+			}
+			// alert("not first render anymore");
+			asyncUpdateStats();
+		},
+		[stats],
+	);
 
 	useEffect(function requestNotificationPermission() {
 		if (Notification.permission !== "granted") {

@@ -5,7 +5,7 @@ import useSound from "use-sound";
 import clickSfx from "../sounds/click.mp3";
 import alertSfx from "../sounds/alert.mp3";
 import timerEndedSfx from "../sounds/timerEnded.mp3";
-import { getUserData } from "../services/supabaseUserData";
+import { getUserData, updateUserData } from "../services/supabaseUserData";
 
 function formatIntervalString(camelCase) {
 	const spacedString = camelCase.replace(/([A-Z])/g, " $1");
@@ -153,6 +153,8 @@ export function Pomodoro({
 
 	function handleStart() {
 		clickSound();
+		// // !TESTING
+		// updateUserData(2, "to_do_list", [{ test: true }]);
 		if (timerRunning) return;
 		startTimer();
 	}
@@ -166,6 +168,7 @@ export function Pomodoro({
 	function handleSkip() {
 		clickSound();
 		pauseTimer();
+		// ! TESTING//
 		getUserData().then(data => console.log(data));
 		const nextType = getNextType();
 		initType(nextType);

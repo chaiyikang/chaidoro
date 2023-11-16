@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import ToggleSwitch from "../LowLevelComponents/ToggleSwitch";
 import toast, { Toaster } from "react-hot-toast";
+import { updateUserData } from "../services/supabaseUserData";
 
 const validationConfigLengths = {
 	required: "Please input desired duration",
@@ -67,15 +68,16 @@ export function Settings({
 	function onSubmit(data) {
 		setSettingsIsOpen(false);
 		applyUpdatedLength(data);
+		const payload = {
+			pomodoroLengthSec: +data.pomodoroLengthMin * 60,
+			shortBreakLengthSec: +data.shortBreakLengthMin * 60,
+			longBreakLengthSec: +data.longBreakLengthMin * 60,
+			interval: +data.interval,
+			autoPomodoro: Boolean(data.autoPomodoro),
+			autoBreaks: Boolean(data.autoBreaks),
+		};
 		dispatchSettings({
-			payload: {
-				pomodoroLengthSec: +data.pomodoroLengthMin * 60,
-				shortBreakLengthSec: +data.shortBreakLengthMin * 60,
-				longBreakLengthSec: +data.longBreakLengthMin * 60,
-				interval: +data.interval,
-				autoPomodoro: Boolean(data.autoPomodoro),
-				autoBreaks: Boolean(data.autoBreaks),
-			},
+			payload: payload,
 		});
 	}
 
