@@ -2,16 +2,17 @@ import { useEffect, useRef } from "react";
 import supabase from "./supabase";
 import { useQuery } from "@tanstack/react-query";
 
-export async function getUserData(userId = 2) {
+export async function getUserData({ queryKey }) {
+	const userId = queryKey[1];
 	const { data, error } = await supabase.from("userData").select("*").eq("user_id", userId);
 
 	// console.log("🚀 ~ file: supabaseUserData.js:6 ~ getUserData ~ data:", data);
 	if (error) {
-		console.error(error.message + "💥💥💥💥💥💥💥💥💥");
-		throw new Error(error.message);
+		console.error(error);
+		return;
 	}
 	const [userData] = data;
-	// console.log("🚀 ~ file: supabaseUserData.js:11 ~ getUserData ~ userData:", userData);
+	console.log("🚀 ~ file: supabaseUserData.js:11 ~ getUserData ~ userData:", userData);
 	return userData;
 }
 
@@ -28,12 +29,11 @@ export async function updateUserData(userId, columnName, payload) {
 	return data;
 }
 
-export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, state) {
+export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCallback, state) {
 	const renders = useRef(0);
 	useEffect(
 		function retrieveOrUpdate() {
-			async function asyncRetrieve() {
-				const userData = await getUserData();
+			async function initSavedSettings() {
 				if (!userData) return;
 				const { [columnName]: data } = userData;
 				applyRetreivedDataCallback(data);
@@ -42,21 +42,23 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 				await updateUserData(2, columnName, state);
 			}
 
-			if (renders.current < 2) {
-				// ! accounting for double render during development
+			if (!userData) return; // ensure initial data from supabase has loaded
+			console.log("🚀 ~ file: supabaseUserData.js:46 ~ retrieveOrUpdate ~ userData:", userData);
+			if (renders.current < 1) {
+				// we only want to init once
 				renders.current++;
-				asyncRetrieve();
+				initSavedSettings();
 				return;
 			}
 			updateSupabase();
 		},
-		[applyRetreivedDataCallback, state, columnName],
+		[userData, applyRetreivedDataCallback, state, columnName],
 	);
 }
 
 // useEffect(
 // 	function retrieveOrUpdateSecondsLeftCache() {
-// 		async function asyncRetrieveSecondsLeftCache() {
+// 		async function initSavedSettingsSecondsLeftCache() {
 // 			const userData = await getUserData();
 // 			if (!userData) return;
 // 			const { seconds_left: secondsLeftCache } = userData;
@@ -68,7 +70,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // 		if (firstRender.current.secondsLeftCacheRenders < 2) {
 // 			// ! accounting for double render during development
 // 			firstRender.current.secondsLeftCacheRenders++;
-// 			asyncRetrieveSecondsLeftCache();
+// 			initSavedSettingsSecondsLeftCache();
 // 			return;
 // 		}
 // 		updateSecondsLeftCacheSupabase();
@@ -77,7 +79,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // );
 
 // useEffect(function retrieveOrUpdateActiveType() {
-// 	async function asyncRetrieveActiveType() {
+// 	async function initSavedSettingsActiveType() {
 // 		const userData = await getUserData();
 // 		if (!userData) return;
 // 		const { active_type: activeType } = userData;
@@ -89,7 +91,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // 	if (firstRender.current.activeTypeRenders < 2) {
 // 		// ! accounting for double render during development
 // 		firstRender.current.activeTypeRenders++;
-// 		asyncRetrieveActiveType();
+// 		initSavedSettingsActiveType();
 // 		return;
 // 	}
 // 	updateActiveTypeSupabase();
@@ -97,7 +99,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 
 // useEffect(
 // 	function retrieveOrUpdateSettings() {
-// 		async function asyncRetrieveSettings() {
+// 		async function initSavedSettingsSettings() {
 // 			const userData = await getUserData();
 // 			if (!userData) return;
 // 			const { settings } = userData;
@@ -117,7 +119,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // 		if (firstRender.current.settingsRenders < 2) {
 // 			// ! accounting for double render during development
 // 			firstRender.current.settingsRenders++;
-// 			asyncRetrieveSettings();
+// 			initSavedSettingsSettings();
 // 			return;
 // 		}
 // 		updateSettingsSupabase();
@@ -127,7 +129,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 
 //useEffect(
 // 	function retrieveOrUpdateToDos() {
-// 		async function asyncRetrieveToDos() {
+// 		async function initSavedSettingsToDos() {
 // 			const userData = await getUserData();
 // 			if (!userData) return;
 // 			const { to_do_list: toDoList } = userData;
@@ -139,7 +141,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // 		if (firstRender.current.toDoRenders < 2) {
 // 			// ! accounting for double render during development
 // 			firstRender.current.toDoRenders++;
-// 			asyncRetrieveToDos();
+// 			initSavedSettingsToDos();
 // 			return;
 // 		}
 // 		updateToDosSupabase();
@@ -149,7 +151,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 
 // useEffect(
 // 	function retrieveOrUpdateStats() {
-// 		async function asyncRetrieveStats() {
+// 		async function initSavedSettingsStats() {
 // 			const userData = await getUserData();
 // 			if (!userData) return;
 // 			const { stats } = userData;
@@ -163,7 +165,7 @@ export function useRetrieveOrUpdate(columnName, applyRetreivedDataCallback, stat
 // 		if (firstRender.current.statsRenders < 2) {
 // 			// ! accounting for double render during development
 // 			firstRender.current.statsRenders++;
-// 			asyncRetrieveStats();
+// 			initSavedSettingsStats();
 // 			return;
 // 		}
 // 		// alert("not first render anymore");

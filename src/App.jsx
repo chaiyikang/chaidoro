@@ -53,12 +53,16 @@ function App() {
 	}, []);
 
 	// * BACKEND //
-	// const x = useQuery({ queryKey: ["userData"], queryFn: getUserData });
-	// console.log(x);
+	const { data: userData, isLoading } = useQuery({
+		queryKey: ["userData", 2],
+		queryFn: getUserData,
+	});
 
-	useRetrieveOrUpdate("seconds_left", setSecondsLeftCache, secondsLeftCache);
+	// console.log(userData);
 
-	useRetrieveOrUpdate("active_type", setActiveType, activeType);
+	useRetrieveOrUpdate(userData, "seconds_left", setSecondsLeftCache, secondsLeftCache);
+
+	useRetrieveOrUpdate(userData, "active_type", setActiveType, activeType);
 
 	const applySettings = useCallback(retrievedSettings => {
 		dispatchSettings({
@@ -68,11 +72,13 @@ function App() {
 		});
 	}, []);
 
-	useRetrieveOrUpdate("settings", applySettings, settings);
+	useRetrieveOrUpdate(userData, "settings", applySettings, settings);
 
-	useRetrieveOrUpdate("to_do_list", setToDos, toDos);
+	useRetrieveOrUpdate(userData, "to_do_list", setToDos, toDos);
 
-	useRetrieveOrUpdate("stats", setStats, stats);
+	useRetrieveOrUpdate(userData, "stats", setStats, stats);
+
+	if (isLoading) return <h1>loading</h1>;
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">
