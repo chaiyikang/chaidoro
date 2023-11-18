@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Button from "../LowLevelComponents/Button";
+import ToDo from "../LowLevelComponents/ToDo";
 
 export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 	const [input, setInput] = useState("");
+
 	function handleNewTaskInputChange(e) {
 		setInput(e.target.value);
 	}
@@ -20,22 +22,8 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 		}
 	}
 
-	function handleCheck(index) {
-		setToDos(old => old.map((task, i) => (i === index ? { ...task, done: !task.done } : task)));
-		// if the task is active and is being marked as done, we auto unselect the task
-		setToDos(old =>
-			old.map((task, i) => {
-				if (index !== i) return task;
-				return { ...task, active: task.active && task.done ? false : task.active };
-			}),
-		);
-	}
-
-	function handleClickActive(index) {
-		setToDos(toDos.map((task, i) => ({ ...task, active: task.active ? false : index === i })));
-	}
-
 	function handleClear() {
+		if (!confirm("Are you sure you want to clear the to-do list?")) return;
 		setToDos([]);
 	}
 
@@ -60,31 +48,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 				</div>
 				<ul className="mt-4">
 					{toDos.map((task, index) => (
-						<li key={index} className="relative flex flex-row items-center justify-center text-2xl">
-							<input
-								type="checkbox"
-								checked={task.done}
-								onChange={() => {
-									handleCheck(index);
-								}}
-								className={`appearance-none`}
-								id={index}
-							/>
-							<label
-								htmlFor={index}
-								className={`material-symbols-outlined mr-2 ${task.done ? "filled-icon" : ""}`}
-							>
-								check_circle
-							</label>
-							<span
-								onClick={() => handleClickActive(index)}
-								className={`${task.done ? "line-through" : ""} ${
-									task.active ? "rounded border border-slate-600 bg-slate-700 p-1" : ""
-								}`}
-							>
-								{task.text}
-							</span>
-						</li>
+						<ToDo task={task} index={index} key={index} toDos={toDos} setToDos={setToDos} />
 					))}
 				</ul>
 				<Button onClick={handleClear} additionalClassName="mx-14">

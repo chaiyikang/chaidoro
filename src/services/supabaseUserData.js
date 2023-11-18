@@ -12,7 +12,7 @@ export async function getUserData({ queryKey }) {
 		return;
 	}
 	const [userData] = data;
-	console.log("🚀 ~ file: supabaseUserData.js:11 ~ getUserData ~ userData:", userData);
+	// console.log("🚀 ~ file: supabaseUserData.js:11 ~ getUserData ~ userData:", userData);
 	return userData;
 }
 
@@ -43,7 +43,7 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 			}
 
 			if (!userData) return; // ensure initial data from supabase has loaded
-			console.log("🚀 ~ file: supabaseUserData.js:46 ~ retrieveOrUpdate ~ userData:", userData);
+			// console.log("🚀 ~ file: supabaseUserData.js:46 ~ retrieveOrUpdate ~ userData:", userData);
 			if (renders.current < 1) {
 				// we only want to init once
 				renders.current++;

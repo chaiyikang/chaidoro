@@ -12,6 +12,7 @@ import SpinningToolBar from "./MajorComponents/SpinningToolBar";
 import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
+import useTitle from "./hooks/useTitle.js";
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -52,13 +53,13 @@ function App() {
 		}
 	}, []);
 
+	useTitle(secondsLeftCache, activeType);
+
 	// * BACKEND //
 	const { data: userData, isLoading } = useQuery({
 		queryKey: ["userData", 2],
 		queryFn: getUserData,
 	});
-
-	// console.log(userData);
 
 	useRetrieveOrUpdate(userData, "seconds_left", setSecondsLeftCache, secondsLeftCache);
 
@@ -87,6 +88,7 @@ function App() {
 			<Stats
 				totalTimeFocused={totalTimeFocused}
 				stats={stats}
+				setStats={setStats}
 				toDoIsOpen={toDoIsOpen}
 				statsIsOpen={statsIsOpen}
 			/>
