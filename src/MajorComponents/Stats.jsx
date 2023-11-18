@@ -1,10 +1,13 @@
 import Button from "../LowLevelComponents/Button";
 
 export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen }) {
+	// const timeProportions = stats.map(ele => ele.lengthSec / totalTimeFocused);
+
 	function handleClearAll() {
 		if (!confirm("Are you sure you want to permanently delete all statistics?")) return;
 		setStats([]);
 	}
+
 	if (!statsIsOpen) return;
 	return (
 		<ul className="text-base-content absolute left-0 top-0 h-screen w-3/12 overflow-y-auto bg-slate-900 p-4 opacity-75 ">
@@ -16,7 +19,13 @@ export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen }) {
 			</li>
 			{stats.map((stat, index) => {
 				return (
-					<li className="mt-2 text-xl" key={index}>
+					<li
+						className="mt-2 bg-slate-700 text-xl"
+						key={index}
+						style={{
+							height: `${stat.lengthSec <= 60 ? 5.2 : Math.round(stat.lengthSec * 0.1)}vh`,
+						}}
+					>
 						<h1>
 							{index + 1}. {stat.task}
 						</h1>
@@ -25,7 +34,9 @@ export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen }) {
 				);
 			})}
 			<li>
-				<Button onClick={handleClearAll}>Clear</Button>
+				<Button additionalClassName="mt-2" onClick={handleClearAll}>
+					Clear
+				</Button>
 			</li>
 		</ul>
 	);
