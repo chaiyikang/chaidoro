@@ -17,7 +17,15 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 
 	function handleAddTask() {
 		if (input.trim()) {
-			setToDos([...toDos, { text: input, done: false, active: false }]);
+			const insertIndex = toDos.findLastIndex(task => task.done === false) + 1;
+			const noTasksOrAllDone = insertIndex - 1 === -1; // check if findLastIndex returned -1
+			if (!noTasksOrAllDone) {
+				const toDosCopy = [...toDos];
+				toDosCopy.splice(insertIndex, 0, { text: input, done: false, active: false });
+				setToDos(toDosCopy);
+			} else {
+				setToDos([{ text: input, done: false, active: false }, ...toDos]);
+			}
 			setInput("");
 		}
 	}

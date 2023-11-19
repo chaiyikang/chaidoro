@@ -5,7 +5,13 @@ import useSound from "use-sound";
 import clickSfx from "../sounds/click.mp3";
 import alertSfx from "../sounds/alert.mp3";
 import timerEndedSfx from "../sounds/timerEnded.mp3";
-import { getUserData, updateUserData } from "../services/supabaseUserData";
+import {
+	USERID,
+	getUserData,
+	updateUserData,
+	useRetrieveOrUpdate,
+} from "../services/supabaseUserData";
+import { useQuery } from "@tanstack/react-query";
 
 function formatIntervalString(camelCase) {
 	const spacedString = camelCase.replace(/([A-Z])/g, " $1");
@@ -181,6 +187,14 @@ export function Pomodoro({
 			setTimeStampEnd(currentTimeStamp + settings[`${nextType}LengthSec`] * 1000);
 		}
 	}
+
+	// * BACKEND //
+	const { data: userData } = useQuery({
+		queryKey: ["userData", USERID],
+		queryFn: getUserData,
+	});
+
+	useRetrieveOrUpdate(userData, "work_sets_completed", setWorkSetsCompleted, workSetsCompleted);
 
 	// * UTILITY //
 	function pauseTimer() {

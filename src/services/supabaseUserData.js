@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import supabase from "./supabase";
 import { useQuery } from "@tanstack/react-query";
 
+export const USERID = 1;
+
 export async function getUserData({ queryKey }) {
 	const userId = queryKey[1];
 	const { data, error } = await supabase.from("userData").select("*").eq("user_id", userId);
@@ -39,7 +41,7 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 				applyRetreivedDataCallback(data);
 			}
 			async function updateSupabase() {
-				await updateUserData(2, columnName, state);
+				await updateUserData(USERID, columnName, state);
 			}
 
 			if (!userData) return; // ensure initial data from supabase has loaded

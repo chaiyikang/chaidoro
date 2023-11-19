@@ -11,7 +11,7 @@ import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./MajorComponents/SpinningToolBar";
 import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
+import { USERID, getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
 import useTitle from "./hooks/useTitle.js";
 
 let initialSettings = {
@@ -57,7 +57,7 @@ function App() {
 
 	// * BACKEND //
 	const { data: userData, isLoading } = useQuery({
-		queryKey: ["userData", 2],
+		queryKey: ["userData", USERID],
 		queryFn: getUserData,
 	});
 
