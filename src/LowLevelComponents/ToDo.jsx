@@ -14,12 +14,26 @@ function ToDo({ task, index, toDos, setToDos }) {
 	}
 
 	function handleCheck(index) {
+		// determine context
+		const markingAsDone = toDos[index].done === false;
+		const isCurrentlyActive = toDos[index].active;
+		// toggle done state
 		setToDos(old => old.map((task, i) => (i === index ? { ...task, done: !task.done } : task)));
+
+		if (!markingAsDone) return;
+		// if task is being marked as done we move it to bottom of list
+		setToDos(old => {
+			const element = old.splice(index, 1)[0]; // Remove the element at index and store it in a variable
+			old.push(element); // Add the element to the end of the array
+			return old;
+		});
+
+		if (!isCurrentlyActive) return;
 		// if the task is active and is being marked as done, we auto unselect the task
 		setToDos(old =>
 			old.map((task, i) => {
 				if (index !== i) return task;
-				return { ...task, active: task.active && task.done ? false : task.active };
+				return { ...task, active: false };
 			}),
 		);
 	}
