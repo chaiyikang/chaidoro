@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { USERID, getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
 import useTitle from "./hooks/useTitle.js";
+import Progress from "./MajorComponents/Progress.jsx";
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,

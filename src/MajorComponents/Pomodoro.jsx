@@ -12,6 +12,7 @@ import {
 	useRetrieveOrUpdate,
 } from "../services/supabaseUserData";
 import { useQuery } from "@tanstack/react-query";
+import Progress from "./Progress";
 
 function formatIntervalString(camelCase) {
 	const spacedString = camelCase.replace(/([A-Z])/g, " $1");
@@ -219,7 +220,7 @@ export function Pomodoro({
 
 	return (
 		<>
-			<div className="absolute left-1/2 top-1/2 z-10 grid h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-5 items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
+			<div className="absolute left-1/2 top-1/2 z-10 grid h-5/6 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>
@@ -238,35 +239,39 @@ export function Pomodoro({
 						Long Break
 					</button>
 				</div>
-				<div className="col-span-3">
-					<time className="">
-						<span className="text-8xl">
-							{Math.floor(displayedSeconds / 60)
-								.toString()
-								.padStart(2, 0)}
-							:
-							{Math.round(displayedSeconds % 60)
-								.toString()
-								.padStart(2, 0)}
-						</span>
-					</time>
+				{/*  ? */}
+				<div className="row-end-8 col-span-3 row-start-3">
+					<Progress
+						ratioDone={
+							(settings[`${activeType}LengthSec`] - secondsLeftCache) /
+							settings[`${activeType}LengthSec`]
+						}
+					>
+						<time className="">
+							<span className="text-8xl">
+								{Math.floor(displayedSeconds / 60)
+									.toString()
+									.padStart(2, 0)}
+								:
+								{Math.round(displayedSeconds % 60)
+									.toString()
+									.padStart(2, 0)}
+							</span>
+						</time>
+						<div className="flex justify-center">
+							{new Array(settings.interval).fill("").map((_, index) => (
+								<ProgressDot key={index} filled={pomodoroRepDisplay >= index + 1} />
+							))}
+						</div>
+					</Progress>
 				</div>
-				<div className="col-span-3 row-start-4 self-start">
-					{/* <h2 className="">
-						{activeType === ""
-							? `Cycle: #${pomodoroCycleDisplay} Rep: #${pomodoroRepDisplay}`
-							: `Cycle: #${breakCycleDisplay} Rep: #${breakRepDisplay}`}
-					</h2> */}
-					{new Array(settings.interval).fill("").map((_, index) => (
-						<ProgressDot key={index} filled={pomodoroRepDisplay >= index + 1} />
-					))}
-				</div>
-				<div className="col-span-3 row-start-5">
+
+				<div className="row-start-8 col-span-3">
 					<ControlButton handler={timerRunning ? handlePause : handleStart}>
 						{timerRunning ? "pause" : "play_arrow"}
 					</ControlButton>
 					{/* {<ControlButton handler={handleStart}>play_arrow</ControlButton>}
-					{<ControlButton handler={handlePause}>pause</ControlButton>} */}
+						{<ControlButton handler={handlePause}>pause</ControlButton>} */}
 					{timerRunning && <ControlButton handler={handleSkip}>skip_next</ControlButton>}
 				</div>
 			</div>

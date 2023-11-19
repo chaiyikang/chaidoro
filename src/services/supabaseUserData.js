@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import supabase from "./supabase";
-import { useQuery } from "@tanstack/react-query";
 
 export const USERID = 2;
 
