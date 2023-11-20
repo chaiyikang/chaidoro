@@ -1,7 +1,13 @@
 import { useState } from "react";
 import ControlButton from "../LowLevelComponents/ControlButton";
 
-function SpinningToolBar({ setSettingsIsOpen, setPomodoroIsOpen, setStatsIsOpen, setToDoIsOpen }) {
+function SpinningToolBar({
+	setSettingsIsOpen,
+	setPomodoroIsOpen,
+	setStatsIsOpen,
+	setToDoIsOpen,
+	setLoginIsOpen,
+}) {
 	const [spinnerOpen, setSpinnerOpen] = useState(false);
 	return (
 		<nav className="menu absolute bottom-[6rem] right-[21rem] z-40 h-[50px] w-[75px] ">
@@ -19,7 +25,7 @@ function SpinningToolBar({ setSettingsIsOpen, setPomodoroIsOpen, setStatsIsOpen,
 			<label className="spinnerOpen" htmlFor="menu-toggler" />
 			<ul>
 				<li className="menu-item">
-					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>
+					<ControlButton handler={() => setLoginIsOpen(old => !old)}>account_circle</ControlButton>
 				</li>
 				<li className="menu-item">
 					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>

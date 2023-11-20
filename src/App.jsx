@@ -15,6 +15,7 @@ import { USERID, getUserData, useRetrieveOrUpdate } from "./services/supabaseUse
 import useTitle from "./hooks/useTitle.js";
 import Progress from "./MajorComponents/Progress.jsx";
 import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
+import LoginModal from "./MajorComponents/LoginModal.jsx";
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -37,11 +38,12 @@ function App() {
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
+	const [totalWorkSessions, setTotalWorkSessions] = useState(0);
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
-	const [totalWorkSessions, setTotalWorkSessions] = useState(0);
+	const [loginIsOpen, setLoginIsOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -122,6 +124,7 @@ function App() {
 				setPomodoroIsOpen={setPomodoroIsOpen}
 				setStatsIsOpen={setStatsIsOpen}
 				setToDoIsOpen={setToDoIsOpen}
+				setLoginIsOpen={setLoginIsOpen}
 			/>
 			<Settings
 				settings={settings}
@@ -135,6 +138,7 @@ function App() {
 				settingsIsOpen={settingsIsOpen}
 				setSettingsIsOpen={setSettingsIsOpen}
 			/>
+			<LoginModal loginIsOpen={loginIsOpen} setLoginIsOpen={setLoginIsOpen} />
 		</div>
 	);
 }

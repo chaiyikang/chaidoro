@@ -5,6 +5,7 @@ import "./index.css";
 import "./menuAnimation.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import "tw-elements-react/dist/css/tw-elements-react.min.css";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
