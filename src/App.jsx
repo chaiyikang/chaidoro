@@ -45,7 +45,7 @@ function App() {
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const totalTimeFocused = stats.reduce((acc, curr) => {
-		return acc + (curr.task === "break" ? 0 : curr.lengthSec);
+		return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
 	}, 0);
 
 	// * EFFECTS //

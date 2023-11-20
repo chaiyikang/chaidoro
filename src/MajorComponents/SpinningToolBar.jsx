@@ -4,7 +4,7 @@ import ControlButton from "../LowLevelComponents/ControlButton";
 function SpinningToolBar({ setSettingsIsOpen, setPomodoroIsOpen, setStatsIsOpen, setToDoIsOpen }) {
 	const [spinnerOpen, setSpinnerOpen] = useState(false);
 	return (
-		<nav className="menu absolute bottom-48 right-[5rem] z-40 h-[50px] w-[75px] ">
+		<nav className="menu absolute bottom-[6rem] right-[21rem] z-40 h-[50px] w-[75px] ">
 			<div
 				className="absolute z-50 h-[50px] w-[75px]"
 				onClick={() => setSpinnerOpen(old => !old)}
