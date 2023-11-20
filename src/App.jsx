@@ -14,6 +14,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { USERID, getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
 import useTitle from "./hooks/useTitle.js";
 import Progress from "./MajorComponents/Progress.jsx";
+import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -77,7 +78,12 @@ function App() {
 	useRetrieveOrUpdate(userData, "stats", setStats, stats);
 	useRetrieveOrUpdate(userData, "total_work_sessions", setTotalWorkSessions, totalWorkSessions);
 
-	if (isLoading) return <h1>loading</h1>;
+	if (isLoading)
+		return (
+			<>
+				<PageLoadingSpinner />
+			</>
+		);
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">
