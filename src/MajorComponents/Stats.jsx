@@ -1,6 +1,6 @@
 import Button from "../LowLevelComponents/Button";
 
-export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen }) {
+export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen, totalWorkSessions }) {
 	// const timeProportions = stats.map(ele => ele.lengthSec / totalTimeFocused);
 
 	function handleClearAll() {
@@ -17,13 +17,17 @@ export function Stats({ totalTimeFocused, stats, setStats, statsIsOpen }) {
 			<li>
 				<h1 className="text-2xl italic ">Total Seconds Focused: {totalTimeFocused}</h1>
 			</li>
+			<li>
+				<h1 className="text-2xl italic ">Work Sessions Completed: {totalWorkSessions}</h1>
+			</li>
 			{stats.map((stat, index) => {
 				return (
 					<li
 						className="mt-2 bg-slate-700 text-xl"
 						key={index}
+						// TODO adjust minimum height
 						style={{
-							height: `${stat.lengthSec <= 60 ? 5.2 : Math.round(stat.lengthSec * 0.1)}vh`,
+							height: `${stat.lengthSec <= 60 ? 10 : Math.round(stat.lengthSec * 0.1)}vh`,
 						}}
 					>
 						<h1>

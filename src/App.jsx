@@ -40,6 +40,7 @@ function App() {
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
+	const [totalWorkSessions, setTotalWorkSessions] = useState(0);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -63,9 +64,7 @@ function App() {
 	});
 
 	useRetrieveOrUpdate(userData, "seconds_left", setSecondsLeftCache, secondsLeftCache);
-
 	useRetrieveOrUpdate(userData, "active_type", setActiveType, activeType);
-
 	const applySettings = useCallback(retrievedSettings => {
 		dispatchSettings({
 			payload: {
@@ -73,12 +72,10 @@ function App() {
 			},
 		});
 	}, []);
-
 	useRetrieveOrUpdate(userData, "settings", applySettings, settings);
-
 	useRetrieveOrUpdate(userData, "to_do_list", setToDos, toDos);
-
 	useRetrieveOrUpdate(userData, "stats", setStats, stats);
+	useRetrieveOrUpdate(userData, "total_work_sessions", setTotalWorkSessions, totalWorkSessions);
 
 	if (isLoading) return <h1>loading</h1>;
 
@@ -92,6 +89,7 @@ function App() {
 				setStats={setStats}
 				toDoIsOpen={toDoIsOpen}
 				statsIsOpen={statsIsOpen}
+				totalWorkSessions={totalWorkSessions}
 			/>
 			{/* <Music /> */}
 			<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
@@ -110,6 +108,8 @@ function App() {
 				setStats={setStats}
 				pomodoroIsOpen={pomodoroIsOpen}
 				setPomodoroIsOpen={setPomodoroIsOpen}
+				totalWorkSessions={totalWorkSessions}
+				setTotalWorkSessions={setTotalWorkSessions}
 			/>
 			<SpinningToolBar
 				setSettingsIsOpen={setSettingsIsOpen}

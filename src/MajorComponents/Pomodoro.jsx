@@ -34,6 +34,8 @@ export function Pomodoro({
 	stats,
 	setStats,
 	pomodoroIsOpen,
+	totalWorkSessions,
+	setTotalWorkSessions,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -113,7 +115,10 @@ export function Pomodoro({
 		function handleTimerEnded() {
 			if (!timerRunning || runningSeconds >= 0) return;
 			setTimeStampEnd(undefined); // pause timer
-			if (activeType === "pomodoro") setWorkSetsCompleted(sets => sets + 1);
+			if (activeType === "pomodoro") {
+				setWorkSetsCompleted(sets => sets + 1);
+				setTotalWorkSessions(total => total + 1);
+			}
 			let nextType;
 			if (activeType !== "pomodoro") {
 				nextType = "pomodoro";

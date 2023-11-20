@@ -37,6 +37,7 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 			async function initSavedSettings() {
 				if (!userData) return;
 				const { [columnName]: data } = userData;
+				if (!data) return;
 				applyRetreivedDataCallback(data);
 			}
 			async function updateSupabase() {
