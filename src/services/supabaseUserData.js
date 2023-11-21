@@ -1,16 +1,32 @@
 import { useEffect, useRef } from "react";
 import supabase from "./supabase";
 
-export const USERID = 2;
+// export async function supabaseGetUser() {
+// 	const { session } = await supabase.auth.getSession();
+// 	if (!session.session) return null;
 
-export async function getUserData({ queryKey }) {
-	const userId = queryKey[1];
-	const { data, error } = await supabase.from("userData").select("*").eq("user_id", userId);
+// 	const { data, error } = await supabase.auth.getUser();
+// 	if (error) throw new Error(error.message);
+// 	console.log(data);
+// 	return data?.user;
+// }
 
-	// console.log("🚀 ~ file: supabaseUserData.js:6 ~ getUserData ~ data:", data);
+export async function getUserData() {
+	// get userid
+	const {
+		data: { session },
+	} = await supabase.auth.getSession();
+	if (!session) return null;
+
+	const { data: user, error: getUserError } = await supabase.auth.getUser();
+	if (getUserError) throw new Error(getUserError.message);
+	const userId = user.user.id;
+
+	// fetch userdata
+	const { data, error } = await supabase.from("userData").select("*").eq("USER_ID", userId);
 	if (error) {
 		console.error(error);
-		return;
+		return null;
 	}
 	const [userData] = data;
 	// console.log("🚀 ~ file: supabaseUserData.js:11 ~ getUserData ~ userData:", userData);
@@ -23,7 +39,7 @@ export async function updateUserData(userId, columnName, payload) {
 		.update({
 			[columnName]: payload,
 		})
-		.eq("user_id", userId)
+		.eq("USER_ID", userId)
 		.select();
 	if (error) console.error(error);
 	// console.log("🚀 ~ file: supabaseUserData.js:25 ~ updateUserData ~ data:", data);
@@ -34,6 +50,8 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 	const renders = useRef(0);
 	useEffect(
 		function retrieveOrUpdate() {
+			if (!userData) return; // ensure initial data from supabase has loaded
+
 			async function initSavedSettings() {
 				if (!userData) return;
 				const { [columnName]: data } = userData;
@@ -41,10 +59,9 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 				applyRetreivedDataCallback(data);
 			}
 			async function updateSupabase() {
-				await updateUserData(USERID, columnName, state);
+				await updateUserData(userData.USER_ID, columnName, state);
 			}
 
-			if (!userData) return; // ensure initial data from supabase has loaded
 			// console.log("🚀 ~ file: supabaseUserData.js:46 ~ retrieveOrUpdate ~ userData:", userData);
 			if (renders.current < 1) {
 				// we only want to init once

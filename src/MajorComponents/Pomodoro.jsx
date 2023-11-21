@@ -5,12 +5,7 @@ import useSound from "use-sound";
 import clickSfx from "../sounds/click.mp3";
 import alertSfx from "../sounds/alert.mp3";
 import timerEndedSfx from "../sounds/timerEnded.mp3";
-import {
-	USERID,
-	getUserData,
-	updateUserData,
-	useRetrieveOrUpdate,
-} from "../services/supabaseUserData";
+import { getUserData, useRetrieveOrUpdate } from "../services/supabaseUserData";
 import { useQuery } from "@tanstack/react-query";
 import Progress from "./Progress";
 
@@ -153,6 +148,7 @@ export function Pomodoro({
 			setActiveType,
 			setSecondsLeftCache,
 			timerEndedSound,
+			setTotalWorkSessions,
 		],
 	);
 
@@ -166,7 +162,6 @@ export function Pomodoro({
 	function handleStart() {
 		clickSound();
 		// // !TESTING
-		// updateUserData(2, "to_do_list", [{ test: true }]);
 		if (timerRunning) return;
 		startTimer();
 	}
@@ -196,7 +191,7 @@ export function Pomodoro({
 
 	// * BACKEND //
 	const { data: userData } = useQuery({
-		queryKey: ["userData", USERID],
+		queryKey: ["userData"],
 		queryFn: getUserData,
 	});
 
