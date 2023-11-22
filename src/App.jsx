@@ -10,12 +10,10 @@ import { Background } from "./MajorComponents/background.jsx";
 import { Toaster } from "react-hot-toast";
 import SpinningToolBar from "./MajorComponents/SpinningToolBar";
 import { useQuery } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js";
 import useTitle from "./hooks/useTitle.js";
-import Progress from "./MajorComponents/Progress.jsx";
 import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
-import LoginModal from "./MajorComponents/LoginModal.jsx";
+import AccountModal from "./MajorComponents/AccountModal.jsx";
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -43,7 +41,7 @@ function App() {
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
-	const [loginIsOpen, setLoginIsOpen] = useState(false);
+	const [accountIsOpen, setAccountIsOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -124,7 +122,7 @@ function App() {
 				setPomodoroIsOpen={setPomodoroIsOpen}
 				setStatsIsOpen={setStatsIsOpen}
 				setToDoIsOpen={setToDoIsOpen}
-				setLoginIsOpen={setLoginIsOpen}
+				setAccountIsOpen={setAccountIsOpen}
 			/>
 			<Settings
 				settings={settings}
@@ -138,7 +136,7 @@ function App() {
 				settingsIsOpen={settingsIsOpen}
 				setSettingsIsOpen={setSettingsIsOpen}
 			/>
-			<LoginModal loginIsOpen={loginIsOpen} setLoginIsOpen={setLoginIsOpen} />
+			<AccountModal accountIsOpen={accountIsOpen} setAccountIsOpen={setAccountIsOpen} />
 		</div>
 	);
 }

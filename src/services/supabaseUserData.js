@@ -1,15 +1,39 @@
 import { useEffect, useRef } from "react";
 import supabase from "./supabase";
 
-// export async function supabaseGetUser() {
-// 	const { session } = await supabase.auth.getSession();
-// 	if (!session.session) return null;
+const defaultUserData = {
+	to_do_list: [],
+	stats: [],
+	active_type: "pomodoro",
+	settings: {
+		interval: 4,
+		autoBreaks: true,
+		autoPomodoro: true,
+		pomodoroLengthSec: 1500,
+		longBreakLengthSec: 900,
+		shortBreakLengthSec: 300,
+	},
+	seconds_left: 1500,
+	work_sets_completed: 0,
+	total_work_sessions: 0,
+};
 
-// 	const { data, error } = await supabase.auth.getUser();
-// 	if (error) throw new Error(error.message);
-// 	console.log(data);
-// 	return data?.user;
-// }
+export async function supabaseCreateUserData({ id, email }) {
+	console.log("🚀 ~ file: supabaseUserData.js:23 ~ supabaseCreateUserData ~ id:", id, email);
+	const { data, error } = await supabase
+		.from("userData")
+		.insert([
+			{
+				...defaultUserData,
+				USER_ID: id,
+				email,
+			},
+		])
+		.select();
+	if (error) throw new Error(error.message);
+	console.log("🚀 ~ file: supabaseUserData.js:11 ~ supabaseCreateUserData ~ data:", data);
+	return data;
+}
 
 export async function getUserData() {
 	// get userid

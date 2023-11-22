@@ -6,7 +6,7 @@ function SpinningToolBar({
 	setPomodoroIsOpen,
 	setStatsIsOpen,
 	setToDoIsOpen,
-	setLoginIsOpen,
+	setAccountIsOpen,
 }) {
 	const [spinnerOpen, setSpinnerOpen] = useState(false);
 	return (
@@ -25,7 +25,9 @@ function SpinningToolBar({
 			<label className="spinnerOpen" htmlFor="menu-toggler" />
 			<ul>
 				<li className="menu-item">
-					<ControlButton handler={() => setLoginIsOpen(old => !old)}>account_circle</ControlButton>
+					<ControlButton handler={() => setAccountIsOpen(old => !old)}>
+						account_circle
+					</ControlButton>
 				</li>
 				<li className="menu-item">
 					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>
