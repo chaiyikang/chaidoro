@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import { supabaseLogIn } from "../services/supabaseAccount";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 function Login({ handleClose, setSignUpIsOpen }) {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("chaiyikang52@gmail.com");
+	const [password, setPassword] = useState("123");
 	const queryClient = useQueryClient();
+	const {
+		mutate: mutateLogIn,
+		data,
+		isPending,
+	} = useMutation({
+		mutationFn: ({ email, password }) => {
+			return supabaseLogIn({ email, password });
+		},
+		onSuccess: () => {
+			toast.success("Successfully logged in!");
+			handleClose();
+			queryClient.invalidateQueries({ queryKey: ["userData"] });
+		},
+		onError: error => {
+			toast.error(error.message);
+		},
+	});
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 grid h-5/6 w-1/3 -translate-x-1/2 -translate-y-1/2 place-items-center bg-slate-800 ">
 			<section className="">
@@ -32,8 +50,8 @@ function Login({ handleClose, setSignUpIsOpen }) {
 								onSubmit={async function handleLogin(e) {
 									e.preventDefault();
 									if (!email || !password) return;
-									await supabaseLogIn({ email, password });
-									queryClient.invalidateQueries({ queryKey: ["userData"] });
+									// await supabaseLogIn({ email, password });
+									mutateLogIn({ email, password });
 								}}
 							>
 								{/* <!-- Email input --> */}
@@ -93,18 +111,17 @@ function Login({ handleClose, setSignUpIsOpen }) {
 										type="submit"
 										className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
 									>
-										{/* {isPending ? (
-                                    <div
-                                        className="inline-block h-[10rem] w-[10rem] animate-spin rounded-full border-[1rem] border-current border-t-transparent text-slate-400"
-                                        role="status"
-                                        aria-label="loading"
-                                    >
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
-                                ) : (
-                                    "Sign in"
-                                )} */}
-										Sign in
+										{isPending ? (
+											<div
+												className="inline-block h-[20px] w-[20px] animate-spin rounded-full border-[1px] border-current border-t-transparent text-slate-400"
+												role="status"
+												aria-label="loading"
+											>
+												<span className="sr-only">Loading...</span>
+											</div>
+										) : (
+											"Sign in"
+										)}
 									</button>
 								</TERipple>
 

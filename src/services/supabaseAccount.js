@@ -4,8 +4,10 @@ export async function supabaseLogIn({ email, password }) {
 		email,
 		password,
 	});
-	if (error) throw new Error(error.message);
-	console.log("🚀 ~ file: supabaseLogin.js:11 ~ supabaseLogIn ~ data:", data);
+	if (error) {
+		throw new Error(error.message);
+	}
+	// console.log("🚀 ~ file: supabaseLogin.js:11 ~ supabaseLogIn ~ data:", data);
 	return data;
 }
 
@@ -20,6 +22,6 @@ export async function supabaseSignUp({ email, password }) {
 		password,
 	});
 	if (error) throw new Error(error.message);
-	console.log("🚀 ~ file: supabaseAccount.js:24 ~ supabaseSignUp ~ data:", data);
+	// console.log("🚀 ~ file: supabaseAccount.js:24 ~ supabaseSignUp ~ data:", data);
 	return { data, error };
 }
