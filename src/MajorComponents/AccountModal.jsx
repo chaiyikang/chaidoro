@@ -21,20 +21,17 @@ function AccountModal({ accountIsOpen, setAccountIsOpen }) {
 	if (userData)
 		return (
 			<>
-				<LogOut
-					handleClose={() => setAccountIsOpen(false)}
-					handleLogOut={async function handleLogOut() {
-						await supabaseLogOut();
-						queryClient.invalidateQueries({ queryKey: ["userData"] });
-					}}
-				/>
+				<LogOut handleClose={() => setAccountIsOpen(false)} />
 				<Overlay handleClose={() => setAccountIsOpen(false)} />
 			</>
 		);
 	if (signUpIsOpen)
 		return (
 			<>
-				<SignUp handleClose={() => setSignUpIsOpen(false)} />
+				<SignUp
+					handleCloseSignUp={() => setSignUpIsOpen(false)}
+					handleCloseAccountModal={() => setAccountIsOpen(false)}
+				/>
 				<Overlay handleClose={() => setSignUpIsOpen(false)} />
 			</>
 		);

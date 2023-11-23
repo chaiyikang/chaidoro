@@ -1,19 +1,39 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
-import { supabaseSignUp } from "../services/supabaseAccount";
+import { supabaseSignUp, supabaseSignUpCreateUserData } from "../services/supabaseAccount";
 import { supabaseCreateUserData } from "../services/supabaseUserData";
+import toast from "react-hot-toast";
 
-function SignUp({ handleClose }) {
+function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const queryClient = useQueryClient();
+
+	const {
+		mutate: mutateSignUp,
+		data,
+		isPending,
+	} = useMutation({
+		mutationFn: ({ email, password }) => {
+			return supabaseSignUpCreateUserData({ email, password });
+		},
+		onSuccess: () => {
+			toast.success("Account successfully created!");
+			queryClient.invalidateQueries({ queryKey: ["userData"] });
+			handleCloseSignUp();
+			handleCloseAccountModal();
+		},
+		onError: error => {
+			toast.error(error.message);
+		},
+	});
 
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 grid h-5/6 w-1/3 -translate-x-1/2 -translate-y-1/2 place-items-center bg-slate-800 ">
 			<section className="">
 				<div className="container h-full px-6 ">
-					<button onClick={handleClose} className="absolute right-1 top-1">
+					<button onClick={handleCloseSignUp} className="absolute right-1 top-1">
 						<span className="material-symbols-outlined">close</span>
 					</button>
 					<h1 className="mb-2">Create an account to accumulate your progress</h1>
@@ -31,20 +51,25 @@ function SignUp({ handleClose }) {
 						{/* <div className="md:w-8/12 lg:ml-6 lg:w-5/12"> */}
 						<div className="">
 							<form
-								onSubmit={async function handleSignUp(e) {
+								onSubmit={async function handleLogin(e) {
 									e.preventDefault();
 									if (!email || !password) return;
-									const {
-										data: {
-											user: { id, email: userEmail },
-										},
-										error,
-									} = await supabaseSignUp({ email, password });
-									if (error) return;
-									console.log(id);
-									await supabaseCreateUserData({ id, email: userEmail });
-									queryClient.invalidateQueries({ queryKey: ["userData"] });
+									mutateSignUp({ email, password });
 								}}
+								// onSubmit={async function handleSignUp(e) {
+								// 	e.preventDefault();
+								// 	if (!email || !password) return;
+								// 	const {
+								// 		data: {
+								// 			user: { id, email: userEmail },
+								// 		},
+								// 		error,
+								// 	} = await supabaseSignUp({ email, password });
+								// 	if (error) return;
+								// 	console.log(id);
+								// 	await supabaseCreateUserData({ id, email: userEmail });
+								// 	queryClient.invalidateQueries({ queryKey: ["userData"] });
+								// }}
 							>
 								{/* <!-- Email input --> */}
 								<TEInput
@@ -76,7 +101,17 @@ function SignUp({ handleClose }) {
 										type="submit"
 										className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
 									>
-										Sign up
+										{isPending ? (
+											<div
+												className="inline-block h-[20px] w-[20px] animate-spin rounded-full border-[1px] border-current border-t-transparent text-slate-400"
+												role="status"
+												aria-label="loading"
+											>
+												<span className="sr-only">Loading...</span>
+											</div>
+										) : (
+											"Sign up"
+										)}
 									</button>
 								</TERipple>
 
