@@ -29,6 +29,7 @@ export function Pomodoro({
 	stats,
 	setStats,
 	pomodoroIsOpen,
+	setPomodoroIsOpen,
 	totalWorkSessions,
 	setTotalWorkSessions,
 	setTotalSecondsFocused,
@@ -120,6 +121,7 @@ export function Pomodoro({
 		function handleTimerEnded() {
 			if (!timerRunning || runningSeconds >= 0) return;
 			setTimeStampEnd(undefined); // pause timer
+			setPomodoroIsOpen(true);
 			if (activeType === "pomodoro") {
 				setWorkSetsCompleted(sets => sets + 1);
 				setTotalWorkSessions(total => total + 1);

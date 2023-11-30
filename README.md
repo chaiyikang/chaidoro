@@ -1,8 +1,12 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Changelog
 
-Currently, two official plugins are available:
+### 30 Nov 2023 Updates:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Lifetime stats like total time focused and total sessions are permanent and will no longer be cleared.
+2. Clearing stats will only remove the timeline and not the lifetime stats.
+3. Stats were improved to reflect hours and minutes instead of seconds.
+4. Height of timeline blocks has been scaled down.
+5. To-dos can now be individually deleted
+6. Timer ending toggles hidden pomodoro
