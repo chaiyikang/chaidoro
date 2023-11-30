@@ -55,7 +55,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 			</div>
 			<ul className=" mt-4 ">
 				{toDos.map((task, index) => (
-					<ToDo task={task} index={index} key={index} toDos={toDos} setToDos={setToDos} />
+					<ToDo index={index} key={index} toDos={toDos} setToDos={setToDos} />
 				))}
 			</ul>
 			<Button onClick={handleClear} additionalClassName="mx-14">

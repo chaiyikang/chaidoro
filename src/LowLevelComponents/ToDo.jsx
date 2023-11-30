@@ -1,41 +1,49 @@
 import { useRef, useState } from "react";
 import ControlButton from "./ControlButton";
 
-function ToDo({ task, index, toDos, setToDos }) {
+function ToDo({ index, toDos, setToDos }) {
+	const task = toDos[index];
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [editInput, setEditInput] = useState(task.text);
 	const clickCount = useRef(0);
 
 	function handleSubmitEdit() {
 		if (editInput.trim()) {
-			setToDos(toDos.map((ele, i) => (index === i ? { ...ele, text: editInput } : ele)));
+			setToDos(old => old.map((ele, i) => (index === i ? { ...ele, text: editInput } : ele)));
 			setIsEditing(false);
 		}
 	}
 
+	function handleDelete() {
+		if (!confirm(`Are you sure you want to delete "${task.text}"?`)) return;
+		setToDos(old => old.filter((ele, i) => !(index === i)));
+	}
+
 	function handleCheck(index) {
 		// determine context
-		const markingAsDone = toDos[index].done === false;
-		const isCurrentlyActive = toDos[index].active;
+		const markingAsDone = task.done === false;
+		const isCurrentlyActive = task.active;
 		// toggle done state
 		setToDos(old => old.map((task, i) => (i === index ? { ...task, done: !task.done } : task)));
 
-		if (!markingAsDone) return;
-		// if task is being marked as done we move it to bottom of list
-		setToDos(old => {
-			const element = old.splice(index, 1)[0]; // Remove the element at index and store it in a variable
-			old.push(element); // Add the element to the end of the array
-			return old;
-		});
-
-		if (!isCurrentlyActive) return;
 		// if the task is active and is being marked as done, we auto unselect the task
-		setToDos(old =>
-			old.map((task, i) => {
-				if (index !== i) return task;
-				return { ...task, active: false };
-			}),
-		);
+		if (isCurrentlyActive && markingAsDone) {
+			setToDos(old =>
+				old.map((task, i) => {
+					if (index !== i) return task;
+					return { ...task, active: false };
+				}),
+			);
+		}
+		// if task is being marked as done we move it to bottom of list
+		if (markingAsDone) {
+			setToDos(old => {
+				const element = old.splice(index, 1)[0]; // Remove the element at index and store it in a variable
+				old.push(element); // Add the element to the end of the array
+				return old;
+			});
+		}
 	}
 
 	function handleClickActive(index) {
@@ -43,7 +51,9 @@ function ToDo({ task, index, toDos, setToDos }) {
 		setTimeout(() => {
 			if (clickCount.current === 1) {
 				console.log(`click count at timeout: ${clickCount.current}`);
-				setToDos(toDos.map((task, i) => ({ ...task, active: task.active ? false : index === i })));
+				setToDos(old =>
+					old.map((task, i) => ({ ...task, active: task.active ? false : index === i })),
+				);
 			}
 			clickCount.current = 0; // Reset the click count
 		}, 250); // Adjust the delay as needed
@@ -103,6 +113,9 @@ function ToDo({ task, index, toDos, setToDos }) {
 				classes="ml-4 mt-2"
 			>
 				edit
+			</ControlButton>
+			<ControlButton handler={handleDelete} fontSize="text-3xl" classes="ml-4 mt-2">
+				delete
 			</ControlButton>
 		</li>
 	);
