@@ -31,6 +31,7 @@ export function Pomodoro({
 	pomodoroIsOpen,
 	totalWorkSessions,
 	setTotalWorkSessions,
+	setTotalSecondsFocused,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -77,6 +78,7 @@ export function Pomodoro({
 	useEffect(
 		function updateStats() {
 			if (!timerRunning) return;
+			setTotalSecondsFocused(old => old + 1);
 			if (activeTask === lastTask) {
 				setStats(old => [
 					...old.slice(0, -1),
@@ -89,7 +91,15 @@ export function Pomodoro({
 				]);
 			}
 		},
-		[runningSeconds, timerRunning, activeTask, lastTask, setStats, currentTimeStamp],
+		[
+			runningSeconds,
+			timerRunning,
+			activeTask,
+			lastTask,
+			setStats,
+			currentTimeStamp,
+			setTotalSecondsFocused,
+		],
 	);
 
 	useEffect(

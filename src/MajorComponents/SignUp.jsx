@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 	const queryClient = useQueryClient();
 
 	const {
@@ -28,6 +29,13 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 			toast.error(error.message);
 		},
 	});
+
+	async function handleSignUp(e) {
+		e.preventDefault();
+		if (!email || !password) return;
+		if (!(password === confirmPassword)) return toast.error("Passwords do not match.");
+		mutateSignUp({ email, password });
+	}
 
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 grid h-5/6 w-1/3 -translate-x-1/2 -translate-y-1/2 place-items-center bg-slate-800 ">
@@ -51,11 +59,8 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 						{/* <div className="md:w-8/12 lg:ml-6 lg:w-5/12"> */}
 						<div className="">
 							<form
-								onSubmit={async function handleLogin(e) {
-									e.preventDefault();
-									if (!email || !password) return;
-									mutateSignUp({ email, password });
-								}}
+								noValidate
+								onSubmit={handleSignUp}
 								// onSubmit={async function handleSignUp(e) {
 								// 	e.preventDefault();
 								// 	if (!email || !password) return;
@@ -88,7 +93,16 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 									value={password}
 									type="password"
 									label="Password"
-									autoComplete="current-password"
+									className="mb-6"
+									size="lg"
+									autocomplete="current-password"
+								></TEInput>
+
+								<TEInput
+									onChange={e => setConfirmPassword(e.target.value)}
+									value={confirmPassword}
+									type="password"
+									label="Re-enter password"
 									className="mb-6"
 									size="lg"
 								></TEInput>
