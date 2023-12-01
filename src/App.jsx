@@ -14,13 +14,17 @@ import { getUserData, useRetrieveOrUpdate } from "./services/supabaseUserData.js
 import useTitle from "./hooks/useTitle.js";
 import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
 import AccountModal from "./MajorComponents/AccountModal.jsx";
+import Test from "./MajorComponents/Test.jsx";
 
 const updateMessage = `30 Nov 2023 Updates: 
 1. Lifetime stats like total time focused and total sessions are permanent and will no longer be cleared.
 2. Clearing stats will only remove the timeline and not the lifetime stats.
 3. Stats were improved to reflect hours and minutes instead of seconds.
 4. Height of timeline blocks has been scaled down.
-5. To-dos can now be individually deleted`;
+5. To-dos can now be individually deleted
+
+1 Dec 2023 Updates:
+1. Toggling components (Stats, Pomodoro, To-do List) now has animations`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -100,6 +104,8 @@ function App() {
 				<PageLoadingSpinner />
 			</>
 		);
+
+	// if (true) return <Test />;
 
 	return (
 		<div className="select-none font-roboto font-light text-slate-400">

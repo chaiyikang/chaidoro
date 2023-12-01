@@ -35,10 +35,14 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 		setToDos([]);
 	}
 
-	if (!toDoIsOpen) return;
+	// if (!toDoIsOpen) return;
 
 	return (
-		<div className=" w-70 absolute right-0 top-0 h-screen overflow-y-auto  bg-slate-900 p-4 opacity-75">
+		<div
+			className={` w-70 absolute right-0 top-0 h-screen overflow-y-auto bg-slate-900 p-4 opacity-75 transition-transform duration-500 ease-in-out ${
+				toDoIsOpen ? "translate-x-0" : " translate-x-full"
+			}`}
+		>
 			<h1 className="text-center text-4xl font-bold">To Do List</h1>
 			<div className="mt-4 flex items-center justify-center">
 				<input

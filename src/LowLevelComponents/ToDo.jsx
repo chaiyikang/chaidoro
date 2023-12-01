@@ -50,13 +50,13 @@ function ToDo({ index, toDos, setToDos }) {
 		clickCount.current++;
 		setTimeout(() => {
 			if (clickCount.current === 1) {
-				console.log(`click count at timeout: ${clickCount.current}`);
+				// console.log(`click count at timeout: ${clickCount.current}`);
 				setToDos(old =>
 					old.map((task, i) => ({ ...task, active: task.active ? false : index === i })),
 				);
 			}
 			clickCount.current = 0; // Reset the click count
-		}, 250); // Adjust the delay as needed
+		}, 200); // Adjust the delay as needed
 	}
 
 	return (

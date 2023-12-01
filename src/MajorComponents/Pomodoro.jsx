@@ -161,6 +161,7 @@ export function Pomodoro({
 			setSecondsLeftCache,
 			timerEndedSound,
 			setTotalWorkSessions,
+			setPomodoroIsOpen,
 		],
 	);
 
@@ -228,11 +229,13 @@ export function Pomodoro({
 		return "shortBreak";
 	}
 
-	if (!pomodoroIsOpen) return;
-
 	return (
 		<>
-			<div className="absolute left-1/2 top-1/2 z-10 grid h-5/6 w-1/2 -translate-x-1/2 -translate-y-1/2 grid-cols-3 grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75">
+			<div
+				className={`absolute left-1/2 top-1/2 z-10 grid h-5/6 w-1/2 -translate-x-1/2  grid-cols-3 grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75 transition-transform duration-500 ease-in-out ${
+					pomodoroIsOpen ? "-translate-y-1/2" : " -translate-y-[170%]"
+				}`}
+			>
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>

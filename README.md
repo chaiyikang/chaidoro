@@ -1,5 +1,3 @@
-# React + Vite
-
 ## Changelog
 
 ### 30 Nov 2023 Updates:
@@ -10,3 +8,7 @@
 4. Height of timeline blocks has been scaled down.
 5. To-dos can now be individually deleted
 6. Timer ending toggles hidden pomodoro
+
+### 1 Dec 2023 Updates:
+
+1. Toggling components (Stats, Pomodoro, To-do List) now has animations`
