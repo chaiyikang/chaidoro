@@ -11,4 +11,8 @@
 
 ### 1 Dec 2023 Updates:
 
-1. Toggling components (Stats, Pomodoro, To-do List) now has animations`
+1. Toggling components (Stats, Pomodoro, To-do List) now has animations.
+
+### 3 Dec 2023 Updates:
+
+1. Added cat hehe

@@ -15,6 +15,8 @@ import useTitle from "./hooks/useTitle.js";
 import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
 import AccountModal from "./MajorComponents/AccountModal.jsx";
 import Test from "./MajorComponents/Test.jsx";
+import Santa from "./LowLevelComponents/Santa.jsx";
+import OriginalKitty from "./svg/OriginalKitty.jsx";
 
 const updateMessage = `30 Nov 2023 Updates: 
 1. Lifetime stats like total time focused and total sessions are permanent and will no longer be cleared.
@@ -24,7 +26,10 @@ const updateMessage = `30 Nov 2023 Updates:
 5. To-dos can now be individually deleted
 
 1 Dec 2023 Updates:
-1. Toggling components (Stats, Pomodoro, To-do List) now has animations`;
+1. Toggling components (Stats, Pomodoro, To-do List) now has animations
+
+3 Dec 2023 Updates:
+1. Added cat hehe`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -108,75 +113,81 @@ function App() {
 	// if (true) return <Test />;
 
 	return (
-		<div className="select-none font-roboto font-light text-slate-400">
-			<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }}>
-				{t => (
-					<ToastBar toast={t}>
-						{({ icon, message }) => (
-							<>
-								{icon}
-								{message}
-								{t.type !== "loading" && (
-									<button className="self-start" onClick={() => toast.dismiss(t.id)}>
-										<span className="material-symbols-outlined">close</span>
-									</button>
-								)}
-							</>
-						)}
-					</ToastBar>
-				)}
-			</Toaster>
-			<Background />
-			<Stats
-				totalSecondsFocused={totalSecondsFocused}
-				stats={stats}
-				setStats={setStats}
-				toDoIsOpen={toDoIsOpen}
-				statsIsOpen={statsIsOpen}
-				totalWorkSessions={totalWorkSessions}
-			/>
-			{/* <Music /> */}
-			<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
-			<Pomodoro
-				settings={settings}
-				timeStampEnd={timeStampEnd}
-				setTimeStampEnd={setTimeStampEnd}
-				timerRunning={timerRunning}
-				activeType={activeType}
-				setActiveType={setActiveType}
-				currentTimeStamp={currentTimeStamp}
-				secondsLeftCache={secondsLeftCache}
-				setSecondsLeftCache={setSecondsLeftCache}
-				toDos={toDos}
-				stats={stats}
-				setStats={setStats}
-				pomodoroIsOpen={pomodoroIsOpen}
-				setPomodoroIsOpen={setPomodoroIsOpen}
-				totalWorkSessions={totalWorkSessions}
-				setTotalWorkSessions={setTotalWorkSessions}
-				setTotalSecondsFocused={setTotalSecondsFocused}
-			/>
-			<SpinningToolBar
-				setSettingsIsOpen={setSettingsIsOpen}
-				setPomodoroIsOpen={setPomodoroIsOpen}
-				setStatsIsOpen={setStatsIsOpen}
-				setToDoIsOpen={setToDoIsOpen}
-				setAccountIsOpen={setAccountIsOpen}
-			/>
-			<Settings
-				settings={settings}
-				dispatchSettings={dispatchSettings}
-				timerRunning={timerRunning}
-				setTimeStampEnd={setTimeStampEnd}
-				activeType={activeType}
-				currentTimeStamp={currentTimeStamp}
-				secondsLeftCache={secondsLeftCache}
-				setSecondsLeftCache={setSecondsLeftCache}
-				settingsIsOpen={settingsIsOpen}
-				setSettingsIsOpen={setSettingsIsOpen}
-			/>
-			<AccountModal accountIsOpen={accountIsOpen} setAccountIsOpen={setAccountIsOpen} />
-		</div>
+		<>
+			<div className=" absolute left-[10rem] top-1/2 z-[999999999] h-[20rem] w-[20rem]">
+				{/* <Santa /> */}
+				<OriginalKitty />
+			</div>
+			<div className="select-none font-roboto font-light text-slate-400">
+				<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }}>
+					{t => (
+						<ToastBar toast={t}>
+							{({ icon, message }) => (
+								<>
+									{icon}
+									{message}
+									{t.type !== "loading" && (
+										<button className="self-start" onClick={() => toast.dismiss(t.id)}>
+											<span className="material-symbols-outlined">close</span>
+										</button>
+									)}
+								</>
+							)}
+						</ToastBar>
+					)}
+				</Toaster>
+				<Background />
+				<Stats
+					totalSecondsFocused={totalSecondsFocused}
+					stats={stats}
+					setStats={setStats}
+					toDoIsOpen={toDoIsOpen}
+					statsIsOpen={statsIsOpen}
+					totalWorkSessions={totalWorkSessions}
+				/>
+				{/* <Music /> */}
+				<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
+				<Pomodoro
+					settings={settings}
+					timeStampEnd={timeStampEnd}
+					setTimeStampEnd={setTimeStampEnd}
+					timerRunning={timerRunning}
+					activeType={activeType}
+					setActiveType={setActiveType}
+					currentTimeStamp={currentTimeStamp}
+					secondsLeftCache={secondsLeftCache}
+					setSecondsLeftCache={setSecondsLeftCache}
+					toDos={toDos}
+					stats={stats}
+					setStats={setStats}
+					pomodoroIsOpen={pomodoroIsOpen}
+					setPomodoroIsOpen={setPomodoroIsOpen}
+					totalWorkSessions={totalWorkSessions}
+					setTotalWorkSessions={setTotalWorkSessions}
+					setTotalSecondsFocused={setTotalSecondsFocused}
+				/>
+				<SpinningToolBar
+					setSettingsIsOpen={setSettingsIsOpen}
+					setPomodoroIsOpen={setPomodoroIsOpen}
+					setStatsIsOpen={setStatsIsOpen}
+					setToDoIsOpen={setToDoIsOpen}
+					setAccountIsOpen={setAccountIsOpen}
+				/>
+				<Settings
+					settings={settings}
+					dispatchSettings={dispatchSettings}
+					timerRunning={timerRunning}
+					setTimeStampEnd={setTimeStampEnd}
+					activeType={activeType}
+					currentTimeStamp={currentTimeStamp}
+					secondsLeftCache={secondsLeftCache}
+					setSecondsLeftCache={setSecondsLeftCache}
+					settingsIsOpen={settingsIsOpen}
+					setSettingsIsOpen={setSettingsIsOpen}
+				/>
+				<AccountModal accountIsOpen={accountIsOpen} setAccountIsOpen={setAccountIsOpen} />
+			</div>
+		</>
 	);
 }
 
