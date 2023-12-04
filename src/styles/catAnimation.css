@@ -1,17 +1,29 @@
-/* left ear position */
-#leftEarPosition {
+#leftEarPosition,
+#leftEarRotate,
+#rightEarPosition,
+#rightEarRotate,
+#tailRotate {
 	transition: all 1.5s ease-in-out;
 }
 
 svg#svgContainer:hover #leftEarPosition {
-	animation: leftEarPositionAnimationOpen 1500ms linear 1 normal forwards;
+	transform: translate(80.856711px, 134.710713px);
 }
 
-/* svg#svgContainer #leftEarPosition {
-	animation: leftEarPositionAnimationClose 1500ms linear 1 normal forwards;
-} */
+svg#svgContainer:hover #leftEarRotate {
+	transform: rotate(-56.844645deg);
+}
 
-@keyframes leftEarPositionAnimationOpen {
+svg#svgContainer:hover #rightEarPosition {
+	transform: translate(170.308179px, 118.323632px);
+}
+svg#svgContainer:hover #rightEarRotate {
+	transform: rotate(50.289003deg);
+}
+svg#svgContainer:hover #tailRotate {
+	transform: translate(252.76282px, 222.039048px) rotate(-5.483906deg);
+}
+/* @keyframes leftEarPositionAnimationOpen {
 	0% {
 		transform: translate(88.429634px, 125.717866px);
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
@@ -29,35 +41,9 @@ svg#svgContainer:hover #leftEarPosition {
 	100% {
 		transform: translate(88.429634px, 125.717866px);
 	}
-}
-
-@keyframes leftEarPositionAnimation {
-	0% {
-		transform: translate(88.429634px, 125.717866px);
-		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-	}
-	33.333333% {
-		transform: translate(80.856711px, 134.710713px);
-	}
-	66.666667% {
-		transform: translate(80.856711px, 134.710713px);
-		animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-	}
-	100% {
-		transform: translate(88.429634px, 125.717866px);
-	}
-}
-
-/* left ear rotate */
-svg#svgContainer:hover #leftEarRotate {
-	animation: leftEarRotateAnimationOpen 1500ms linear 1 normal forwards;
-}
-
-/* svg#svgContainer #leftEarRotate {
-	animation: leftEarRotateAnimationClose 1500ms linear 1 normal forwards;
 } */
 
-@keyframes leftEarRotateAnimationOpen {
+/* @keyframes leftEarRotateAnimationOpen {
 	0% {
 		transform: rotate(-34.153047deg);
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
@@ -75,35 +61,13 @@ svg#svgContainer:hover #leftEarRotate {
 	100% {
 		transform: rotate(-34.153047deg);
 	}
-}
-
-@keyframes leftEarRotateAnimation {
-	0% {
-		transform: rotate(-34.153047deg);
-		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-	}
-	33.333333% {
-		transform: rotate(-56.844645deg);
-	}
-	66.666667% {
-		transform: rotate(-56.844645deg);
-		animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-	}
-	100% {
-		transform: rotate(-34.153047deg);
-	}
-}
-
-/* right ear position */
-svg#svgContainer:hover #rightEarPosition {
-	animation: rightEarPositionAnimationOpen 1500ms linear 1 normal forwards;
-}
+} */
 
 /* svg#svgContainer #rightEarPosition {
 	animation: rightEarPositionAnimationClose 1500ms linear 1 normal forwards;
 } */
 
-@keyframes rightEarPositionAnimationOpen {
+/* @keyframes rightEarPositionAnimationOpen {
 	0% {
 		transform: translate(158.895473px, 107.624222px);
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
@@ -137,18 +101,13 @@ svg#svgContainer:hover #rightEarPosition {
 	100% {
 		transform: translate(158.895473px, 107.624222px);
 	}
-}
-
-/* right ear rotate */
-svg#svgContainer:hover #rightEarRotate {
-	animation: rightEarRotateAnimationOpen 1500ms linear 1 normal forwards;
-}
+} */
 
 /* svg#svgContainer #rightEarRotate {
 	animation: rightEarRotateAnimationClose 1500ms linear 1 normal forwards;
 } */
 
-@keyframes rightEarRotateAnimationOpen {
+/* @keyframes rightEarRotateAnimationOpen {
 	0% {
 		transform: rotate(31.710381deg);
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
@@ -182,18 +141,13 @@ svg#svgContainer:hover #rightEarRotate {
 	100% {
 		transform: rotate(31.710381deg);
 	}
-}
-
-/* tail rotate */
-svg#svgContainer:hover #tailRotate {
-	animation: tailRotateAnimationOpen 1500ms linear 1 normal forwards;
-}
+} */
 
 /* svg#svgContainer #tailRotate {
 	animation: tailRotateAnimationClose 1500ms linear 1 normal forwards;
 } */
 
-@keyframes tailRotateAnimationOpen {
+/* @keyframes tailRotateAnimationOpen {
 	0% {
 		transform: translate(252.76282px, 222.039048px) rotate(0deg);
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
@@ -228,4 +182,4 @@ svg#svgContainer:hover #tailRotate {
 	100% {
 		transform: translate(252.76282px, 222.039048px) rotate(0deg);
 	}
-}
+} */

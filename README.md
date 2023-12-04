@@ -20,3 +20,4 @@
 ### 4 Dec 2023 Updates:
 
 1. Added animation to cat: Airplane ears ✈️
+2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.
