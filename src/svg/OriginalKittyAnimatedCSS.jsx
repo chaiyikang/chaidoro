@@ -1,33 +1,38 @@
+import { useState } from "react";
+
 function OriginalKittyAnimatedCSS() {
+	const [animate, setAnimate] = useState(false);
+
 	return (
 		<svg
-			id="eWsoOTDxFIr1"
+			onMouseEnter={() => setAnimate(true)}
+			onMouseLeave={() => setAnimate(false)}
+			className={`${animate ? "open" : "close"} h-auto w-auto`}
+			id="svgContainer"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
-			viewBox="0 0 300 300"
+			viewBox="50 90 230 180"
 			shapeRendering="geometricPrecision"
 			textRendering="geometricPrecision"
 		>
-			<style
-				dangerouslySetInnerHTML={{
-					__html:
-						"\n#eWsoOTDxFIr4_to {animation: eWsoOTDxFIr4_to__to 3000ms linear infinite normal forwards}@keyframes eWsoOTDxFIr4_to__to { 0% {transform: translate(88.429634px,125.717866px);animation-timing-function: cubic-bezier(0.47,0,0.745,0.715)} 33.333333% {transform: translate(80.856711px,134.710713px)} 66.666667% {transform: translate(80.856711px,134.710713px);animation-timing-function: cubic-bezier(0.39,0.575,0.565,1)} 100% {transform: translate(88.429634px,125.717866px)}} #eWsoOTDxFIr4_tr {animation: eWsoOTDxFIr4_tr__tr 3000ms linear infinite normal forwards}@keyframes eWsoOTDxFIr4_tr__tr { 0% {transform: rotate(-34.153047deg);animation-timing-function: cubic-bezier(0.47,0,0.745,0.715)} 33.333333% {transform: rotate(-56.844645deg)} 66.666667% {transform: rotate(-56.844645deg);animation-timing-function: cubic-bezier(0.39,0.575,0.565,1)} 100% {transform: rotate(-34.153047deg)}} #eWsoOTDxFIr7_to {animation: eWsoOTDxFIr7_to__to 3000ms linear infinite normal forwards}@keyframes eWsoOTDxFIr7_to__to { 0% {transform: translate(158.895473px,107.624222px);animation-timing-function: cubic-bezier(0.47,0,0.745,0.715)} 33.333333% {transform: translate(170.308179px,118.323632px)} 66.666667% {transform: translate(170.308179px,118.323632px);animation-timing-function: cubic-bezier(0.445,0.05,0.55,0.95)} 100% {transform: translate(158.895473px,107.624222px)}} #eWsoOTDxFIr7_tr {animation: eWsoOTDxFIr7_tr__tr 3000ms linear infinite normal forwards}@keyframes eWsoOTDxFIr7_tr__tr { 0% {transform: rotate(31.710381deg);animation-timing-function: cubic-bezier(0.47,0,0.745,0.715)} 33.333333% {transform: rotate(50.289003deg)} 66.666667% {transform: rotate(50.289003deg);animation-timing-function: cubic-bezier(0.445,0.05,0.55,0.95)} 100% {transform: rotate(31.710381deg)}} #eWsoOTDxFIr23_tr {animation: eWsoOTDxFIr23_tr__tr 3000ms linear infinite normal forwards}@keyframes eWsoOTDxFIr23_tr__tr { 0% {transform: translate(252.76282px,222.039048px) rotate(0deg);animation-timing-function: cubic-bezier(0.47,0,0.745,0.715)} 33.333333% {transform: translate(252.76282px,222.039048px) rotate(-5.483906deg)} 66.666667% {transform: translate(252.76282px,222.039048px) rotate(-5.483906deg);animation-timing-function: cubic-bezier(0.39,0.575,0.565,1)} 100% {transform: translate(252.76282px,222.039048px) rotate(0deg)}}\n",
-				}}
-			/>
-			<path
-				d="M-78.679889,0c0-27.128555,21.31593-50.859376,64.769633-50.859376-3.7393,2.581716,16.000254-18.542677,48.251203-14.779648s44.338942,45.202014,44.338942,65.639024c0,27.128555-37.399663,24.777644-80.853366,24.777644s-76.506412,2.350911-76.506412-24.777644Z"
-				transform="translate(174.792606 213.66022)"
-				fill="#a7723e"
-				strokeWidth={0}
-			/>
-			<path
-				d="M-47.569268,0c-2.257918-27.597272,18.470758-42.927129,47.802197-43.949469s48.318845,16.113859,47.336339,43.949469-21.297487,45.056683-47.569268,45.056683-47.569268-20.172564-47.569268-45.056683Z"
-				transform="matrix(1.046641 0 0 0.871027 119.882875 150.025573)"
-				fill="#a6733e"
-				strokeWidth={0}
-			/>
-			<g id="eWsoOTDxFIr4_to" transform="translate(88.429634,125.717866)">
-				<g id="eWsoOTDxFIr4_tr" transform="rotate(-34.153047)">
+			{/* body */}
+			<g>
+				<path
+					d="M-78.679889,0c0-27.128555,21.31593-50.859376,64.769633-50.859376-3.7393,2.581716,16.000254-18.542677,48.251203-14.779648s44.338942,45.202014,44.338942,65.639024c0,27.128555-37.399663,24.777644-80.853366,24.777644s-76.506412,2.350911-76.506412-24.777644Z"
+					transform="translate(174.792606 213.66022)"
+					fill="#a7723e"
+					strokeWidth={0}
+				/>
+				{/* head */}
+				<path
+					d="M-47.569268,0c-2.257918-27.597272,18.470758-42.927129,47.802197-43.949469s48.318845,16.113859,47.336339,43.949469-21.297487,45.056683-47.569268,45.056683-47.569268-20.172564-47.569268-45.056683Z"
+					transform="matrix(1.046641 0 0 0.871027 119.882875 150.025573)"
+					fill="#a6733e"
+					strokeWidth={0}
+				/>
+			</g>
+			<g id="leftEarPosition" transform="translate(88.429634,125.717866)">
+				<g id="leftEarRotate" transform="rotate(-34.153047)">
 					<g transform="scale(-1,1) translate(-19.804277,-111.747054)">
 						<path
 							d="M-3.229973,14.259065l-20.125-.000003L-3.354972,-22.62941"
@@ -44,8 +49,8 @@ function OriginalKittyAnimatedCSS() {
 					</g>
 				</g>
 			</g>
-			<g id="eWsoOTDxFIr7_to" transform="translate(158.895473,107.624222)">
-				<g id="eWsoOTDxFIr7_tr" transform="rotate(31.710381)">
+			<g id="rightEarPosition" transform="translate(158.895473,107.624222)">
+				<g id="rightEarRotate" transform="rotate(31.710381)">
 					<g transform="translate(-19.90534,-93.098896)">
 						<path
 							d="M-3.229973,14.259065l-20.125-.000003L-3.354972,-22.62941"
@@ -129,7 +134,7 @@ function OriginalKittyAnimatedCSS() {
 				stroke="#9c5000"
 				strokeWidth={3}
 			/>
-			<g id="eWsoOTDxFIr23_tr" transform="translate(252.76282,222.039048) rotate(0)">
+			<g id="tailRotate" transform="translate(252.76282,222.039048) rotate(0)">
 				<path
 					d="M-64.851301,0.781341C-7.013366,7.701536,56.157181,-5.950395,57.428562,-23.440228"
 					transform="translate(-55.966276,23.931626)"

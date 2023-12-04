@@ -16,8 +16,8 @@ import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
 import AccountModal from "./MajorComponents/AccountModal.jsx";
 import Test from "./MajorComponents/Test.jsx";
 import Santa from "./LowLevelComponents/Santa.jsx";
-import OriginalKitty from "./svg/OriginalKitty.jsx";
-import OriginalKittyAnimated from "./svg/OriginalKittyAnimated.jsx";
+import OriginalKitty from "../svgArchive/OriginalKitty.jsx";
+import OriginalKittyAnimated from "../svgArchive/OriginalKittyAnimated.jsx";
 import OriginalKittyAnimatedCSS from "./svg/OriginalKittyAnimatedCSS.jsx";
 
 const updateMessage = `30 Nov 2023 Updates: 

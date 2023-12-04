@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "./index.css";
-import "./menuAnimation.css";
+import "./styles/index.css";
+import "./styles/menuAnimation.css";
+import "./styles/catAnimation.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import "tw-elements-react/dist/css/tw-elements-react.min.css";
