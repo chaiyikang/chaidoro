@@ -17,6 +17,8 @@ import AccountModal from "./MajorComponents/AccountModal.jsx";
 import Test from "./MajorComponents/Test.jsx";
 import Santa from "./LowLevelComponents/Santa.jsx";
 import OriginalKitty from "./svg/OriginalKitty.jsx";
+import OriginalKittyAnimated from "./svg/OriginalKittyAnimated.jsx";
+import OriginalKittyAnimatedCSS from "./svg/OriginalKittyAnimatedCSS.jsx";
 
 const updateMessage = `30 Nov 2023 Updates: 
 1. Lifetime stats like total time focused and total sessions are permanent and will no longer be cleared.
@@ -29,7 +31,10 @@ const updateMessage = `30 Nov 2023 Updates:
 1. Toggling components (Stats, Pomodoro, To-do List) now has animations
 
 3 Dec 2023 Updates:
-1. Added cat hehe`;
+1. Added cat hehe
+
+4 Dec 2023 Updates:
+1. Added animation to cat: Airplane ears ✈️`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -116,7 +121,7 @@ function App() {
 		<>
 			<div className=" absolute left-[10rem] top-1/2 z-[999999999] h-[20rem] w-[20rem]">
 				{/* <Santa /> */}
-				<OriginalKitty />
+				<OriginalKittyAnimatedCSS />
 			</div>
 			<div className="select-none font-roboto font-light text-slate-400">
 				<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }}>

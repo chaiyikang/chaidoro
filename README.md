@@ -16,3 +16,7 @@
 ### 3 Dec 2023 Updates:
 
 1. Added cat hehe
+
+### 4 Dec 2023 Updates:
+
+1. Added animation to cat: Airplane ears ✈️
