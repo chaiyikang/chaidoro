@@ -193,6 +193,12 @@ export function Pomodoro({
 		}
 	}
 
+	function handleResetCycle() {
+		clickSound();
+		if (!confirm("Are you sure you want to reset the work cycle?")) return;
+		setWorkSetsCompleted(0);
+	}
+
 	// * BACKEND //
 	const { data: userData } = useQuery({
 		queryKey: ["userData"],
@@ -264,10 +270,13 @@ export function Pomodoro({
 									.padStart(2, 0)}
 							</span>
 						</time>
-						<div className="flex justify-center">
+						<div className="mt-4 flex justify-center">
 							{new Array(settings.interval).fill("").map((_, index) => (
 								<ProgressDot key={index} filled={pomodoroRepDisplay >= index + 1} />
 							))}
+						</div>
+						<div onClick={handleResetCycle} className="mt-2 flex justify-center">
+							<ControlButton fontSize="base">restart_alt</ControlButton>
 						</div>
 					</Progress>
 				</div>

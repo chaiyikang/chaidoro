@@ -3,7 +3,7 @@ function Progress({ ratioDone, children }) {
 	const offsetValue = ratioDone * -101;
 	return (
 		<>
-			<div className="relative z-10 grid h-[15rem] w-[15rem]">
+			<div className="relative z-10 grid h-[17rem] w-[17rem]">
 				<svg
 					className="h-full w-full"
 					width={36}

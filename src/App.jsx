@@ -28,7 +28,8 @@ const updateMessage = `
 2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.
 
 5 Dec 2023 Updates:
-1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.`;
+1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.
+2. Work cycle can now be reset with the button below the progress dots.`;
 
 toast.success(updateMessage, { duration: 10000 });
 
