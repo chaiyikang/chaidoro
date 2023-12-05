@@ -29,7 +29,8 @@ const updateMessage = `
 
 5 Dec 2023 Updates:
 1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.
-2. Work cycle can now be reset with the button below the progress dots.`;
+2. Work cycle can now be reset with the button below the progress dots.
+3. Cat can now be toggled.`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -52,15 +53,18 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+	const [archivedSecondsFocused, setArchivedSecondsFocused] = useState(0);
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
 	const [totalWorkSessions, setTotalWorkSessions] = useState(0);
+
+	// * UI OPENING STATE //
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
-	const [archivedSecondsFocused, setArchivedSecondsFocused] = useState(0);
+	const [catIsOpen, setCatIsOpen] = useState(true);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -135,7 +139,7 @@ function App() {
 					)}
 				</Toaster>
 				<Background />
-				{/* <Cat /> */}
+				<Cat catIsOpen={catIsOpen} />
 				<Stats
 					currentTotalSecondsFocused={currentTotalSecondsFocused}
 					setArchivedSecondsFocused={setArchivedSecondsFocused}
@@ -171,6 +175,7 @@ function App() {
 					setStatsIsOpen={setStatsIsOpen}
 					setToDoIsOpen={setToDoIsOpen}
 					setAccountIsOpen={setAccountIsOpen}
+					setCatIsOpen={setCatIsOpen}
 				/>
 				<Settings
 					settings={settings}

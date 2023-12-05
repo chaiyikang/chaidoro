@@ -7,6 +7,7 @@ function SpinningToolBar({
 	setStatsIsOpen,
 	setToDoIsOpen,
 	setAccountIsOpen,
+	setCatIsOpen,
 }) {
 	const [spinnerOpen, setSpinnerOpen] = useState(false);
 	return (
@@ -30,7 +31,7 @@ function SpinningToolBar({
 					</ControlButton>
 				</li>
 				<li className="menu-item">
-					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>
+					<ControlButton handler={() => setCatIsOpen(old => !old)}>pets</ControlButton>
 				</li>
 				<li className="menu-item">
 					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>

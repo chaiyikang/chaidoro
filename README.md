@@ -28,3 +28,4 @@
    lifetime seconds = archived + sum of seconds in stats;
    when stats are cleared archived = lifetime seconds. This fixed the bug where lifetime focus time was slightly unsynchronised with timeline.
 2. Work cycle can now be reset with the button below the progress dots.
+3. Cat can now be toggled.
