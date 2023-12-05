@@ -25,7 +25,10 @@ const updateMessage = `
 
 4 Dec 2023 Updates:
 1. Added animation to cat: Airplane ears ✈️
-2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.`;
+2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.
+
+5 Dec 2023 Updates:
+1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -96,7 +99,7 @@ function App() {
 	useRetrieveOrUpdate(userData, "total_work_sessions", setTotalWorkSessions, totalWorkSessions);
 	useRetrieveOrUpdate(
 		userData,
-		"total_seconds_focused",
+		"archived_seconds_focused",
 		setArchivedSecondsFocused,
 		archivedSecondsFocused,
 	);

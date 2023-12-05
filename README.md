@@ -21,3 +21,9 @@
 
 1. Added animation to cat: Airplane ears ✈️
 2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.
+
+### 5 Dec 2023 Updates:
+
+1. restructured how lifetime seconds focused works =>
+   lifetime seconds = archived + sum of seconds in stats;
+   when stats are cleared archived = lifetime seconds. This fixed the bug where lifetime focus time was slightly unsynchronised with timeline.
