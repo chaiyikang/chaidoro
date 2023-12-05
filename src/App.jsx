@@ -129,7 +129,7 @@ function App() {
 					)}
 				</Toaster>
 				<Background />
-				<Cat />
+				{/* <Cat /> */}
 				<Stats
 					totalSecondsFocused={totalSecondsFocused}
 					stats={stats}

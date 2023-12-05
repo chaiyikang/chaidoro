@@ -60,7 +60,7 @@ export function Pomodoro({
 			? "Short Break"
 			: "Long Break";
 
-	const lastTask = stats.at(-1)?.task;
+	const lastTask = stats?.at(-1)?.task;
 
 	// * SOUND //
 	const [clickSound] = useSound(clickSfx);
@@ -79,7 +79,7 @@ export function Pomodoro({
 	useEffect(
 		function updateStats() {
 			if (!timerRunning) return;
-			setTotalSecondsFocused(old => old + 1);
+			// setTotalSecondsFocused(old => old + 1);
 			if (activeTask === lastTask) {
 				setStats(old => [
 					...old.slice(0, -1),
@@ -92,15 +92,7 @@ export function Pomodoro({
 				]);
 			}
 		},
-		[
-			runningSeconds,
-			timerRunning,
-			activeTask,
-			lastTask,
-			setStats,
-			currentTimeStamp,
-			setTotalSecondsFocused,
-		],
+		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp, setTotalSecondsFocused],
 	);
 
 	useEffect(
