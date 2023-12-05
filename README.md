@@ -29,3 +29,4 @@
    when stats are cleared archived = lifetime seconds. This fixed the bug where lifetime focus time was slightly unsynchronised with timeline.
 2. Work cycle can now be reset with the button below the progress dots.
 3. Cat can now be toggled.
+4. Fixed bug where timeline was inaccurate when browser is not open / on different tab. Previously statistics were incremented in the useEffect, which was assumed to run every second. This assumption is not guaranteed. Synchronous, blocking tasks such as alert windows or being in a different tab or the browswer being minimised would block some renders, resulting in lower time recorded than expected. A solution where time was calculated based on the difference of timestamps was implemented.

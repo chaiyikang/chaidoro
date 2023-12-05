@@ -10,12 +10,12 @@ export function Stats({
 }) {
 	// const timeProportions = stats.map(ele => ele.lengthSec / currentTotalSecondsFocused);
 	function secondsToHours(sec) {
-		// return Math.round((sec / 60 / 60) * 10) / 10;
-		return sec;
+		return Math.round((sec / 60 / 60) * 10) / 10;
+		// return sec;
 	}
 	function secondsToMins(sec) {
-		// return Math.round((sec / 60) * 10) / 10;
-		return sec;
+		return Math.round((sec / 60) * 10) / 10;
+		// return sec;
 	}
 
 	function handleClearAll() {

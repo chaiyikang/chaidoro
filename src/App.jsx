@@ -30,7 +30,8 @@ const updateMessage = `
 5 Dec 2023 Updates:
 1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.
 2. Work cycle can now be reset with the button below the progress dots.
-3. Cat can now be toggled.`;
+3. Cat can now be toggled.
+4. Fixed bug where timeline is inaccurate when browser is not open / on different tab.`;
 
 toast.success(updateMessage, { duration: 10000 });
 

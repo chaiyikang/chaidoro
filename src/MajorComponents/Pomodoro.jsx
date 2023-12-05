@@ -77,21 +77,43 @@ export function Pomodoro({
 
 	useEffect(
 		function updateStats() {
-			if (!timerRunning) return;
+			if (!timerRunning) {
+				if (stats.length === 0) return;
+				setStats(old => [...old.slice(0, -1), { ...old.at(-1), stale: true }]);
+				return;
+			}
 			// setTotalSecondsFocused(old => old + 1);
 			if (activeTask === lastTask) {
-				setStats(old => [
-					...old.slice(0, -1),
-					{ ...old.at(-1), lengthSec: old.at(-1).lengthSec + 1 },
-				]);
+				setStats(old => {
+					const currStat = old.at(-1);
+					// const staleTime = Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000);
+					const addSec = !currStat.stale
+						? Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000)
+						: 0;
+					return [
+						...old.slice(0, -1),
+						{
+							...currStat,
+							lastUpdatedTimeStamp: currentTimeStamp,
+							lengthSec: currStat.lengthSec + addSec,
+							stale: false,
+						},
+					];
+				});
 			} else {
 				setStats(old => [
 					...old,
-					{ task: activeTask, lengthSec: 0, timeStampStarted: currentTimeStamp },
+					{
+						task: activeTask,
+						lengthSec: 0,
+						timeStampCreated: currentTimeStamp,
+						lastUpdatedTimeStamp: currentTimeStamp,
+						stale: false,
+					},
 				]);
 			}
 		},
-		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp],
+		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp, stats.length],
 	);
 
 	useEffect(
