@@ -1,12 +1,21 @@
 import Button from "../LowLevelComponents/Button";
 
-export function Stats({ totalSecondsFocused, stats, setStats, statsIsOpen, totalWorkSessions }) {
-	// const timeProportions = stats.map(ele => ele.lengthSec / totalSecondsFocused);
+export function Stats({
+	currentTotalSecondsFocused,
+	setArchivedSecondsFocused,
+	stats,
+	setStats,
+	statsIsOpen,
+	totalWorkSessions,
+}) {
+	// const timeProportions = stats.map(ele => ele.lengthSec / currentTotalSecondsFocused);
 	function secondsToHours(sec) {
-		return Math.round((sec / 60 / 60) * 10) / 10;
+		// return Math.round((sec / 60 / 60) * 10) / 10;
+		return sec;
 	}
 	function secondsToMins(sec) {
-		return Math.round((sec / 60) * 10) / 10;
+		// return Math.round((sec / 60) * 10) / 10;
+		return sec;
 	}
 
 	function handleClearAll() {
@@ -16,6 +25,7 @@ export function Stats({ totalSecondsFocused, stats, setStats, statsIsOpen, total
 			)
 		)
 			return;
+		setArchivedSecondsFocused(currentTotalSecondsFocused);
 		setStats([]);
 	}
 
@@ -31,7 +41,9 @@ export function Stats({ totalSecondsFocused, stats, setStats, statsIsOpen, total
 					<h1 className="text-7xl">Stats</h1>
 				</li>
 				<li>
-					<h1 className="text-2xl italic ">{secondsToHours(totalSecondsFocused)} Hours Focused</h1>
+					<h1 className="text-2xl italic ">
+						{secondsToHours(currentTotalSecondsFocused)} Hours Focused
+					</h1>
 				</li>
 				<li>
 					<h1 className="text-2xl italic ">Work Sessions Completed: {totalWorkSessions}</h1>

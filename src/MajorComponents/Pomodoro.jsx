@@ -32,7 +32,6 @@ export function Pomodoro({
 	setPomodoroIsOpen,
 	totalWorkSessions,
 	setTotalWorkSessions,
-	setTotalSecondsFocused,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -92,7 +91,7 @@ export function Pomodoro({
 				]);
 			}
 		},
-		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp, setTotalSecondsFocused],
+		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp],
 	);
 
 	useEffect(

@@ -56,13 +56,15 @@ function App() {
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
-	const [totalSecondsFocused, setTotalSecondsFocused] = useState(0);
+	const [archivedSecondsFocused, setArchivedSecondsFocused] = useState(0);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
-	// const totalSecondsFocused = stats.reduce((acc, curr) => {
-	// 	return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
-	// }, 0);
+	const currentTotalSecondsFocused =
+		archivedSecondsFocused +
+		stats.reduce((acc, curr) => {
+			return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
+		}, 0);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -95,8 +97,8 @@ function App() {
 	useRetrieveOrUpdate(
 		userData,
 		"total_seconds_focused",
-		setTotalSecondsFocused,
-		totalSecondsFocused,
+		setArchivedSecondsFocused,
+		archivedSecondsFocused,
 	);
 
 	if (isLoading)
@@ -131,7 +133,8 @@ function App() {
 				<Background />
 				{/* <Cat /> */}
 				<Stats
-					totalSecondsFocused={totalSecondsFocused}
+					currentTotalSecondsFocused={currentTotalSecondsFocused}
+					setArchivedSecondsFocused={setArchivedSecondsFocused}
 					stats={stats}
 					setStats={setStats}
 					toDoIsOpen={toDoIsOpen}
@@ -157,7 +160,6 @@ function App() {
 					setPomodoroIsOpen={setPomodoroIsOpen}
 					totalWorkSessions={totalWorkSessions}
 					setTotalWorkSessions={setTotalWorkSessions}
-					setTotalSecondsFocused={setTotalSecondsFocused}
 				/>
 				<SpinningToolBar
 					setSettingsIsOpen={setSettingsIsOpen}
