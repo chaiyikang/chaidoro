@@ -2,11 +2,11 @@ import Button from "../LowLevelComponents/Button";
 
 export function Stats({
 	currentTotalSecondsFocused,
-	setArchivedSecondsFocused,
+	setLifetimeArchivedSecondsFocused,
 	stats,
 	setStats,
 	statsIsOpen,
-	totalWorkSessions,
+	lifetimeWorkSessions,
 }) {
 	// const timeProportions = stats.map(ele => ele.lengthSec / currentTotalSecondsFocused);
 	function secondsToHours(sec) {
@@ -25,7 +25,7 @@ export function Stats({
 			)
 		)
 			return;
-		setArchivedSecondsFocused(currentTotalSecondsFocused);
+		setLifetimeArchivedSecondsFocused(currentTotalSecondsFocused);
 		setStats([]);
 	}
 
@@ -38,15 +38,15 @@ export function Stats({
 		>
 			<ul>
 				<li>
-					<h1 className="text-7xl">Stats</h1>
+					<h1 className="text-7xl">Daily Stats</h1>
 				</li>
 				<li>
 					<h1 className="text-2xl italic ">
-						{secondsToHours(currentTotalSecondsFocused)} Hours Focused
+						{secondsToHours(currentTotalSecondsFocused)} Hours Focused Today
 					</h1>
 				</li>
 				<li>
-					<h1 className="text-2xl italic ">Work Sessions Completed: {totalWorkSessions}</h1>
+					<h1 className="text-xl italic ">Work Sessions Completed Today: {lifetimeWorkSessions}</h1>
 				</li>
 				{stats.map((stat, index) => {
 					return (

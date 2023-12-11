@@ -54,10 +54,10 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
-	const [archivedSecondsFocused, setArchivedSecondsFocused] = useState(0);
+	const [lifetimeArchivedSecondsFocused, setLifetimeArchivedSecondsFocused] = useState(0);
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
-	const [totalWorkSessions, setTotalWorkSessions] = useState(0);
+	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
 
 	// * UI OPENING STATE //
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
@@ -70,7 +70,7 @@ function App() {
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const currentTotalSecondsFocused =
-		archivedSecondsFocused +
+		lifetimeArchivedSecondsFocused +
 		stats.reduce((acc, curr) => {
 			return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
 		}, 0);
@@ -102,12 +102,17 @@ function App() {
 	useRetrieveOrUpdate(userData, "settings", applySettings, settings);
 	useRetrieveOrUpdate(userData, "to_do_list", setToDos, toDos);
 	useRetrieveOrUpdate(userData, "stats", setStats, stats);
-	useRetrieveOrUpdate(userData, "total_work_sessions", setTotalWorkSessions, totalWorkSessions);
 	useRetrieveOrUpdate(
 		userData,
-		"archived_seconds_focused",
-		setArchivedSecondsFocused,
-		archivedSecondsFocused,
+		"lifetime_work_sessions",
+		setLifetimeWorkSessions,
+		lifetimeWorkSessions,
+	);
+	useRetrieveOrUpdate(
+		userData,
+		"lifetime_archived_seconds_focused",
+		setLifetimeArchivedSecondsFocused,
+		lifetimeArchivedSecondsFocused,
 	);
 
 	if (isLoading)
@@ -143,12 +148,12 @@ function App() {
 				<Cat catIsOpen={catIsOpen} />
 				<Stats
 					currentTotalSecondsFocused={currentTotalSecondsFocused}
-					setArchivedSecondsFocused={setArchivedSecondsFocused}
+					setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
 					stats={stats}
 					setStats={setStats}
 					toDoIsOpen={toDoIsOpen}
 					statsIsOpen={statsIsOpen}
-					totalWorkSessions={totalWorkSessions}
+					lifetimeWorkSessions={lifetimeWorkSessions}
 				/>
 				{/* <Music /> */}
 				<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
@@ -167,8 +172,7 @@ function App() {
 					setStats={setStats}
 					pomodoroIsOpen={pomodoroIsOpen}
 					setPomodoroIsOpen={setPomodoroIsOpen}
-					totalWorkSessions={totalWorkSessions}
-					setTotalWorkSessions={setTotalWorkSessions}
+					setLifetimeWorkSessions={setLifetimeWorkSessions}
 				/>
 				<SpinningToolBar
 					setSettingsIsOpen={setSettingsIsOpen}
