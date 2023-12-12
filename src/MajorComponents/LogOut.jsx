@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TERipple } from "tw-elements-react";
 import { supabaseLogOut } from "../services/supabaseAccount";
 import toast from "react-hot-toast";
+import { secondsToHours } from "../helpers";
 
-function LogOut({ handleClose }) {
+function LogOut({ handleClose, lifetimeCurrentSecondsFocused, lifetimeWorkSessions }) {
 	const queryClient = useQueryClient();
 
 	const {
@@ -26,7 +27,11 @@ function LogOut({ handleClose }) {
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 grid h-5/6 w-1/3 -translate-x-1/2 -translate-y-1/2 place-items-center bg-slate-800 ">
 			<section className="">
-				<div className="container h-full px-6 ">
+				<div className="container grid h-full place-items-center px-6">
+					<h1 className="mb-4">
+						You have completed {lifetimeWorkSessions} sessions, focusing for a total of{" "}
+						{secondsToHours(lifetimeCurrentSecondsFocused)} hours.
+					</h1>
 					<button onClick={handleClose} className="absolute right-1 top-1">
 						<span className="material-symbols-outlined">close</span>
 					</button>

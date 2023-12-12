@@ -15,6 +15,8 @@ import useTitle from "./hooks/useTitle.js";
 import PageLoadingSpinner from "./MajorComponents/PageLoadingSpinner.jsx";
 import AccountModal from "./MajorComponents/AccountModal.jsx";
 import Cat from "./MajorComponents/Cat.jsx";
+import { isSameDate } from "./helpers.js";
+import Test from "./Test.jsx";
 
 const updateMessage = `
 1 Dec 2023 Updates:
@@ -33,7 +35,7 @@ const updateMessage = `
 3. Cat can now be toggled.
 4. Fixed bug where timeline is inaccurate when browser is not open / on different tab.`;
 
-toast.success(updateMessage, { duration: 10000 });
+// toast.success(updateMessage, { duration: 10000 });
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,
@@ -54,7 +56,7 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
-	const [lifetimeArchivedSecondsFocused, setLifetimeArchivedSecondsFocused] = useState(0);
+	const [lifetimeArchivedSecondsFocused, setLifetimeArchivedSecondsFocused] = useState(0); // stores length of deleted stats
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
@@ -65,15 +67,18 @@ function App() {
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
-	const [catIsOpen, setCatIsOpen] = useState(true);
+	const [catIsOpen, setCatIsOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
-	const currentTotalSecondsFocused =
+	const lifetimeCurrentSecondsFocused =
 		lifetimeArchivedSecondsFocused +
 		stats.reduce((acc, curr) => {
 			return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
 		}, 0);
+	const todayCurrentSecondsFocused = stats.reduce((acc, curr) => {
+		return isSameDate(currentTimeStamp, curr.timeStampCreated) ? curr.lengthSec : 0;
+	}, 0);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -122,7 +127,7 @@ function App() {
 			</>
 		);
 
-	// if (true) return <Test />;
+	// if (true) return <Test stats={stats} />;
 
 	return (
 		<>
@@ -147,13 +152,15 @@ function App() {
 				<Background />
 				<Cat catIsOpen={catIsOpen} />
 				<Stats
-					currentTotalSecondsFocused={currentTotalSecondsFocused}
+					todayCurrentSecondsFocused={todayCurrentSecondsFocused}
+					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 					setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
 					stats={stats}
 					setStats={setStats}
 					toDoIsOpen={toDoIsOpen}
 					statsIsOpen={statsIsOpen}
 					lifetimeWorkSessions={lifetimeWorkSessions}
+					currentTimeStamp={currentTimeStamp}
 				/>
 				{/* <Music /> */}
 				<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
@@ -194,7 +201,12 @@ function App() {
 					settingsIsOpen={settingsIsOpen}
 					setSettingsIsOpen={setSettingsIsOpen}
 				/>
-				<AccountModal accountIsOpen={accountIsOpen} setAccountIsOpen={setAccountIsOpen} />
+				<AccountModal
+					accountIsOpen={accountIsOpen}
+					setAccountIsOpen={setAccountIsOpen}
+					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+					lifetimeWorkSessions={lifetimeWorkSessions}
+				/>
 			</div>
 		</>
 	);

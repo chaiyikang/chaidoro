@@ -4,6 +4,8 @@ import App from "./App.jsx";
 import "./styles/index.css";
 import "./styles/menuAnimation.css";
 import "./styles/catAnimation.css";
+import "react-calendar-heatmap/dist/styles.css";
+import "react-tooltip/dist/react-tooltip.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import "tw-elements-react/dist/css/tw-elements-react.min.css";

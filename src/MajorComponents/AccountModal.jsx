@@ -8,7 +8,12 @@ import Login from "./Login";
 import LogOut from "./LogOut";
 import SignUp from "./SignUp";
 
-function AccountModal({ accountIsOpen, setAccountIsOpen }) {
+function AccountModal({
+	accountIsOpen,
+	setAccountIsOpen,
+	lifetimeCurrentSecondsFocused,
+	lifetimeWorkSessions,
+}) {
 	const [signUpIsOpen, setSignUpIsOpen] = useState(false);
 	// const { login, isPending } = useLogin();
 	const queryClient = useQueryClient();
@@ -21,7 +26,11 @@ function AccountModal({ accountIsOpen, setAccountIsOpen }) {
 	if (userData)
 		return (
 			<>
-				<LogOut handleClose={() => setAccountIsOpen(false)} />
+				<LogOut
+					handleClose={() => setAccountIsOpen(false)}
+					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+					lifetimeWorkSessions={lifetimeWorkSessions}
+				/>
 				<Overlay handleClose={() => setAccountIsOpen(false)} />
 			</>
 		);

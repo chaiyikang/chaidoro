@@ -200,8 +200,6 @@ export function Pomodoro({
 	function handleSkip() {
 		clickSound();
 		pauseTimer();
-		// ! TESTING//
-		getUserData().then(data => console.log(data));
 		const nextType = getNextType();
 		initType(nextType);
 
