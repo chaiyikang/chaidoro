@@ -19,21 +19,8 @@ import { isSameDate } from "./helpers.js";
 import Test from "./Test.jsx";
 
 const updateMessage = `
-1 Dec 2023 Updates:
-1. Toggling components (Stats, Pomodoro, To-do List) now has animations
-
-3 Dec 2023 Updates:
-1. Added cat hehe
-
-4 Dec 2023 Updates:
-1. Added animation to cat: Airplane ears ✈️
-2. Cat can now be pet by hovering over him. He meows and goes into airplane mode for you to pet.
-
-5 Dec 2023 Updates:
-1. Fixed bug where lifetime focus time was slightly unsynchronised with timeline.
-2. Work cycle can now be reset with the button below the progress dots.
-3. Cat can now be toggled.
-4. Fixed bug where timeline is inaccurate when browser is not open / on different tab.`;
+12 Dec 2023 Updates:
+1. Implemented calendar, tracking by day, traverse timelines of different days, and feature where you can search for a task and see total time spent`;
 
 // toast.success(updateMessage, { duration: 10000 });
 
