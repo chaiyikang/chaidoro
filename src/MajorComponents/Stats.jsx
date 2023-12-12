@@ -1,6 +1,6 @@
 import CalendarHeatmap from "react-calendar-heatmap";
 import Button from "../LowLevelComponents/Button";
-import { isSameDate, secondsToHours, secondsToMins } from "../helpers";
+import { formatDateDisplay, isSameDate, secondsToHours, secondsToMins } from "../helpers";
 import { useState } from "react";
 import Calendar from "./Calendar";
 import SearchStats from "./SearchStats";
@@ -8,7 +8,6 @@ import SearchStats from "./SearchStats";
 export function Stats({
 	lifetimeCurrentSecondsFocused,
 	setLifetimeArchivedSecondsFocused,
-	todayCurrentSecondsFocused,
 	stats,
 	setStats,
 	statsIsOpen,
@@ -16,22 +15,36 @@ export function Stats({
 	currentTimeStamp,
 }) {
 	const [calendarIsOpen, setCalendarIsOpen] = useState(false);
+	const [showStatsDate, setShowStatsDate] = useState(new Date("15 Dec 2023"));
+	const isShowingToday = formatDateDisplay(showStatsDate) === formatDateDisplay(new Date());
+
+	const daySecondsFocused = stats.reduce((acc, curr) => {
+		return isSameDate(showStatsDate, curr.timeStampCreated) ? curr.lengthSec : 0;
+	}, 0);
 
 	function handleClearTodayTimeline() {
 		if (
 			!confirm(
-				"Are you sure you want to clear today's timeline? Your total time and sessions will still be saved.",
+				`Are you sure you want to clear ${
+					isShowingToday ? "today" : "the day"
+				}'s timeline? Your total time and sessions will still be saved.`,
 			)
 		)
 			return;
-		setLifetimeArchivedSecondsFocused(old => old + todayCurrentSecondsFocused);
+		setLifetimeArchivedSecondsFocused(old => old + daySecondsFocused);
 		setStats(old => old.filter(stat => !isSameDate(stat.timeStampCreated, currentTimeStamp)));
 	}
 
 	// if (!statsIsOpen) return;
 	return (
 		<>
-			{calendarIsOpen && <Calendar stats={stats} />}
+			{calendarIsOpen && (
+				<Calendar
+					setCalendarIsOpen={setCalendarIsOpen}
+					setShowStatsDate={setShowStatsDate}
+					stats={stats}
+				/>
+			)}
 			<div
 				className={`text-base-content absolute left-0 top-0 h-screen w-3/12 overflow-y-auto bg-slate-900 p-4 opacity-75 transition-transform duration-500 ease-in-out ${
 					statsIsOpen ? "translate-x-0" : "-translate-x-full"
@@ -39,20 +52,20 @@ export function Stats({
 			>
 				<ul>
 					<li>
-						<h1 className="text-7xl">Daily Stats</h1>
+						<h1 className="text-3xl">{formatDateDisplay(showStatsDate)} </h1>
 					</li>
 					<li>
 						<h1 className="text-2xl italic ">
-							{secondsToHours(todayCurrentSecondsFocused)} Hours Focused Today
+							{secondsToHours(daySecondsFocused)} Hours Focused {isShowingToday ? "Today" : ""}
 						</h1>
 					</li>
-					<li>
+					{/* <li>
 						<h1 className="text-xl italic ">
-							Work Sessions Completed Today: {lifetimeWorkSessions}
+							Work Sessions Completed {isShowingToday ? "Today" : ""}: {lifetimeWorkSessions}
 						</h1>
-					</li>
+					</li> */}
 					{stats
-						.filter(stat => isSameDate(stat.timeStampCreated, currentTimeStamp))
+						.filter(stat => isSameDate(stat.timeStampCreated, showStatsDate))
 						.map((stat, index) => {
 							return (
 								<li

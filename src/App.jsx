@@ -76,9 +76,6 @@ function App() {
 		stats.reduce((acc, curr) => {
 			return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
 		}, 0);
-	const todayCurrentSecondsFocused = stats.reduce((acc, curr) => {
-		return isSameDate(currentTimeStamp, curr.timeStampCreated) ? curr.lengthSec : 0;
-	}, 0);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -152,7 +149,6 @@ function App() {
 				<Background />
 				<Cat catIsOpen={catIsOpen} />
 				<Stats
-					todayCurrentSecondsFocused={todayCurrentSecondsFocused}
 					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 					setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
 					stats={stats}

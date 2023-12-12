@@ -28,7 +28,7 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 	return newCalendarData;
 }
 
-function Calendar({ stats }) {
+function Calendar({ stats, setCalendarIsOpen, setShowStatsDate }) {
 	const [changeRange, setChangeRange] = useState(0);
 	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);
 	const endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1 + changeRange, 0);
@@ -57,6 +57,11 @@ function Calendar({ stats }) {
 		setChangeRange(old => old - 1);
 	}
 
+	function handleClickDay(value) {
+		setCalendarIsOpen(false);
+		setShowStatsDate(value.date);
+	}
+
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 w-1/6 -translate-x-1/2 -translate-y-1/2 bg-slate-900">
 			<div className="flex justify-center">
@@ -72,6 +77,7 @@ function Calendar({ stats }) {
 				// 	{ date: "2023-01-30", totalLength: 38 },
 				// ]}
 				values={everyDayData}
+				onClick={handleClickDay}
 				classForValue={value => {
 					return getColourGradient(value?.totalLength);
 				}}
