@@ -29,12 +29,9 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 }
 
 function Calendar({ stats }) {
-	const [startDate, setStartDate] = useState(
-		new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-	);
-	const [endDate, setEndDate] = useState(
-		new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-	);
+	const [changeRange, setChangeRange] = useState(0);
+	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);
+	const endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1 + changeRange, 0);
 
 	// for every statistic, collate the total duration worked that day
 	let workDaysData = [];
@@ -53,14 +50,17 @@ function Calendar({ stats }) {
 	const everyDayData = populateMonthlyData(workDaysData, startDate, endDate);
 
 	function handleNext() {
-		setStartDate(old => new Date(old.setMonth(old.getMonth() + 1)));
-		setEndDate(old => new Date(old.setMonth(old.getMonth() + 1)));
+		setChangeRange(old => old + 1);
+	}
+
+	function handlePrev() {
+		setChangeRange(old => old - 1);
 	}
 
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 w-1/6 -translate-x-1/2 -translate-y-1/2 bg-slate-900">
 			<div className="flex justify-center">
-				<ControlButton handler={handleNext}>navigate_before</ControlButton>
+				<ControlButton handler={handlePrev}>navigate_before</ControlButton>
 				<ControlButton handler={handleNext}>navigate_next</ControlButton>
 			</div>
 			<CalendarHeatmap
@@ -86,6 +86,7 @@ function Calendar({ stats }) {
 				}}
 				showWeekdayLabels={false}
 				showMonthLabels={false}
+				horizontal={false}
 			/>
 			<Tooltip id="my-tooltip" />
 		</div>
