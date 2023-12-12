@@ -1,4 +1,3 @@
-import CalendarHeatmap from "react-calendar-heatmap";
 import Button from "../LowLevelComponents/Button";
 import { formatDateDisplay, isSameDate, secondsToHours, secondsToMins } from "../helpers";
 import { useState } from "react";
@@ -19,7 +18,7 @@ export function Stats({
 	const isShowingToday = formatDateDisplay(showStatsDate) === formatDateDisplay(new Date());
 
 	const daySecondsFocused = stats.reduce((acc, curr) => {
-		return isSameDate(showStatsDate, curr.timeStampCreated) ? curr.lengthSec : 0;
+		return isSameDate(showStatsDate, curr.timeStampCreated) ? acc + curr.lengthSec : acc;
 	}, 0);
 
 	function handleClearTodayTimeline() {
