@@ -3,6 +3,7 @@ import Button from "../LowLevelComponents/Button";
 import { isSameDate, secondsToHours, secondsToMins } from "../helpers";
 import { useState } from "react";
 import Calendar from "./Calendar";
+import SearchStats from "./SearchStats";
 
 export function Stats({
 	lifetimeCurrentSecondsFocused,
@@ -82,6 +83,9 @@ export function Stats({
 						<Button additionalClassName="mt-2" onClick={() => setCalendarIsOpen(old => !old)}>
 							Lifetime Stats
 						</Button>
+					</li>
+					<li>
+						<SearchStats stats={stats} />
 					</li>
 				</ul>
 			</div>
