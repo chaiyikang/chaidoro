@@ -10,6 +10,8 @@ import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { FormProvider } from "react-hook-form";
 
+import ControlButton from "../LowLevelComponents/ControlButton";
+
 function populateMonthlyData(calendarData, startDate, endDate) {
 	const newCalendarData = [];
 	let currentDate = startDate;
@@ -49,10 +51,18 @@ function Calendar({ stats }) {
 
 	// for every day in the active month, collate the total duration worked
 	const everyDayData = populateMonthlyData(workDaysData, startDate, endDate);
-	console.log(everyDayData);
+
+	function handleNext() {
+		setStartDate(old => new Date(old.setMonth(old.getMonth() + 1)));
+		setEndDate(old => new Date(old.setMonth(old.getMonth() + 1)));
+	}
 
 	return (
 		<div className="absolute left-1/2 top-1/2 z-50 w-1/6 -translate-x-1/2 -translate-y-1/2 bg-slate-900">
+			<div className="flex justify-center">
+				<ControlButton handler={handleNext}>navigate_before</ControlButton>
+				<ControlButton handler={handleNext}>navigate_next</ControlButton>
+			</div>
 			<CalendarHeatmap
 				startDate={new Date(startDate).setDate(startDate.getDate() - 1)} // for some reason not inclusive of start date
 				endDate={endDate}
