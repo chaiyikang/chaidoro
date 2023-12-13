@@ -12,9 +12,8 @@ export function Stats({
 	statsIsOpen,
 	lifetimeWorkSessions,
 	currentTimeStamp,
+	showStatsDate,
 }) {
-	const [calendarIsOpen, setCalendarIsOpen] = useState(false);
-	const [showStatsDate, setShowStatsDate] = useState(new Date("15 Dec 2023"));
 	const isShowingToday = formatDateDisplay(showStatsDate) === formatDateDisplay(new Date());
 
 	const daySecondsFocused = stats.reduce((acc, curr) => {
@@ -37,13 +36,6 @@ export function Stats({
 	// if (!statsIsOpen) return;
 	return (
 		<>
-			{calendarIsOpen && (
-				<Calendar
-					setCalendarIsOpen={setCalendarIsOpen}
-					setShowStatsDate={setShowStatsDate}
-					stats={stats}
-				/>
-			)}
 			<div
 				className={`text-base-content absolute left-0 top-0 h-screen w-3/12 overflow-y-auto bg-slate-900 p-4 opacity-75 transition-transform duration-500 ease-in-out ${
 					statsIsOpen ? "translate-x-0" : "-translate-x-full"
@@ -90,14 +82,6 @@ export function Stats({
 						<Button additionalClassName="mt-2" onClick={handleClearTodayTimeline}>
 							Clear
 						</Button>
-					</li>
-					<li>
-						<Button additionalClassName="mt-2" onClick={() => setCalendarIsOpen(old => !old)}>
-							Lifetime Stats
-						</Button>
-					</li>
-					<li>
-						<SearchStats stats={stats} />
 					</li>
 				</ul>
 			</div>

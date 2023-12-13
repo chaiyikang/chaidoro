@@ -53,7 +53,7 @@ export function Pomodoro({
 
 	const activeTask =
 		activeType === "pomodoro"
-			? "Pomodoro: " + (toDos.filter(task => task.active)[0]?.text ?? "No task selected")
+			? toDos.filter(task => task.active)[0]?.text ?? "No task selected"
 			: activeType === "shortBreak"
 			? "Short Break"
 			: "Long Break";
@@ -82,7 +82,7 @@ export function Pomodoro({
 				return;
 			}
 			// setTotalSecondsFocused(old => old + 1);
-			if (activeTask.substring(10) === lastTask) {
+			if (activeTask === lastTask) {
 				setStats(old => {
 					const currStat = old.at(-1);
 					// const staleTime = Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000);
@@ -103,7 +103,7 @@ export function Pomodoro({
 				setStats(old => [
 					...old,
 					{
-						task: activeTask.substring(10),
+						task: activeTask,
 						lengthSec: 0,
 						timeStampCreated: currentTimeStamp,
 						lastUpdatedTimeStamp: currentTimeStamp,

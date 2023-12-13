@@ -1,21 +1,13 @@
 import { useState } from "react";
 import { secondsToHours } from "../helpers";
 
-function SearchStats({ stats }) {
-	const [input, setInput] = useState("slack");
-	const searchResultArray = [];
+function SearchStats({ taskStats }) {
+	const [input, setInput] = useState("");
+	let searchResultArray;
 	if (input !== "") {
-		stats.forEach(ele => {
-			if (!ele.task.toLowerCase().includes(input.toLowerCase())) return; // search does not match stats
-			if (!searchResultArray.some(result => result.task.toLowerCase() === ele.task.toLowerCase())) {
-				// task is not alr in array, so we add it
-				return searchResultArray.push({ task: ele.task, totalLength: ele.lengthSec });
-			}
-			// task is in array, so we increment the value
-			searchResultArray.find(
-				result => result.task.toLowerCase() === ele.task.toLowerCase(),
-			).totalLength += ele.lengthSec;
-			return;
+		searchResultArray = taskStats?.filter(taskStat => {
+			if (taskStat.task.toLowerCase().includes(input.toLowerCase())) return true;
+			return false;
 		});
 	}
 
@@ -24,7 +16,7 @@ function SearchStats({ stats }) {
 	}
 
 	return (
-		<div className="mt-4">
+		<div className="align-center mt-4 flex w-fit flex-col items-center justify-center bg-slate-900 p-4 opacity-75">
 			<input
 				type="text"
 				value={input}
@@ -33,7 +25,7 @@ function SearchStats({ stats }) {
 				className="h-7 w-auto rounded-xl border border-slate-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none"
 			/>
 			<ul className="search-results">
-				{searchResultArray.map((result, i) => (
+				{searchResultArray?.map((result, i) => (
 					<li key={i}>
 						You spent {secondsToHours(result.totalLength)} hours on &quot;{result.task}&quot;
 					</li>

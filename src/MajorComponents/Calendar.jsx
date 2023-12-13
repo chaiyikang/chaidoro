@@ -28,15 +28,15 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 	return newCalendarData;
 }
 
-function Calendar({ stats, setCalendarIsOpen, setShowStatsDate }) {
+function Calendar({ stats, setShowStatsDate, setDashboardIsOpen }) {
 	const [changeRange, setChangeRange] = useState(0);
+	// month
 	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);
 	const endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1 + changeRange, 0);
 
 	// for every statistic, collate the total duration worked that day
 	let workDaysData = [];
 	stats.forEach(ele => {
-		if (!ele) return;
 		if (ele.task === "Short Break" || ele.task === "Long Break") return;
 		const dateString = formatDate(ele.timeStampCreated);
 		if (workDaysData.at(-1)?.date === dateString) {
@@ -58,12 +58,12 @@ function Calendar({ stats, setCalendarIsOpen, setShowStatsDate }) {
 	}
 
 	function handleClickDay(value) {
-		setCalendarIsOpen(false);
 		setShowStatsDate(value.date);
+		setDashboardIsOpen(false);
 	}
 
 	return (
-		<div className="absolute left-1/2 top-1/2 z-50 w-1/6 -translate-x-1/2 -translate-y-1/2 bg-slate-900">
+		<div className="z-50 w-1/6 bg-transparent">
 			<div className="flex justify-center">
 				<ControlButton handler={handlePrev}>navigate_before</ControlButton>
 				<ControlButton handler={handleNext}>navigate_next</ControlButton>

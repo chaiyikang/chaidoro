@@ -34,3 +34,9 @@
 ### 12 Dec 2023 Updates:
 
 1. Implemented calendar, tracking by day, traverse timelines of different days, and feature where you can search for a task and see total time spent`
+
+### 13 Dec 2023 Updates:
+
+1. Implemented navbar and scrolling animation for toggling between dashboard and pomodoro.
+2. Implemented dashboard with time display, calendar stats, task stat searcher.
+3. Implemented static quote/statistic display`

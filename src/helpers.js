@@ -29,6 +29,30 @@ export function formatDateDisplay(dateString) {
 	});
 }
 
+export function convertMillisTo12HourTime(timestamp) {
+	// Convert milliseconds to date object
+	const date = new Date(timestamp);
+
+	// Extract hours, minutes, and seconds
+	const hours = date.getHours();
+	const minutes = date.getMinutes();
+
+	// Convert hours to 12-hour format
+	const ampm = hours >= 12 ? "PM" : "AM";
+	let hour = hours % 12;
+	if (hour === 0) {
+		hour = 12;
+	}
+
+	// Format time with leading zeros
+	const formattedTime = `${hour.toString().padStart(2, "0")}:${minutes
+		.toString()
+		.padStart(2, "0")}`;
+
+	// Return time with AM/PM indicator
+	return `${formattedTime} ${ampm}`;
+}
+
 export function roundUpToNearestIntLimited(num, divisor, max) {
 	// Check for invalid inputs
 	if (typeof num !== "number" || typeof divisor !== "number" || typeof max !== "number") {
