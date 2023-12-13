@@ -39,4 +39,4 @@
 
 1. Implemented navbar and scrolling animation for toggling between dashboard and pomodoro.
 2. Implemented dashboard with time display, calendar stats, task stat searcher.
-3. Implemented static quote/statistic display`
+3. Implemented dynamic quote/statistic display`

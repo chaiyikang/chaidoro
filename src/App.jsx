@@ -152,6 +152,7 @@ function App() {
 					stats={stats}
 					setShowStatsDate={setShowStatsDate}
 					setDashboardIsOpen={setDashboardIsOpen}
+					userDataIsLoading={isLoading}
 				/>
 
 				<PomodoroApp dashboardIsOpen={dashboardIsOpen}>
@@ -166,6 +167,7 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 						currentTimeStamp={currentTimeStamp}
 						showStatsDate={showStatsDate}
+						setShowStatsDate={setShowStatsDate}
 					/>
 					{/* <Music /> */}
 					<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />

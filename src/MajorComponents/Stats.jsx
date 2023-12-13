@@ -13,6 +13,7 @@ export function Stats({
 	lifetimeWorkSessions,
 	currentTimeStamp,
 	showStatsDate,
+	setShowStatsDate,
 }) {
 	const isShowingToday = formatDateDisplay(showStatsDate) === formatDateDisplay(new Date());
 
@@ -44,6 +45,9 @@ export function Stats({
 				<ul>
 					<li>
 						<h1 className="text-3xl">{formatDateDisplay(showStatsDate)} </h1>
+						{!isShowingToday && (
+							<text onClick={() => setShowStatsDate(new Date())}>View today</text>
+						)}
 					</li>
 					<li>
 						<h1 className="text-2xl italic ">
