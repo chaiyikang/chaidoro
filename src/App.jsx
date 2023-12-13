@@ -17,6 +17,9 @@ import AccountModal from "./MajorComponents/AccountModal.jsx";
 import Cat from "./MajorComponents/Cat.jsx";
 import { isSameDate } from "./helpers.js";
 import Test from "./Test.jsx";
+import PomodoroApp from "./MajorComponents/PomodoroApp.jsx";
+import Dashboard from "./MajorComponents/Dashboard.jsx";
+import Navbar from "./MajorComponents/Navbar.jsx";
 
 const updateMessage = `
 12 Dec 2023 Updates:
@@ -49,6 +52,7 @@ function App() {
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
 
 	// * UI OPENING STATE //
+	const [dashboardIsOpen, setDashboardIsOpen] = useState(true);
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
@@ -134,62 +138,68 @@ function App() {
 					)}
 				</Toaster>
 				<Background />
-				<Cat catIsOpen={catIsOpen} />
-				<Stats
-					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-					setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
-					stats={stats}
-					setStats={setStats}
-					toDoIsOpen={toDoIsOpen}
-					statsIsOpen={statsIsOpen}
-					lifetimeWorkSessions={lifetimeWorkSessions}
-					currentTimeStamp={currentTimeStamp}
-				/>
-				{/* <Music /> */}
-				<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
-				<Pomodoro
-					settings={settings}
-					timeStampEnd={timeStampEnd}
-					setTimeStampEnd={setTimeStampEnd}
-					timerRunning={timerRunning}
-					activeType={activeType}
-					setActiveType={setActiveType}
-					currentTimeStamp={currentTimeStamp}
-					secondsLeftCache={secondsLeftCache}
-					setSecondsLeftCache={setSecondsLeftCache}
-					toDos={toDos}
-					stats={stats}
-					setStats={setStats}
-					pomodoroIsOpen={pomodoroIsOpen}
-					setPomodoroIsOpen={setPomodoroIsOpen}
-					setLifetimeWorkSessions={setLifetimeWorkSessions}
-				/>
-				<SpinningToolBar
-					setSettingsIsOpen={setSettingsIsOpen}
-					setPomodoroIsOpen={setPomodoroIsOpen}
-					setStatsIsOpen={setStatsIsOpen}
-					setToDoIsOpen={setToDoIsOpen}
-					setAccountIsOpen={setAccountIsOpen}
-					setCatIsOpen={setCatIsOpen}
-				/>
-				<Settings
-					settings={settings}
-					dispatchSettings={dispatchSettings}
-					timerRunning={timerRunning}
-					setTimeStampEnd={setTimeStampEnd}
-					activeType={activeType}
-					currentTimeStamp={currentTimeStamp}
-					secondsLeftCache={secondsLeftCache}
-					setSecondsLeftCache={setSecondsLeftCache}
-					settingsIsOpen={settingsIsOpen}
-					setSettingsIsOpen={setSettingsIsOpen}
-				/>
-				<AccountModal
-					accountIsOpen={accountIsOpen}
-					setAccountIsOpen={setAccountIsOpen}
-					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-					lifetimeWorkSessions={lifetimeWorkSessions}
-				/>
+				<Navbar dashboardIsOpen={dashboardIsOpen} setDashboardIsOpen={setDashboardIsOpen} />
+
+				<Dashboard dashboardIsOpen={dashboardIsOpen} />
+
+				<PomodoroApp dashboardIsOpen={dashboardIsOpen}>
+					<Cat catIsOpen={catIsOpen} />
+					<Stats
+						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+						setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
+						stats={stats}
+						setStats={setStats}
+						toDoIsOpen={toDoIsOpen}
+						statsIsOpen={statsIsOpen}
+						lifetimeWorkSessions={lifetimeWorkSessions}
+						currentTimeStamp={currentTimeStamp}
+					/>
+					{/* <Music /> */}
+					<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
+					<Pomodoro
+						settings={settings}
+						timeStampEnd={timeStampEnd}
+						setTimeStampEnd={setTimeStampEnd}
+						timerRunning={timerRunning}
+						activeType={activeType}
+						setActiveType={setActiveType}
+						currentTimeStamp={currentTimeStamp}
+						secondsLeftCache={secondsLeftCache}
+						setSecondsLeftCache={setSecondsLeftCache}
+						toDos={toDos}
+						stats={stats}
+						setStats={setStats}
+						pomodoroIsOpen={pomodoroIsOpen}
+						setPomodoroIsOpen={setPomodoroIsOpen}
+						setLifetimeWorkSessions={setLifetimeWorkSessions}
+					/>
+					<SpinningToolBar
+						setSettingsIsOpen={setSettingsIsOpen}
+						setPomodoroIsOpen={setPomodoroIsOpen}
+						setStatsIsOpen={setStatsIsOpen}
+						setToDoIsOpen={setToDoIsOpen}
+						setAccountIsOpen={setAccountIsOpen}
+						setCatIsOpen={setCatIsOpen}
+					/>
+					<Settings
+						settings={settings}
+						dispatchSettings={dispatchSettings}
+						timerRunning={timerRunning}
+						setTimeStampEnd={setTimeStampEnd}
+						activeType={activeType}
+						currentTimeStamp={currentTimeStamp}
+						secondsLeftCache={secondsLeftCache}
+						setSecondsLeftCache={setSecondsLeftCache}
+						settingsIsOpen={settingsIsOpen}
+						setSettingsIsOpen={setSettingsIsOpen}
+					/>
+					<AccountModal
+						accountIsOpen={accountIsOpen}
+						setAccountIsOpen={setAccountIsOpen}
+						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+						lifetimeWorkSessions={lifetimeWorkSessions}
+					/>
+				</PomodoroApp>
 			</div>
 		</>
 	);

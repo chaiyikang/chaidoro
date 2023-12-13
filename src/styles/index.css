@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
+body {
 	overflow: hidden;
-} */
+}
 .heatmapcontainer {
 	height: 100px;
 	width: 100px;
@@ -20,6 +20,14 @@
 
 .unfilled-icon {
 	font-variation-settings: "FILL" 0;
+}
+
+.material-symbols-outlined-max-weight {
+	font-variation-settings:
+		"FILL" 1,
+		"wght" 700,
+		"GRAD" 0,
+		"opsz" 48;
 }
 
 span.material-symbols-outlined:active {

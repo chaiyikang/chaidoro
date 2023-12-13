@@ -1,8 +1,14 @@
-function ControlButton({ handler, children, classes = "", fontSize = "text-7xl" }) {
+function ControlButton({
+	handler,
+	children,
+	classes = "",
+	fontSize = "text-7xl",
+	iconClassName = "",
+}) {
 	return (
-		<button onClick={handler} className={classes}>
+		<button onClick={handler} className={classes + "leading-none"}>
 			<span
-				className={`material-symbols-outlined ${fontSize} hover:text-slate-500 active:text-slate-600`}
+				className={`material-symbols-outlined align-middle ${fontSize} hover:text-slate-500 active:text-slate-600 ${iconClassName}`}
 			>
 				{children}
 			</span>

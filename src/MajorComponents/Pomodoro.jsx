@@ -248,7 +248,7 @@ export function Pomodoro({
 	return (
 		<>
 			<div
-				className={`absolute left-1/2 top-1/2 z-10 grid h-5/6 w-1/2 -translate-x-1/2  grid-cols-3 grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75 transition-transform duration-500 ease-in-out ${
+				className={`absolute left-1/2 top-[17rem] z-10 grid h-[500px] w-[460px] -translate-x-1/2 grid-cols-3  grid-rows-[62.5px_62.5px_312.5px_62.5px] items-center justify-items-center gap-0 rounded-xl bg-slate-900 opacity-75 transition-transform duration-500 ease-in-out ${
 					pomodoroIsOpen ? "-translate-y-1/2" : " -translate-y-[170%]"
 				}`}
 			>
