@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSound from "use-sound";
 import meowSfx from "../sounds/meowwww.mp3";
 
-function Cat({ catIsOpen }) {
+function Cat() {
 	const [animate, setAnimate] = useState(false);
 	const [meowSound] = useSound(meowSfx);
 
@@ -13,9 +13,8 @@ function Cat({ catIsOpen }) {
 
 	return (
 		<div
-			className={`absolute left-[10rem] top-1/2 z-[999999999] h-[20rem] w-[20rem] transition-transform duration-500 ease-in-out ${
-				catIsOpen ? "translate-y-0" : "translate-y-full"
-			}`}
+			className={`h-[20rem] w-[20rem] transition-transform duration-500
+			ease-in-out`}
 		>
 			<svg
 				onMouseEnter={handlePet}

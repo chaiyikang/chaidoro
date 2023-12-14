@@ -20,6 +20,7 @@ import Test from "./Test.jsx";
 import PomodoroApp from "./MajorComponents/PomodoroApp.jsx";
 import Dashboard from "./MajorComponents/Dashboard.jsx";
 import Navbar from "./MajorComponents/Navbar.jsx";
+import CatApp from "./MajorComponents/CatApp.jsx";
 
 const updateMessage = `
 12 Dec 2023 Updates:
@@ -64,7 +65,7 @@ function App() {
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
-	const [catIsOpen, setCatIsOpen] = useState(false);
+	const [catAppIsOpen, setCatAppIsOpen] = useState(false);
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
@@ -144,19 +145,22 @@ function App() {
 					)}
 				</Toaster>
 				<Background />
-				<Navbar dashboardIsOpen={dashboardIsOpen} setDashboardIsOpen={setDashboardIsOpen} />
+				<Navbar
+					dashboardIsOpen={dashboardIsOpen}
+					setDashboardIsOpen={setDashboardIsOpen}
+					catAppIsOpen={catAppIsOpen}
+					setCatAppIsOpen={setCatAppIsOpen}
+				/>
 
 				<Dashboard
 					dashboardIsOpen={dashboardIsOpen}
+					catAppIsOpen={catAppIsOpen}
 					currentTimeStamp={currentTimeStamp}
 					stats={stats}
 					setShowStatsDate={setShowStatsDate}
 					setDashboardIsOpen={setDashboardIsOpen}
-					userDataIsLoading={isLoading}
 				/>
-
-				<PomodoroApp dashboardIsOpen={dashboardIsOpen}>
-					<Cat catIsOpen={catIsOpen} />
+				<PomodoroApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen}>
 					<Stats
 						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 						setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
@@ -194,7 +198,6 @@ function App() {
 						setStatsIsOpen={setStatsIsOpen}
 						setToDoIsOpen={setToDoIsOpen}
 						setAccountIsOpen={setAccountIsOpen}
-						setCatIsOpen={setCatIsOpen}
 					/>
 					<Settings
 						settings={settings}
@@ -215,6 +218,7 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
 				</PomodoroApp>
+				<CatApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen} />
 			</div>
 		</>
 	);

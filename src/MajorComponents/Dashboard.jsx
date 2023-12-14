@@ -15,11 +15,11 @@ function chooseMessage(array1, array2, probability1) {
 
 function Dashboard({
 	dashboardIsOpen,
+	catAppIsOpen,
 	currentTimeStamp,
 	stats,
 	setShowStatsDate,
 	setDashboardIsOpen,
-	userDataIsLoading,
 }) {
 	// * DERIVE ARRAY OF STATS OF EACH TASK //
 	const taskStats = [];
@@ -72,11 +72,17 @@ function Dashboard({
 		setDisplayMessage(chooseMessage(top3TaskStatsMessages, quotesArray, 0.5));
 	}
 
+	// * UI //
+	const translation = dashboardIsOpen
+		? "translate-x-0"
+		: catAppIsOpen
+		? "-translate-x-[200%]"
+		: "-translate-x-full";
+
 	return (
 		<div
-			className={`absolute z-10 h-full w-full transition-all duration-500 ${
-				dashboardIsOpen ? "translate-x-0" : "-translate-x-full"
-			}`}
+			id="Dashboard"
+			className={`absolute z-10 h-full w-full transition-all duration-500 ${translation}`}
 		>
 			<h1 className="bg-slate-900 text-xl font-bold opacity-75">
 				{displayMessage}
