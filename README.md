@@ -39,4 +39,8 @@
 
 1. Implemented navbar and scrolling animation for toggling between dashboard and pomodoro.
 2. Implemented dashboard with time display, calendar stats, task stat searcher.
-3. Implemented dynamic quote/statistic display`
+3. Implemented dynamic quote/statistic display.
+
+### 14 Dec 2023 Updates:
+
+1. Implemented third tab for cat and basic dragging of food to cat
