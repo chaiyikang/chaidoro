@@ -29,9 +29,12 @@ const updateMessage = `
 13 Dec 2023 Updates:
 1. Implemented navbar and scrolling animation for toggling between dashboard and pomodoro.
 2. Implemented dashboard with time display, calendar stats, task stat searcher.
-3. Implemented static quote/statistic display`;
+3. Implemented static quote/statistic display
 
-// toast.success(updateMessage, { duration: 10000 });
+18 Dec 2023 Updates:
+1. Implemented basic functionality cat feeding: earning food, feeding`;
+
+toast.success(updateMessage, { duration: 10000 });
 
 let initialSettings = {
 	pomodoroLengthSec: 25 * 60,

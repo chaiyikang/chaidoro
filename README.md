@@ -44,3 +44,8 @@
 ### 14 Dec 2023 Updates:
 
 1. Implemented third tab for cat and basic dragging of food to cat
+
+### 18 Dec 2023 Updates:
+
+1. i am so braindead today but i implemented base logic for cat feeding - food earned by focus time and food fed, tracked by day
+2. changed how clearing stats works. instead of deleting from the stats state, clearing stats now simply sets the show property on the stat to false, and only stats with show: true are displayed on the timeline. Solves the problem of having to preserve seconds focused for deleted stats.
