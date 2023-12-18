@@ -56,6 +56,8 @@ function App() {
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
+	const [catFoodStats, setCatFoodStats] = useState([]);
+	const [catFoodStatsLoaded, setCatFoodStatsLoaded] = useState(false);
 	const [showStatsDate, setShowStatsDate] = useState(new Date());
 
 	// * UI OPENING STATE //
@@ -114,6 +116,13 @@ function App() {
 		setLifetimeArchivedSecondsFocused,
 		lifetimeArchivedSecondsFocused,
 	);
+	useRetrieveOrUpdate(
+		userData,
+		"cat_food_stats",
+		setCatFoodStats,
+		catFoodStats,
+		setCatFoodStatsLoaded,
+	);
 
 	if (isLoading)
 		return (
@@ -159,6 +168,8 @@ function App() {
 					stats={stats}
 					setShowStatsDate={setShowStatsDate}
 					setDashboardIsOpen={setDashboardIsOpen}
+					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+					lifetimeWorkSessions={lifetimeWorkSessions}
 				/>
 				<PomodoroApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen}>
 					<Stats
@@ -191,6 +202,9 @@ function App() {
 						pomodoroIsOpen={pomodoroIsOpen}
 						setPomodoroIsOpen={setPomodoroIsOpen}
 						setLifetimeWorkSessions={setLifetimeWorkSessions}
+						catFoodStats={catFoodStats}
+						setCatFoodStats={setCatFoodStats}
+						catFoodStatsLoaded={catFoodStatsLoaded}
 					/>
 					<SpinningToolBar
 						setSettingsIsOpen={setSettingsIsOpen}
@@ -218,7 +232,12 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
 				</PomodoroApp>
-				<CatApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen} />
+				<CatApp
+					dashboardIsOpen={dashboardIsOpen}
+					catAppIsOpen={catAppIsOpen}
+					catFoodStats={catFoodStats}
+					setCatFoodStats={setCatFoodStats}
+				/>
 			</div>
 		</>
 	);

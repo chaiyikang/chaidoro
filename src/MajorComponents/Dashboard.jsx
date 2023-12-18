@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { convertMillisTo12HourTime, secondsToHours } from "../helpers";
 import quotesArray from "../quotes";
 import Calendar from "./Calendar";
@@ -20,6 +20,8 @@ function Dashboard({
 	stats,
 	setShowStatsDate,
 	setDashboardIsOpen,
+	lifetimeWorkSessions,
+	lifetimeCurrentSecondsFocused,
 }) {
 	// * DERIVE ARRAY OF STATS OF EACH TASK //
 	const taskStats = [];
@@ -41,7 +43,7 @@ function Dashboard({
 		}
 	});
 
-	// * CREATE ARRAY OF MESSAGES //
+	// * CREATE MESSAGES FOR TOP 3 TASKS //
 	const descendingTaskStats = taskStats?.toSorted((a, b) => b.totalLength - a.totalLength);
 	const top3TasksStats = descendingTaskStats?.slice(0, 3);
 	const top3TaskStatsMessages = top3TasksStats?.map(taskStat => {
@@ -50,26 +52,35 @@ function Dashboard({
 		else return `You spent ${secondsToHours(taskStat.totalLength)} hours on "${taskStat.task}"!`;
 	});
 
+	// * CREATE MESSAGE FOR TOTAL STATS //
+	const totalStatMessage = `You have completed ${lifetimeWorkSessions} sessions, focusing for a total of ${secondsToHours(
+		lifetimeCurrentSecondsFocused,
+	)} hours.`;
+	const statsMessages = useMemo(
+		() => [...top3TaskStatsMessages, totalStatMessage],
+		[top3TaskStatsMessages, totalStatMessage],
+	);
+
 	const [displayMessage, setDisplayMessage] = useState(
-		chooseMessage(top3TaskStatsMessages, quotesArray, 0.5),
+		chooseMessage(statsMessages, quotesArray, 1),
 	);
 	const [displayMessageHasInit, setDisplayMessageHasInit] = useState(false);
 
 	// * if the user has stats, we re-generate the message so the statistics message may appear //
 	useEffect(
 		function initDisplayMessage() {
-			if (!displayMessageHasInit && top3TaskStatsMessages.length > 0) {
-				// console.log(top3TaskStatsMessages);
-				setDisplayMessage(chooseMessage(top3TaskStatsMessages, quotesArray, 0.5));
+			if (!displayMessageHasInit && statsMessages.length > 0) {
+				// console.log(statsMessages);
+				setDisplayMessage(chooseMessage(statsMessages, quotesArray, 1));
 				setDisplayMessageHasInit(true);
 			}
 		},
-		[top3TaskStatsMessages, displayMessageHasInit],
+		[statsMessages, displayMessageHasInit],
 	);
 
 	// * HANDLERS //
 	function handleRefresh() {
-		setDisplayMessage(chooseMessage(top3TaskStatsMessages, quotesArray, 0.5));
+		setDisplayMessage(chooseMessage(statsMessages, quotesArray, 1));
 	}
 
 	// * UI //

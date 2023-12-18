@@ -8,6 +8,8 @@ import timerEndedSfx from "../sounds/timerEnded.mp3";
 import { getUserData, useRetrieveOrUpdate } from "../services/supabaseUserData";
 import { useQuery } from "@tanstack/react-query";
 import Progress from "./Progress";
+import { formatDate, isSameDate } from "../helpers";
+import { CAT_FOOD_DURATION_SEC } from "../config";
 
 function formatIntervalString(camelCase) {
 	const spacedString = camelCase.replace(/([A-Z])/g, " $1");
@@ -31,6 +33,9 @@ export function Pomodoro({
 	pomodoroIsOpen,
 	setPomodoroIsOpen,
 	setLifetimeWorkSessions,
+	catFoodStats,
+	setCatFoodStats,
+	catFoodStatsLoaded,
 }) {
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -51,6 +56,16 @@ export function Pomodoro({
 	// const breakRepDisplay =
 	// 	workSetsCompleted === 0 ? 1 : workSetsCompleted % 4 === 0 ? 4 : workSetsCompleted % 4;
 
+	const todaySecondsFocused = stats.reduce((acc, curr) => {
+		if (curr.task === "Short Break" || curr.task === "Long Break") return acc;
+		if (!isSameDate(new Date(), curr.timeStampCreated)) return acc;
+		return acc + curr.lengthSec;
+	}, 0);
+	const catFoodEarnedToday = Math.floor(todaySecondsFocused / CAT_FOOD_DURATION_SEC);
+	const catFoodStatTodayInited = Boolean(
+		catFoodStats?.find(ele => ele.date === formatDate(new Date())),
+	);
+
 	const activeTask =
 		activeType === "pomodoro"
 			? toDos.filter(task => task.active)[0]?.text ?? "No task selected"
@@ -60,12 +75,43 @@ export function Pomodoro({
 
 	const lastTask = stats?.at(-1)?.task;
 
+	// * BACKEND //
+	const { data: userData } = useQuery({
+		queryKey: ["userData"],
+		queryFn: getUserData,
+	});
+
+	useRetrieveOrUpdate(userData, "work_sets_completed", setWorkSetsCompleted, workSetsCompleted);
+
 	// * SOUND //
 	const [clickSound] = useSound(clickSfx);
 	const [alertSound] = useSound(alertSfx);
 	const [timerEndedSound] = useSound(timerEndedSfx);
 
 	// * EFFECTS //
+	useEffect(
+		function updateCatFoodStats() {
+			if (!catFoodStatsLoaded) return; // wait for supabase stats (if any) to be applied
+			if (!catFoodStatTodayInited) {
+				// create new stat for the day
+				setCatFoodStats(stats => [
+					...stats,
+					{ date: formatDate(new Date()), foodEarned: catFoodEarnedToday, foodFed: 0 },
+				]);
+			} else {
+				// update food earned
+				setCatFoodStats(foodStats =>
+					foodStats.map(ele => {
+						if (ele.date === formatDate(new Date()))
+							return { ...ele, foodEarned: catFoodEarnedToday };
+						else return ele;
+					}),
+				);
+			}
+		},
+		[catFoodEarnedToday, catFoodStatTodayInited, setCatFoodStats, catFoodStatsLoaded],
+	);
+
 	useEffect(
 		function cacheSecondsLeft() {
 			if (!timerRunning) return;
@@ -137,6 +183,7 @@ export function Pomodoro({
 			if (activeType === "pomodoro") {
 				setWorkSetsCompleted(sets => sets + 1);
 				setLifetimeWorkSessions(total => total + 1);
+				// setCatFoodStats(q => q + 1);
 			}
 			let nextType;
 			if (activeType !== "pomodoro") {
@@ -174,6 +221,7 @@ export function Pomodoro({
 			timerEndedSound,
 			setLifetimeWorkSessions,
 			setPomodoroIsOpen,
+			setCatFoodStats,
 		],
 	);
 
@@ -218,14 +266,6 @@ export function Pomodoro({
 		setWorkSetsCompleted(0);
 	}
 
-	// * BACKEND //
-	const { data: userData } = useQuery({
-		queryKey: ["userData"],
-		queryFn: getUserData,
-	});
-
-	useRetrieveOrUpdate(userData, "work_sets_completed", setWorkSetsCompleted, workSetsCompleted);
-
 	// * UTILITY //
 	function pauseTimer() {
 		setTimeStampEnd(undefined);
@@ -254,6 +294,7 @@ export function Pomodoro({
 			>
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
+					<h3>{todaySecondsFocused}</h3>
 				</div>
 				<div className="row-start-2 justify-self-end text-3xl">
 					<button onClick={handleType} value="pomodoro" className="">

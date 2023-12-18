@@ -1,8 +1,9 @@
-function CatTunaBox() {
+function CatTunaBox({ children }) {
 	return (
 		<div className="absolute h-[5rem] w-[5rem]">
 			{/*?xml version="1.0" encoding="utf-8"?*/}
 			{/* Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools */}
+			{children}
 			<svg
 				viewBox="0 0 1024 1024"
 				className="icon"

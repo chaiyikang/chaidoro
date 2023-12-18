@@ -15,7 +15,8 @@ const defaultUserData = {
 	},
 	seconds_left: 1500,
 	work_sets_completed: 0,
-	total_work_sessions: 0,
+	lifetime_work_sessions: 0,
+	cat_food_stats: [],
 };
 
 export async function supabaseCreateUserData({ id, email }) {
@@ -70,7 +71,13 @@ export async function updateUserData(userId, columnName, payload) {
 	return data;
 }
 
-export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCallback, state) {
+export function useRetrieveOrUpdate(
+	userData,
+	columnName,
+	applyRetreivedDataCallback,
+	state,
+	updateStatus = undefined,
+) {
 	const renders = useRef(0);
 	useEffect(
 		function retrieveOrUpdate() {
@@ -91,13 +98,16 @@ export function useRetrieveOrUpdate(userData, columnName, applyRetreivedDataCall
 				// we only want to init once
 				renders.current++;
 				initSavedSettings();
+				if (updateStatus) updateStatus(true);
 				return;
 			}
 			// guard to prevent updating empty data when error occurs
 			if (Array.isArray(state) && state.length === 0) return;
 
 			updateSupabase();
+			return;
 		},
 		[userData, applyRetreivedDataCallback, state, columnName],
 	);
+	return renders.current;
 }
