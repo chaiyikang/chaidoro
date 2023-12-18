@@ -1,1 +1,1 @@
-export const CAT_FOOD_DURATION_SEC = 300;
+export const CAT_FOOD_DURATION_SEC = 25 * 60;

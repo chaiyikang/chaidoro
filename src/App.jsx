@@ -52,7 +52,6 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
-	const [lifetimeArchivedSecondsFocused, setLifetimeArchivedSecondsFocused] = useState(0); // stores length of deleted stats
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
@@ -71,11 +70,9 @@ function App() {
 
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
-	const lifetimeCurrentSecondsFocused =
-		lifetimeArchivedSecondsFocused +
-		stats.reduce((acc, curr) => {
-			return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
-		}, 0);
+	const lifetimeCurrentSecondsFocused = stats.reduce((acc, curr) => {
+		return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
+	}, 0);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -110,12 +107,7 @@ function App() {
 		setLifetimeWorkSessions,
 		lifetimeWorkSessions,
 	);
-	useRetrieveOrUpdate(
-		userData,
-		"lifetime_archived_seconds_focused",
-		setLifetimeArchivedSecondsFocused,
-		lifetimeArchivedSecondsFocused,
-	);
+
 	useRetrieveOrUpdate(
 		userData,
 		"cat_food_stats",
@@ -174,7 +166,6 @@ function App() {
 				<PomodoroApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen}>
 					<Stats
 						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-						setLifetimeArchivedSecondsFocused={setLifetimeArchivedSecondsFocused}
 						stats={stats}
 						setStats={setStats}
 						toDoIsOpen={toDoIsOpen}

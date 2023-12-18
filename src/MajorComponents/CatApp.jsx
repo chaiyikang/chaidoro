@@ -50,14 +50,22 @@ function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }
 
 							{foodOriginalPosition1 || foodBalance <= 0 ? (
 								<div className="shieldDiv">
-									<div className="catTunaContainer absolute " onClick={handleClickFood} ref={ref}>
+									<div
+										className="catTunaContainer absolute "
+										onMouseDown={handleClickFood}
+										ref={ref}
+									>
 										<CatTuna />
 									</div>
 								</div>
 							) : (
 								<Draggable>
 									<div className="shieldDiv">
-										<div className="catTunaContainer absolute " onClick={handleClickFood} ref={ref}>
+										<div
+											className="catTunaContainer absolute "
+											onMouseDown={handleClickFood}
+											ref={ref}
+										>
 											<CatTuna />
 										</div>
 									</div>

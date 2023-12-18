@@ -154,6 +154,7 @@ export function Pomodoro({
 						timeStampCreated: currentTimeStamp,
 						lastUpdatedTimeStamp: currentTimeStamp,
 						stale: false,
+						show: true,
 					},
 				]);
 			}
@@ -294,7 +295,6 @@ export function Pomodoro({
 			>
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
-					<h3>{todaySecondsFocused}</h3>
 				</div>
 				<div className="row-start-2 justify-self-end text-3xl">
 					<button onClick={handleType} value="pomodoro" className="">

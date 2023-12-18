@@ -6,7 +6,6 @@ import SearchStats from "./SearchStats";
 
 export function Stats({
 	lifetimeCurrentSecondsFocused,
-	setLifetimeArchivedSecondsFocused,
 	stats,
 	setStats,
 	statsIsOpen,
@@ -30,8 +29,12 @@ export function Stats({
 			)
 		)
 			return;
-		setLifetimeArchivedSecondsFocused(old => old + daySecondsFocused);
-		setStats(old => old.filter(stat => !isSameDate(stat.timeStampCreated, currentTimeStamp)));
+		setStats(stats =>
+			stats.map(stat =>
+				isSameDate(stat.timeStampCreated, new Date()) ? { ...stat, show: false } : stat,
+			),
+		);
+		// setStats(old => old.filter(stat => !isSameDate(stat.timeStampCreated, currentTimeStamp)));
 	}
 
 	// if (!statsIsOpen) return;
@@ -60,7 +63,7 @@ export function Stats({
 						</h1>
 					</li> */}
 					{stats
-						.filter(stat => isSameDate(stat.timeStampCreated, showStatsDate))
+						.filter(stat => isSameDate(stat.timeStampCreated, showStatsDate) && stat.show)
 						.map((stat, index) => {
 							return (
 								<li
