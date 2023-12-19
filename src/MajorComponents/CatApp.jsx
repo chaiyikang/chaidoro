@@ -41,7 +41,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 		},
 	});
 
-	function handleClickFood() {
+	function handleNoMoreFood() {
 		if (foodBalance <= 0)
 			return toast.error("You don't have any food left. Keep focusing to earn more.");
 	}
@@ -49,31 +49,29 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 	return (
 		<div id="CatApp" className={`h-screen w-screen transition-all duration-500 ${translation}`}>
 			<Cat foodFedToday={foodFedToday}>
-				<div className="w-[3rem]">
-					<div className="absolute left-0 top-0 translate-x-[30rem] translate-y-[10rem]">
-						<div className="h-[5rem] w-[5rem]  ">
-							<CatTunaBox>
-								<div className="absolute bottom-0 right-0 ">{foodBalance} </div>
-							</CatTunaBox>
-
-							{foodOriginalPosition1 || foodBalance <= 0 ? (
-								"" // to destroy the element, resetting the translation state
-							) : (
-								<Draggable>
-									<div className="shieldDiv">
-										<div
-											className="catTunaContainer {} absolute cursor-grab active:cursor-grabbing"
-											onMouseDown={handleClickFood}
-											ref={ref}
-										>
-											<CatTuna />
-										</div>
-									</div>
-								</Draggable>
-							)}
-						</div>
+				<CatTunaBox handler={handleNoMoreFood}>
+					<div className="absolute bottom-0 right-0 w-[1.5rem] -translate-x-[2rem] rounded-full bg-red-400 text-center text-4xl text-slate-900">
+						{foodBalance}
 					</div>
-				</div>
+				</CatTunaBox>
+
+				{foodOriginalPosition1 || foodBalance <= 0 ? (
+					"" // to destroy the element, resetting the translation state
+				) : (
+					<div className="tra absolute bottom-0 left-0 w-fit -translate-x-[210%] -translate-y-[70%]">
+						<Draggable>
+							<div className="shieldDiv">
+								<div
+									className="catTunaContainer cursor-grab active:cursor-grabbing"
+									onMouseDown={handleNoMoreFood}
+									ref={ref}
+								>
+									<CatTuna />
+								</div>
+							</div>
+						</Draggable>
+					</div>
+				)}
 				<CatProgress value={foodFedToday} />
 			</Cat>
 		</div>
