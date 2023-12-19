@@ -1,9 +1,6 @@
-function PomodoroApp({ children, dashboardIsOpen, catAppIsOpen }) {
-	const translation = dashboardIsOpen
-		? "translate-x-full"
-		: catAppIsOpen
-		? "-translate-x-full"
-		: "translate-x-0";
+function PomodoroApp({ children, navPage }) {
+	const translation =
+		navPage === 0 ? "translate-x-full" : navPage === 2 ? "-translate-x-full" : "translate-x-0";
 	return (
 		<div
 			id="PomodoroApp"

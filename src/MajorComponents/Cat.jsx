@@ -21,10 +21,9 @@ function Cat({ children, foodFedToday }) {
 			className={`myCatHehe absolute left-1/2 top-1/2 z-10 h-[15rem] w-[20rem] -translate-x-1/2 -translate-y-1/2
 			transition-transform duration-500 ease-in-out`}
 		>
-			<h1 className="absolute">
+			{/* <h1 className="absolute">
 				{foodFedToday} / {CAT_FEED_MAX}
-			</h1>
-			{children}
+			</h1> */}
 			<svg
 				onMouseEnter={handlePet}
 				onMouseLeave={() => setAnimate(false)}
@@ -38,6 +37,7 @@ function Cat({ children, foodFedToday }) {
 			>
 				<CatFedSvgContent fedState={foodFedToday} />
 			</svg>
+			{children}
 		</div>
 	);
 }

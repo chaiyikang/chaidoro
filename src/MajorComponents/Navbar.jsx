@@ -1,11 +1,13 @@
 import ControlButton from "../LowLevelComponents/ControlButton";
 
-function Navbar({ dashboardIsOpen, setDashboardIsOpen, catAppIsOpen, setCatAppIsOpen }) {
-	const indicatorTranslation = dashboardIsOpen
-		? "-translate-x-[3.55rem]"
-		: catAppIsOpen
-		? "translate-x-[3.55rem]"
-		: "translate-x-0";
+function Navbar({ navPage, setNavPage }) {
+	const indicatorTranslation =
+		navPage === 0
+			? "-translate-x-[3.55rem]"
+			: navPage === 2
+			? "translate-x-[3.55rem]"
+			: "translate-x-0";
+
 	return (
 		<div className="absolute bottom-5 left-1/2 z-20 flex h-[4rem] w-[11rem] -translate-x-1/2 items-center justify-center rounded-full bg-slate-900 py-1">
 			<div
@@ -14,16 +16,14 @@ function Navbar({ dashboardIsOpen, setDashboardIsOpen, catAppIsOpen, setCatAppIs
 			<div className="absolute z-50 flex justify-between gap-[0.55rem]">
 				<ControlButton
 					handler={() => {
-						setDashboardIsOpen(true);
-						setCatAppIsOpen(false);
+						setNavPage(0);
 					}}
 				>
 					home
 				</ControlButton>
 				<ControlButton
 					handler={() => {
-						setDashboardIsOpen(false);
-						setCatAppIsOpen(false);
+						setNavPage(1);
 					}}
 					iconClassName="material-symbols-outlined-max-weight"
 				>
@@ -31,8 +31,7 @@ function Navbar({ dashboardIsOpen, setDashboardIsOpen, catAppIsOpen, setCatAppIs
 				</ControlButton>
 				<ControlButton
 					handler={() => {
-						setDashboardIsOpen(false);
-						setCatAppIsOpen(true);
+						setNavPage(2);
 					}}
 				>
 					pets

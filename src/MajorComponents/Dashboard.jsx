@@ -15,12 +15,11 @@ function chooseMessage(array1, array2, probability1) {
 }
 
 function Dashboard({
-	dashboardIsOpen,
-	catAppIsOpen,
+	navPage,
+	setNavPage,
 	currentTimeStamp,
 	stats,
 	setShowStatsDate,
-	setDashboardIsOpen,
 	lifetimeWorkSessions,
 	lifetimeCurrentSecondsFocused,
 }) {
@@ -86,11 +85,8 @@ function Dashboard({
 	}
 
 	// * UI //
-	const translation = dashboardIsOpen
-		? "translate-x-0"
-		: catAppIsOpen
-		? "-translate-x-[200%]"
-		: "-translate-x-full";
+	const translation =
+		navPage === 0 ? "translate-x-0" : navPage === 2 ? "-translate-x-[200%]" : "-translate-x-full";
 
 	return (
 		<div
@@ -106,11 +102,7 @@ function Dashboard({
 			<time className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full text-8xl">
 				{convertMillisTo12HourTime(currentTimeStamp)}
 			</time>
-			<Calendar
-				stats={stats}
-				setShowStatsDate={setShowStatsDate}
-				setDashboardIsOpen={setDashboardIsOpen}
-			/>
+			<Calendar stats={stats} setShowStatsDate={setShowStatsDate} setNavPage={setNavPage} />
 			<SearchStats taskStats={taskStats} />
 		</div>
 	);

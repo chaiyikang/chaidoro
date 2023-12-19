@@ -7,17 +7,19 @@ import CatTunaBox from "../LowLevelComponents/CatTunaBox";
 import toast from "react-hot-toast";
 import { isSameDate, secondsToMins } from "../helpers";
 import { CAT_FEED_MAX, CAT_FOOD_DURATION_SEC } from "../config";
+import CatProgress from "./CatProgress";
 
-function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }) {
+function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 	// * STATE //
 	const [foodOriginalPosition1, setFoodOriginalPosition1] = useState(false);
 
 	// * DERIVED STATE //
-	const translation = dashboardIsOpen
-		? "translate-x-[200%]" // x o o
-		: catAppIsOpen
-		? "translate-x-0" // o o x
-		: "translate-x-full"; // o x o
+	const translation =
+		navPage === 0
+			? "translate-x-[200%]" // x o o
+			: navPage === 2
+			? "translate-x-0" // o o x
+			: "translate-x-full"; // o x o
 	const foodBalance =
 		catFoodStats?.reduce((acc, curr) => acc + curr.foodEarned - curr.foodFed, 0) || 0;
 	const foodFedToday = catFoodStats?.find(ele => isSameDate(ele.date, new Date()))?.foodFed || 0;
@@ -60,7 +62,7 @@ function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }
 								<Draggable>
 									<div className="shieldDiv">
 										<div
-											className="catTunaContainer absolute "
+											className="catTunaContainer {} absolute cursor-grab active:cursor-grabbing"
 											onMouseDown={handleClickFood}
 											ref={ref}
 										>
@@ -72,6 +74,7 @@ function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }
 						</div>
 					</div>
 				</div>
+				<CatProgress value={foodFedToday} />
 			</Cat>
 		</div>
 	);

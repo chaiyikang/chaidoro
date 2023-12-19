@@ -35,7 +35,10 @@ const updateMessage = `
 1. Implemented basic functionality cat feeding: earning food, feeding
 
 19 Dec 2023 Updates:
-1. IMPLEMENTED CAT CHONKINESS. HE GETS FAT WHEN YOU FEED HIMMMMMMM`;
+1. IMPLEMENTED CAT CHONKINESS. HE GETS FAT WHEN YOU FEED HIMMMMMMM
+2. Fixed bug where guest user cat food was not being updated.
+3. Implemented progress indicator for feeding and descriptions.
+4. Improved logic for page navigation and implemented keyboard navigation.`;
 
 toast.success(updateMessage, { duration: 10000 });
 
@@ -66,6 +69,7 @@ function App() {
 	const [showStatsDate, setShowStatsDate] = useState(new Date());
 
 	// * UI OPENING STATE //
+	const [navPage, setNavPage] = useState(0);
 	const [dashboardIsOpen, setDashboardIsOpen] = useState(true);
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
@@ -88,6 +92,19 @@ function App() {
 	}, []);
 
 	useTitle(secondsLeftCache, activeType);
+
+	useEffect(
+		function arrowKeyNav() {
+			function handleKeyDown(e) {
+				// console.log(e.key);
+				if (e.key === "ArrowLeft" && navPage > 0) return setNavPage(page => page - 1);
+				if (e.key === "ArrowRight" && navPage < 2) return setNavPage(page => page + 1);
+			}
+			document.addEventListener("keydown", handleKeyDown);
+			return () => document.removeEventListener("keydown", handleKeyDown);
+		},
+		[navPage],
+	);
 
 	// * BACKEND //
 	const { data: userData, isLoading } = useQuery({
@@ -153,24 +170,18 @@ function App() {
 					)}
 				</Toaster>
 				<Background />
-				<Navbar
-					dashboardIsOpen={dashboardIsOpen}
-					setDashboardIsOpen={setDashboardIsOpen}
-					catAppIsOpen={catAppIsOpen}
-					setCatAppIsOpen={setCatAppIsOpen}
-				/>
+				<Navbar navPage={navPage} setNavPage={setNavPage} />
 
 				<Dashboard
-					dashboardIsOpen={dashboardIsOpen}
-					catAppIsOpen={catAppIsOpen}
+					navPage={navPage}
+					setNavPage={setNavPage}
 					currentTimeStamp={currentTimeStamp}
 					stats={stats}
 					setShowStatsDate={setShowStatsDate}
-					setDashboardIsOpen={setDashboardIsOpen}
 					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 					lifetimeWorkSessions={lifetimeWorkSessions}
 				/>
-				<PomodoroApp dashboardIsOpen={dashboardIsOpen} catAppIsOpen={catAppIsOpen}>
+				<PomodoroApp navPage={navPage}>
 					<Stats
 						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 						stats={stats}
@@ -230,12 +241,7 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
 				</PomodoroApp>
-				<CatApp
-					dashboardIsOpen={dashboardIsOpen}
-					catAppIsOpen={catAppIsOpen}
-					catFoodStats={catFoodStats}
-					setCatFoodStats={setCatFoodStats}
-				/>
+				<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />
 			</div>
 		</>
 	);

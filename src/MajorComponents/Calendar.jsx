@@ -28,7 +28,7 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 	return newCalendarData;
 }
 
-function Calendar({ stats, setShowStatsDate, setDashboardIsOpen }) {
+function Calendar({ stats, setShowStatsDate, setNavPage }) {
 	const [changeRange, setChangeRange] = useState(0);
 	// month
 	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);
@@ -59,7 +59,7 @@ function Calendar({ stats, setShowStatsDate, setDashboardIsOpen }) {
 
 	function handleClickDay(value) {
 		setShowStatsDate(value.date);
-		setDashboardIsOpen(false);
+		setNavPage(1);
 	}
 
 	return (
