@@ -1,6 +1,19 @@
+import { Tooltip } from "react-tooltip";
+import { secondsToMins } from "../helpers";
+import { CAT_FOOD_DURATION_SEC } from "../config";
+
 function CatTunaBox({ children }) {
+	const toolTipContent = `For every ${secondsToMins(
+		CAT_FOOD_DURATION_SEC,
+	)} minutes focused, you earn 1x food for the
+	lil guy.`;
 	return (
-		<div className="absolute h-[5rem] w-[5rem]">
+		<div
+			data-tooltip-id="cat-feeding-info"
+			data-tooltip-content={toolTipContent}
+			className="absolute h-[5rem] w-[5rem]"
+		>
+			<Tooltip id="cat-feeding-info" />
 			{/*?xml version="1.0" encoding="utf-8"?*/}
 			{/* Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools */}
 			{children}

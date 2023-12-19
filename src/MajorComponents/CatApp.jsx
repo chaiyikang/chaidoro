@@ -5,16 +5,22 @@ import { useInView } from "react-intersection-observer";
 import { useRef, useState } from "react";
 import CatTunaBox from "../LowLevelComponents/CatTunaBox";
 import toast from "react-hot-toast";
-import { isSameDate } from "../helpers";
+import { isSameDate, secondsToMins } from "../helpers";
+import { CAT_FEED_MAX, CAT_FOOD_DURATION_SEC } from "../config";
 
 function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }) {
+	// * STATE //
 	const [foodOriginalPosition1, setFoodOriginalPosition1] = useState(false);
+
+	// * DERIVED STATE //
 	const translation = dashboardIsOpen
 		? "translate-x-[200%]" // x o o
 		: catAppIsOpen
 		? "translate-x-0" // o o x
 		: "translate-x-full"; // o x o
-	const foodBalance = catFoodStats.reduce((acc, curr) => acc + curr.foodEarned - curr.foodFed, 0);
+	const foodBalance =
+		catFoodStats?.reduce((acc, curr) => acc + curr.foodEarned - curr.foodFed, 0) || 0;
+	const foodFedToday = catFoodStats?.find(ele => isSameDate(ele.date, new Date()))?.foodFed || 0;
 
 	const { ref, inView, entry } = useInView({
 		root: document.querySelector(".myCatHehe"),
@@ -40,24 +46,16 @@ function CatApp({ dashboardIsOpen, catAppIsOpen, catFoodStats, setCatFoodStats }
 
 	return (
 		<div id="CatApp" className={`h-screen w-screen transition-all duration-500 ${translation}`}>
-			<Cat>
+			<Cat foodFedToday={foodFedToday}>
 				<div className="w-[3rem]">
 					<div className="absolute left-0 top-0 translate-x-[30rem] translate-y-[10rem]">
-						<div className="h-[5rem] w-[5rem]  bg-blue-900">
+						<div className="h-[5rem] w-[5rem]  ">
 							<CatTunaBox>
-								<div className="absolute bottom-0 right-0 bg-red-400">{foodBalance} </div>
+								<div className="absolute bottom-0 right-0 ">{foodBalance} </div>
 							</CatTunaBox>
 
 							{foodOriginalPosition1 || foodBalance <= 0 ? (
-								<div className="shieldDiv">
-									<div
-										className="catTunaContainer absolute "
-										onMouseDown={handleClickFood}
-										ref={ref}
-									>
-										<CatTuna />
-									</div>
-								</div>
+								"" // to destroy the element, resetting the translation state
 							) : (
 								<Draggable>
 									<div className="shieldDiv">

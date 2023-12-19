@@ -4,6 +4,7 @@ import quotesArray from "../quotes";
 import Calendar from "./Calendar";
 import SearchStats from "./SearchStats";
 import ControlButton from "../LowLevelComponents/ControlButton";
+import { STATS_VS_QUOTE_PROB } from "../config";
 
 function chooseMessage(array1, array2, probability1) {
 	if (Math.random() < probability1 && array1.length > 0) {
@@ -56,13 +57,14 @@ function Dashboard({
 	const totalStatMessage = `You have completed ${lifetimeWorkSessions} sessions, focusing for a total of ${secondsToHours(
 		lifetimeCurrentSecondsFocused,
 	)} hours.`;
-	const statsMessages = useMemo(
-		() => [...top3TaskStatsMessages, totalStatMessage],
-		[top3TaskStatsMessages, totalStatMessage],
-	);
+	const statsMessages = useMemo(() => {
+		if (lifetimeCurrentSecondsFocused > 0) return [...top3TaskStatsMessages, totalStatMessage];
+		else return [...top3TaskStatsMessages];
+	}, [top3TaskStatsMessages, totalStatMessage, lifetimeCurrentSecondsFocused]);
 
+	// * CREATE STATE //
 	const [displayMessage, setDisplayMessage] = useState(
-		chooseMessage(statsMessages, quotesArray, 1),
+		chooseMessage(statsMessages, quotesArray, STATS_VS_QUOTE_PROB),
 	);
 	const [displayMessageHasInit, setDisplayMessageHasInit] = useState(false);
 
@@ -71,7 +73,7 @@ function Dashboard({
 		function initDisplayMessage() {
 			if (!displayMessageHasInit && statsMessages.length > 0) {
 				// console.log(statsMessages);
-				setDisplayMessage(chooseMessage(statsMessages, quotesArray, 1));
+				setDisplayMessage(chooseMessage(statsMessages, quotesArray, STATS_VS_QUOTE_PROB));
 				setDisplayMessageHasInit(true);
 			}
 		},
@@ -80,7 +82,7 @@ function Dashboard({
 
 	// * HANDLERS //
 	function handleRefresh() {
-		setDisplayMessage(chooseMessage(statsMessages, quotesArray, 1));
+		setDisplayMessage(chooseMessage(statsMessages, quotesArray, STATS_VS_QUOTE_PROB));
 	}
 
 	// * UI //

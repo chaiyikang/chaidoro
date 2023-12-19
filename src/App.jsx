@@ -32,7 +32,10 @@ const updateMessage = `
 3. Implemented static quote/statistic display
 
 18 Dec 2023 Updates:
-1. Implemented basic functionality cat feeding: earning food, feeding`;
+1. Implemented basic functionality cat feeding: earning food, feeding
+
+19 Dec 2023 Updates:
+1. IMPLEMENTED CAT CHONKINESS. HE GETS FAT WHEN YOU FEED HIMMMMMMM`;
 
 toast.success(updateMessage, { duration: 10000 });
 
