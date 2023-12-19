@@ -77,12 +77,11 @@ export function useRetrieveOrUpdate(
 	applyRetreivedDataCallback,
 	state,
 	updateStatus = undefined,
+	userDataIsLoading,
 ) {
 	const renders = useRef(0);
 	useEffect(
 		function retrieveOrUpdate() {
-			if (!userData) return; // ensure initial data from supabase has loaded
-
 			async function initSavedSettings() {
 				if (!userData) return;
 				const { [columnName]: data } = userData;
@@ -93,12 +92,16 @@ export function useRetrieveOrUpdate(
 				await updateUserData(userData.USER_ID, columnName, state);
 			}
 
+			if (!userData && userDataIsLoading === false) {
+				return updateStatus?.(true);
+			}
+			if (!userData) return; // ensure initial data from supabase has loaded
 			// console.log("🚀 ~ file: supabaseUserData.js:46 ~ retrieveOrUpdate ~ userData:", userData);
 			if (renders.current < 1) {
 				// we only want to init once
 				renders.current++;
 				initSavedSettings();
-				if (updateStatus) updateStatus(true);
+				updateStatus?.(true);
 				return;
 			}
 			// guard to prevent updating empty data when error occurs
@@ -107,7 +110,7 @@ export function useRetrieveOrUpdate(
 			updateSupabase();
 			return;
 		},
-		[userData, applyRetreivedDataCallback, state, columnName],
+		[userData, applyRetreivedDataCallback, state, columnName, updateStatus, userDataIsLoading],
 	);
 	return renders.current;
 }

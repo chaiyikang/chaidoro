@@ -53,3 +53,4 @@
 ### 19 Dec 2023 Updates:
 
 1. IMPLEMENTED CAT CHONKINESS. HE GETS FAT WHEN YOU FEED HIMMMMMMM
+2. Fixed bug where guest user cat food was not being updated. Previously we only signalled that catFoodStats was done loading after we attempted to apply the supabase data. However we did not account for if there is no userData, hence catFoodStatsLoaded was never updated.

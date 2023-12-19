@@ -120,6 +120,7 @@ function App() {
 		setCatFoodStats,
 		catFoodStats,
 		setCatFoodStatsLoaded,
+		isLoading,
 	);
 
 	if (isLoading)
