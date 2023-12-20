@@ -21,6 +21,9 @@ import PomodoroApp from "./MajorComponents/PomodoroApp.jsx";
 import Dashboard from "./MajorComponents/Dashboard.jsx";
 import Navbar from "./MajorComponents/Navbar.jsx";
 import CatApp from "./MajorComponents/CatApp.jsx";
+import classListTable from "./classList.js";
+import shadesObject from "./classListGenerator.js";
+import { ThemeContext } from "./ThemeContext.js";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -48,33 +51,38 @@ function settingsReducer(state, action) {
 }
 
 function App() {
+	// * POMODORO LOGIC STATE //
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+
+	// * TO DOS, STATS STATE
 	const [toDos, setToDos] = useState([]);
 	const [stats, setStats] = useState([]);
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
-	const [catFoodStats, setCatFoodStats] = useState([]);
-	const [catFoodStatsLoaded, setCatFoodStatsLoaded] = useState(false);
 	const [showStatsDate, setShowStatsDate] = useState(new Date());
-
-	// * UI OPENING STATE //
-	const [navPage, setNavPage] = useState(0);
-	const [dashboardIsOpen, setDashboardIsOpen] = useState(true);
-	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
-	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
-	const [statsIsOpen, setStatsIsOpen] = useState(true);
-	const [toDoIsOpen, setToDoIsOpen] = useState(true);
-	const [accountIsOpen, setAccountIsOpen] = useState(false);
-	const [catAppIsOpen, setCatAppIsOpen] = useState(false);
-
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const lifetimeCurrentSecondsFocused = stats.reduce((acc, curr) => {
 		return acc + (curr.task === "Short Break" || curr.task === "Long Break" ? 0 : curr.lengthSec);
 	}, 0);
+
+	// * THEME //
+	const [theme, setTheme] = useState("slate");
+
+	// * CAT STATE //
+	const [catFoodStats, setCatFoodStats] = useState([]);
+	const [catFoodStatsLoaded, setCatFoodStatsLoaded] = useState(false);
+
+	// * UI OPENING STATE //
+	const [navPage, setNavPage] = useState(0);
+	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
+	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
+	const [statsIsOpen, setStatsIsOpen] = useState(true);
+	const [toDoIsOpen, setToDoIsOpen] = useState(true);
+	const [accountIsOpen, setAccountIsOpen] = useState(false);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -143,98 +151,100 @@ function App() {
 
 	return (
 		<>
-			<div className="select-none font-roboto font-light text-slate-400">
-				<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }}>
-					{t => (
-						<ToastBar toast={t}>
-							{({ icon, message }) => (
-								<>
-									{icon}
-									{message}
-									{t.type !== "loading" && (
-										<button className="self-start" onClick={() => toast.dismiss(t.id)}>
-											<span className="material-symbols-outlined">close</span>
-										</button>
-									)}
-								</>
-							)}
-						</ToastBar>
-					)}
-				</Toaster>
-				<Background />
-				<Navbar navPage={navPage} setNavPage={setNavPage} />
+			<ThemeContext.Provider value={{ theme: theme, setTheme: setTheme }}>
+				<div className="select-none font-roboto font-light text-slate-400">
+					<Toaster toastOptions={{ style: { background: "#1e293b", color: "#94a3b8" } }}>
+						{t => (
+							<ToastBar toast={t}>
+								{({ icon, message }) => (
+									<>
+										{icon}
+										{message}
+										{t.type !== "loading" && (
+											<button className="self-start" onClick={() => toast.dismiss(t.id)}>
+												<span className="material-symbols-outlined">close</span>
+											</button>
+										)}
+									</>
+								)}
+							</ToastBar>
+						)}
+					</Toaster>
+					<Background />
+					<Navbar navPage={navPage} setNavPage={setNavPage} />
 
-				<Dashboard
-					navPage={navPage}
-					setNavPage={setNavPage}
-					currentTimeStamp={currentTimeStamp}
-					stats={stats}
-					setShowStatsDate={setShowStatsDate}
-					lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-					lifetimeWorkSessions={lifetimeWorkSessions}
-				/>
-				<PomodoroApp navPage={navPage}>
-					<Stats
-						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-						stats={stats}
-						setStats={setStats}
-						toDoIsOpen={toDoIsOpen}
-						statsIsOpen={statsIsOpen}
-						lifetimeWorkSessions={lifetimeWorkSessions}
+					<Dashboard
+						navPage={navPage}
+						setNavPage={setNavPage}
 						currentTimeStamp={currentTimeStamp}
-						showStatsDate={showStatsDate}
+						stats={stats}
 						setShowStatsDate={setShowStatsDate}
-					/>
-					{/* <Music /> */}
-					<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
-					<Pomodoro
-						settings={settings}
-						timeStampEnd={timeStampEnd}
-						setTimeStampEnd={setTimeStampEnd}
-						timerRunning={timerRunning}
-						activeType={activeType}
-						setActiveType={setActiveType}
-						currentTimeStamp={currentTimeStamp}
-						secondsLeftCache={secondsLeftCache}
-						setSecondsLeftCache={setSecondsLeftCache}
-						toDos={toDos}
-						stats={stats}
-						setStats={setStats}
-						pomodoroIsOpen={pomodoroIsOpen}
-						setPomodoroIsOpen={setPomodoroIsOpen}
-						setLifetimeWorkSessions={setLifetimeWorkSessions}
-						catFoodStats={catFoodStats}
-						setCatFoodStats={setCatFoodStats}
-						catFoodStatsLoaded={catFoodStatsLoaded}
-					/>
-					<SpinningToolBar
-						setSettingsIsOpen={setSettingsIsOpen}
-						setPomodoroIsOpen={setPomodoroIsOpen}
-						setStatsIsOpen={setStatsIsOpen}
-						setToDoIsOpen={setToDoIsOpen}
-						setAccountIsOpen={setAccountIsOpen}
-					/>
-					<Settings
-						settings={settings}
-						dispatchSettings={dispatchSettings}
-						timerRunning={timerRunning}
-						setTimeStampEnd={setTimeStampEnd}
-						activeType={activeType}
-						currentTimeStamp={currentTimeStamp}
-						secondsLeftCache={secondsLeftCache}
-						setSecondsLeftCache={setSecondsLeftCache}
-						settingsIsOpen={settingsIsOpen}
-						setSettingsIsOpen={setSettingsIsOpen}
-					/>
-					<AccountModal
-						accountIsOpen={accountIsOpen}
-						setAccountIsOpen={setAccountIsOpen}
 						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
-				</PomodoroApp>
-				<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />
-			</div>
+					<PomodoroApp navPage={navPage}>
+						<Stats
+							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+							stats={stats}
+							setStats={setStats}
+							toDoIsOpen={toDoIsOpen}
+							statsIsOpen={statsIsOpen}
+							lifetimeWorkSessions={lifetimeWorkSessions}
+							currentTimeStamp={currentTimeStamp}
+							showStatsDate={showStatsDate}
+							setShowStatsDate={setShowStatsDate}
+						/>
+						{/* <Music /> */}
+						<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
+						<Pomodoro
+							settings={settings}
+							timeStampEnd={timeStampEnd}
+							setTimeStampEnd={setTimeStampEnd}
+							timerRunning={timerRunning}
+							activeType={activeType}
+							setActiveType={setActiveType}
+							currentTimeStamp={currentTimeStamp}
+							secondsLeftCache={secondsLeftCache}
+							setSecondsLeftCache={setSecondsLeftCache}
+							toDos={toDos}
+							stats={stats}
+							setStats={setStats}
+							pomodoroIsOpen={pomodoroIsOpen}
+							setPomodoroIsOpen={setPomodoroIsOpen}
+							setLifetimeWorkSessions={setLifetimeWorkSessions}
+							catFoodStats={catFoodStats}
+							setCatFoodStats={setCatFoodStats}
+							catFoodStatsLoaded={catFoodStatsLoaded}
+						/>
+						<SpinningToolBar
+							setSettingsIsOpen={setSettingsIsOpen}
+							setPomodoroIsOpen={setPomodoroIsOpen}
+							setStatsIsOpen={setStatsIsOpen}
+							setToDoIsOpen={setToDoIsOpen}
+							setAccountIsOpen={setAccountIsOpen}
+						/>
+						<Settings
+							settings={settings}
+							dispatchSettings={dispatchSettings}
+							timerRunning={timerRunning}
+							setTimeStampEnd={setTimeStampEnd}
+							activeType={activeType}
+							currentTimeStamp={currentTimeStamp}
+							secondsLeftCache={secondsLeftCache}
+							setSecondsLeftCache={setSecondsLeftCache}
+							settingsIsOpen={settingsIsOpen}
+							setSettingsIsOpen={setSettingsIsOpen}
+						/>
+						<AccountModal
+							accountIsOpen={accountIsOpen}
+							setAccountIsOpen={setAccountIsOpen}
+							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+							lifetimeWorkSessions={lifetimeWorkSessions}
+						/>
+					</PomodoroApp>
+					<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />
+				</div>
+			</ThemeContext.Provider>
 		</>
 	);
 }
