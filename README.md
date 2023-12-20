@@ -56,3 +56,4 @@
 2. Fixed bug where guest user cat food was not being updated. Previously we only signalled that catFoodStats was done loading after we attempted to apply the supabase data. However we did not account for if there is no userData, hence catFoodStatsLoaded was never updated.
 3. Implemented progress indicator for feeding and descriptions.
 4. Improved logic for page navigation and implemented keyboard navigation.
+5. improved styling and positioning of cat feeding
