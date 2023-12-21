@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "../styles/index.css";
 import "../features/PomodoroApp/Pomodoro/menuAnimation.css";
 import "../features/Cat/catAnimation.css";
-import "../features/Theming/dayNightToggle.css"
+import "../features/Theming/dayNightToggle.css";
 import "react-calendar-heatmap/dist/styles.css";
 import "react-tooltip/dist/react-tooltip.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

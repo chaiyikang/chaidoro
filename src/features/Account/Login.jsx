@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { supabaseLogIn } from "./supabaseAccount";
 import toast from "react-hot-toast";
-import { TEInput, TERipple } from "tw-elements-react";
 import { ThemeContext } from "../Theming/ThemeContext";
 
 function Login({ handleClose, setSignUpIsOpen }) {
@@ -59,7 +58,7 @@ function Login({ handleClose, setSignUpIsOpen }) {
 								}}
 							>
 								{/* <!-- Email input --> */}
-								<TEInput
+								<input
 									onChange={e => setEmail(e.target.value)}
 									value={email}
 									type="email"
@@ -67,10 +66,10 @@ function Login({ handleClose, setSignUpIsOpen }) {
 									autoComplete="username"
 									size="lg"
 									className="mb-6"
-								></TEInput>
+								></input>
 
 								{/* <!--Password input--> */}
-								<TEInput
+								<input
 									onChange={e => setPassword(e.target.value)}
 									value={password}
 									type="password"
@@ -78,7 +77,7 @@ function Login({ handleClose, setSignUpIsOpen }) {
 									autoComplete="current-password"
 									className="mb-6"
 									size="lg"
-								></TEInput>
+								></input>
 
 								{/* <!-- Remember me checkbox --> */}
 								<div className="mb-6 flex items-center justify-between">
@@ -109,25 +108,23 @@ function Login({ handleClose, setSignUpIsOpen }) {
 
 								{/* <!-- Submit button --> */}
 
-								<TERipple rippleColor="light" className="w-full">
-									<button
-										// disabled={isPending}
-										type="submit"
-										className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-									>
-										{isPending ? (
-											<div
-												className={`inline-block h-[20px] w-[20px] animate-spin rounded-full border-[1px] border-current border-t-transparent text-${theme}-400`}
-												role="status"
-												aria-label="loading"
-											>
-												<span className="sr-only">Loading...</span>
-											</div>
-										) : (
-											"Sign in"
-										)}
-									</button>
-								</TERipple>
+								<button
+									// disabled={isPending}
+									type="submit"
+									className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+								>
+									{isPending ? (
+										<div
+											className={`inline-block h-[20px] w-[20px] animate-spin rounded-full border-[1px] border-current border-t-transparent text-${theme}-400`}
+											role="status"
+											aria-label="loading"
+										>
+											<span className="sr-only">Loading...</span>
+										</div>
+									) : (
+										"Sign in"
+									)}
+								</button>
 
 								{/* Sign up link */}
 								<p className="mb-0 mt-2 pt-1 text-sm font-semibold">
