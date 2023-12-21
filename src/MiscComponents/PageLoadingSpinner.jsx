@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { ThemeContext } from "../features/Theming/ThemeContext";
 
 function PageLoadingSpinner() {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 
 	return (
-		<div className={`grid h-screen w-screen place-items-center bg-${theme}-800`}>
+		<div className={`grid h-screen w-screen place-items-center bg-neutral-800`}>
 			<div
-				className={`inline-block h-[10rem] w-[10rem] animate-spin rounded-full border-[1rem] border-current border-t-transparent text-${theme}-400`}
+				className={`text-netural-400 inline-block h-[10rem] w-[10rem] animate-spin rounded-full border-[1rem] border-current border-t-transparent`}
 				role="status"
 				aria-label="loading"
 			>

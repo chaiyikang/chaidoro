@@ -4,7 +4,7 @@ import ToDo from "./ToDo";
 import { ThemeContext } from "../Theming/ThemeContext";
 
 export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
-	const { theme, insideNight: themeColour } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 
 	const [input, setInput] = useState("");
 
@@ -56,7 +56,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 					onChange={handleNewTaskInputChange}
 					onKeyDown={handleEnter}
 					placeholder="Enter a new task"
-					className={`h-7 w-auto rounded-xl border border-${theme}-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+					className={`h-7 w-auto rounded-xl border ${themeColour?.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
 				/>
 				<Button onClick={handleAddTask} additionalClassName="ml-4">
 					Add

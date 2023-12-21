@@ -44,12 +44,36 @@ function settingsReducer(state, action) {
 const themeColours = {
 	insideNight: {
 		text: `text-indigo-200`,
-		textHover: `text-indigo-400`,
-		textActive: `text-indigo-500`,
+		textHover: `hover:text-indigo-300`,
+		textActive: `active:text-indigo-400`,
+		// "button" means text buttons, for icon buttons text styles are used
+		button: `bg-indigo-700`,
+		buttonHover: `hover:bg-indigo-800`,
+		buttonActive: `active:bg-indigo-900`,
+		background: `bg-indigo-700 bg-opacity-30`,
+		backgroundTranslucent: `bg-indigo-700 bg-opacity-75`,
+		backgroundOpaque: `bg-indigo-700 bg-opacity-100`,
+		navIndicator: `bg-indigo-500`,
+		pageLoadingSpinner: `text-indigo-400`,
+		border: `border-indigo-700`,
+		fillEmpty: `fill-indigo-50`,
+		fill200: `fill-indigo-200`,
+		fill300: `fill-indigo-300`,
+		fill400: `fill-indigo-400`,
+		fill500: `fill-indigo-500`,
+		fill600: `fill-indigo-600`,
+		fill700: `fill-indigo-700`,
+		fill800: `fill-indigo-800`,
+		fill900: `fill-indigo-900`,
 		menu: `bg-indigo-200`,
 		menuHover: `bg-indigo-400`,
 		menuActive: `bg-indigo-500`,
-		background: `bg-indigo-700 bg-opacity-30`,
+		menuBefore: `before:bg-indigo-200`,
+		menuHoverBefore: `before:bg-indigo-400`,
+		menuActiveBefore: `before:bg-indigo-500`,
+		menuAfter: `after:bg-indigo-200`,
+		menuHoverAfter: `after:bg-indigo-400`,
+		menuActiveAfter: `after:bg-indigo-500`,
 	},
 };
 
@@ -73,8 +97,8 @@ function App() {
 	}, 0);
 
 	// * THEME //
-	const [theme, setTheme] = useState("slate");
-	const [backgroundTheme, setBackgroundTheme] = useState("insideNight");
+	const [staticTheme, setStaticTheme] = useState("slate");
+	const [theme, setTheme] = useState("insideNight");
 	const [day, setDay] = useState(false);
 
 	// * CAT STATE //
@@ -164,8 +188,10 @@ function App() {
 
 	return (
 		<>
-			<ThemeContext.Provider value={{ theme: theme, setTheme: setTheme, ...themeColours }}>
-				<div className={`select-none font-roboto font-light ${themeColours[backgroundTheme].text}`}>
+			<ThemeContext.Provider
+				value={{ theme: staticTheme, setTheme: setStaticTheme, themeColour: themeColours[theme] }}
+			>
+				<div className={`select-none font-roboto font-light ${themeColours[theme].text}`}>
 					<Toaster
 						toastOptions={{
 							style: {

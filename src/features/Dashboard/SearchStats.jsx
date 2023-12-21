@@ -3,7 +3,7 @@ import { secondsToHours } from "../../main/helpers";
 import { ThemeContext } from "../Theming/ThemeContext";
 
 function SearchStats({ taskStats }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	const [input, setInput] = useState("");
 	let searchResultArray;
 	if (input !== "") {
@@ -19,14 +19,14 @@ function SearchStats({ taskStats }) {
 
 	return (
 		<div
-			className={`align-center mt-4 flex w-fit flex-col items-center justify-center bg-${theme}-900 p-4 opacity-75`}
+			className={`align-center mt-4 flex w-fit flex-col items-center justify-center ${themeColour?.backgroundTranslucent} p-4`}
 		>
 			<input
 				type="text"
 				value={input}
 				onChange={handleInputChange}
 				placeholder="Search for a task"
-				className={`h-7 w-auto rounded-xl border border-${theme}-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+				className={`h-7 w-auto rounded-xl border ${themeColour?.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
 			/>
 			<ul className="search-results">
 				{searchResultArray?.map((result, i) => (

@@ -28,7 +28,7 @@ function Dashboard({
 	day,
 	setDay,
 }) {
-	const { theme, setTheme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 
 	function handleCheck() {
 		setDay(check => !check);
@@ -95,11 +95,11 @@ function Dashboard({
 		setDisplayMessage(chooseMessage(statsMessages, quotesArray, STATS_VS_QUOTE_PROB));
 	}
 
-	function handleThemeChange(e) {
-		const theme = e.target.value;
-		if (!themes.includes(theme)) return;
-		setTheme(theme);
-	}
+	// function handleThemeChange(e) {
+	// 	const theme = e.target.value;
+	// 	if (!themes.includes(theme)) return;
+	// 	setTheme(theme);
+	// }
 
 	// * UI //
 	const translation =
@@ -112,12 +112,12 @@ function Dashboard({
 		>
 			<DayNightToggle handler={handleCheck} checked={day} />
 
-			<select onChange={handleThemeChange} value={theme}>
+			{/* <select onChange={handleThemeChange} value={theme}>
 				{themes.map(theme => (
 					<option key={theme}>{theme}</option>
 				))}
-			</select>
-			<h1 className={`bg-${theme}-900 text-xl font-bold opacity-75`}>
+			</select> */}
+			<h1 className={`${themeColour?.background} text-xl font-bold`}>
 				{displayMessage}
 				<ControlButton handler={handleRefresh} fontSize="text-3xl">
 					restart_alt

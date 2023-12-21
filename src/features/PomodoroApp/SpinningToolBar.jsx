@@ -10,10 +10,10 @@ function SpinningToolBar({
 	setAccountIsOpen,
 	setCatIsOpen,
 }) {
-	const { theme, insideNight: themeColour } = useContext(ThemeContext);
-	const labelColour = `${themeColour?.menu} before:${themeColour?.menu} after:${themeColour?.menu}`;
-	const labelColourHover = `${themeColour?.menuHover} before:${themeColour?.menuHover} after:${themeColour?.menuHover}`;
-	const labelColourActive = `${themeColour?.menuActive} before:${themeColour?.menuActive} after:${themeColour?.menuActive}`;
+	const { themeColour } = useContext(ThemeContext);
+	const labelColour = `${themeColour?.menu} ${themeColour?.menuBefore} ${themeColour?.menuAfter}`;
+	const labelColourHover = `${themeColour?.menuHover} ${themeColour?.menuHoverBefore} ${themeColour?.menuHoverAfter}`;
+	const labelColourActive = `${themeColour?.menuActive} ${themeColour?.menuActiveBefore} ${themeColour?.menuActiveAfter}`;
 
 	const [spinnerOpen, setSpinnerOpen] = useState(false);
 	const [hovering, setHovering] = useState(false);

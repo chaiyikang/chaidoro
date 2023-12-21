@@ -38,7 +38,7 @@ export function Pomodoro({
 	setCatFoodStats,
 	catFoodStatsLoaded,
 }) {
-	const { theme, insideNight: themeColour } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 

@@ -30,7 +30,7 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 }
 
 function Calendar({ stats, setShowStatsDate, setNavPage }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	const [changeRange, setChangeRange] = useState(0);
 	// month
 	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);
@@ -81,10 +81,10 @@ function Calendar({ stats, setShowStatsDate, setNavPage }) {
 				values={everyDayData}
 				onClick={handleClickDay}
 				classForValue={value => {
-					if (!value?.totalLength) return `fill-${theme}-50`;
+					if (!value?.totalLength) return `${themeColour?.fillEmpty}`;
 					const roundedValue =
 						200 + roundUpToNearestIntLimited(value.totalLength, 60 * 60, 5) * 100;
-					return `fill-${theme}-${roundedValue}`;
+					return `${themeColour[`fill${roundedValue}`]}`;
 				}}
 				tooltipDataAttrs={value => {
 					// console.log(value);

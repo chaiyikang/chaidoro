@@ -15,7 +15,7 @@ export function Stats({
 	showStatsDate,
 	setShowStatsDate,
 }) {
-	const { theme, insideNight: themeColour } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	const isShowingToday = formatDateDisplay(showStatsDate) === formatDateDisplay(new Date());
 
 	const daySecondsFocused = stats.reduce((acc, curr) => {
@@ -71,7 +71,7 @@ export function Stats({
 						.map((stat, index) => {
 							return (
 								<li
-									className={`mt-2 rounded-xl bg-${theme}-700 p-2 text-xl`}
+									className={`mt-2 rounded-xl ${themeColour?.backgroundOpaque} p-2 text-xl`}
 									key={index}
 									// TODO adjust minimum height
 									style={{
