@@ -56,7 +56,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 					onChange={handleNewTaskInputChange}
 					onKeyDown={handleEnter}
 					placeholder="Enter a new task"
-					className={`h-7 w-auto rounded-xl border ${themeColour?.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+					className={`h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.backgroundTranslucent} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 				/>
 				<Button onClick={handleAddTask} additionalClassName="ml-4">
 					Add

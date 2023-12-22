@@ -4,6 +4,7 @@ import ToggleSwitch from "../../UtilityComponents/ToggleSwitch";
 import toast, { Toaster } from "react-hot-toast";
 import { updateUserData } from "../Account/supabaseUserData";
 import { ThemeContext } from "../Theming/ThemeContext";
+import Modal from "../../UtilityComponents/Modal";
 
 const validationConfigLengths = {
 	required: "Please input desired duration",
@@ -38,6 +39,7 @@ export function Settings({
 	settingsIsOpen,
 	setSettingsIsOpen,
 }) {
+	const { themeColour } = useContext(ThemeContext);
 	const defaultValues = useMemo(
 		() => ({
 			pomodoroLengthMin: +(settings.pomodoroLengthSec / 60).toFixed(1),
@@ -205,61 +207,4 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 			{/* <span className="text-red-700 ">{errorMessage}</span> */}
 		</div>
 	);
-}
-
-function Modal({ children, submitAndClose, settingsIsOpen }) {
-	const { theme } = useContext(ThemeContext);
-	return (
-		<>
-			{settingsIsOpen && (
-				<>
-					<div
-						className={`fixed left-1/2 top-1/2 z-50 h-auto w-auto -translate-x-1/2 -translate-y-1/2 bg-${theme}-900 px-7 py-4 text-base`}
-					>
-						<button onClick={submitAndClose} className="absolute right-1 top-1">
-							<span className="material-symbols-outlined">close</span>
-						</button>
-						{children}
-					</div>
-					<div
-						onClick={submitAndClose}
-						className="fixed left-0 top-0 z-[49] h-screen w-screen bg-black/70"
-					></div>
-				</>
-			)}
-		</>
-	);
-
-	// return (
-	// 	<>
-	// 		{/* You can open the modal using document.getElementById('ID').showModal() method */}
-	// 		<button className="absolute bottom-0 right-0 btn" onClick={() => modal.current.showModal()}>
-	// 			Settings
-	// 		</button>
-	// 		<dialog ref={modal} className="modal">
-	// 			<div className="modal-box">
-	// 				<form method="dialog">
-	// 					{/* if there is a button in form, it will close the modal */}
-	// 					<button
-	// 						onClick={() => {
-	// 							handleSubmit(onSubmit)();
-	// 						}}
-	// 						className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
-	// 					>
-	// 						✕
-	// 					</button>
-	// 				</form>
-	// 				{children}
-	// 			</div>
-	// 			<form method="dialog" className="modal-backdrop">
-	// 				<button
-	// 					onClick={() => {
-	// 						handleSubmit(onSubmit)();
-	// 					}}
-	// 					className="cursor-default"
-	// 				></button>
-	// 			</form>
-	// 		</dialog>
-	// 	</>
-	// );
 }

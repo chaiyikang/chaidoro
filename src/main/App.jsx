@@ -35,7 +35,7 @@ const updateMessage = `
 3. Implemented progress indicator for feeding and descriptions.
 4. Improved logic for page navigation and implemented keyboard navigation.`;
 
-toast.success(updateMessage, { duration: 10000 });
+// toast.success(updateMessage, { duration: 10000 });
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
@@ -52,6 +52,10 @@ const themeColours = {
 		catProgress: `bg-indigo-400`,
 		catProgressText: `text-indigo-900`,
 		// "button" means text buttons, for icon buttons text styles are used
+		toggleOff: `bg-indigo-900`,
+		toggleButtonOff: `before:bg-indigo-200`,
+		toggleOn: `checked:bg-indigo-400`,
+		toggleButtonOn: `checked:before:bg-indigo-50`,
 		button: `bg-indigo-700`,
 		buttonHover: `hover:bg-indigo-800`,
 		buttonActive: `active:bg-indigo-900`,

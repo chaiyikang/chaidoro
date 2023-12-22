@@ -34,6 +34,62 @@ function Login({ handleClose, setSignUpIsOpen }) {
 				<button onClick={handleClose} className="absolute right-1 top-1">
 					<span className="material-symbols-outlined">close</span>
 				</button>
+				<div className="p-4 sm:p-7">
+					<div className="text-center">
+						<h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
+					</div>
+					<div className="mt-5">
+						{/* Form */}
+						<form>
+							<div className="grid gap-y-4">
+								{/* Form Group */}
+								<div>
+									<label htmlFor="email" className="mb-2 block text-sm dark:text-white">
+										Email address
+									</label>
+									<div className="relative">
+										<input
+											type="email"
+											id="email"
+											name="email"
+											className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+											required=""
+											aria-describedby="email-error"
+										/>
+									</div>
+								</div>
+								{/* End Form Group */}
+								{/* Form Group */}
+								<div>
+									<div className="flex items-center justify-between">
+										<label htmlFor="password" className="mb-2 block text-sm dark:text-white">
+											Password
+										</label>
+									</div>
+									<div className="relative">
+										<input
+											type="password"
+											id="password"
+											name="password"
+											className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+											required=""
+											aria-describedby="password-error"
+										/>
+									</div>
+								</div>
+								{/* End Form Group */}
+
+								<button
+									type="submit"
+									className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+								>
+									Sign in
+								</button>
+							</div>
+						</form>
+						{/* End Form */}
+					</div>
+				</div>
 
 				{/* <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
 						<div className="">
