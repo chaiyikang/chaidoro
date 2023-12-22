@@ -10,7 +10,7 @@ import { isSameDate } from "../../main/helpers";
 import { ThemeContext } from "../Theming/ThemeContext";
 
 function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	// * STATE //
 	const [foodOriginalPosition1, setFoodOriginalPosition1] = useState(false);
 
@@ -52,7 +52,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 			<Cat foodFedToday={foodFedToday}>
 				<CatTunaBox handler={handleNoMoreFood}>
 					<div
-						className={`text-${theme}-900 absolute bottom-0 right-0 w-[1.5rem] -translate-x-[2rem] rounded-full bg-red-400 text-center text-4xl`}
+						className={`absolute bottom-0 right-0 w-auto -translate-x-[2rem] rounded-full bg-red-400 px-2 text-center text-4xl text-red-900`}
 					>
 						{foodBalance}
 					</div>

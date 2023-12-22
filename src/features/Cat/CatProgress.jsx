@@ -3,7 +3,7 @@ import { Tooltip } from "react-tooltip";
 import { ThemeContext } from "../Theming/ThemeContext";
 
 function CatProgress({ value }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	let catProgressInfo;
 	if (value === 0) catProgressInfo = `The lil guy is starving. GET TO WORK!!!`;
 	if (value === 1)
@@ -13,23 +13,29 @@ function CatProgress({ value }) {
 	if (value >= 4)
 		catProgressInfo = `The lil guy is completely stuffed. It's your fault if he becomes a chonkster.`;
 	return (
-		<div
-			className={`flex h-4 w-full overflow-hidden rounded-full bg-${theme}700`}
-			role="progressbar"
-			aria-valuenow={value}
-			aria-valuemin="0"
-			aria-valuemax="4"
-			data-tooltip-id="cat-progress-info"
-			data-tooltip-content={catProgressInfo}
-		>
+		<>
 			<Tooltip id="cat-progress-info" />
+
 			<div
-				className="flex flex-col justify-center overflow-hidden whitespace-nowrap rounded-full bg-blue-600 text-center text-xs text-white transition duration-500"
-				style={{ width: `${(value / 4) * 100}%` }}
+				className={`flex h-6 w-full overflow-hidden rounded-full ${themeColour?.catProgressBackground}`}
+				data-tooltip-id="cat-progress-info"
+				data-tooltip-content={catProgressInfo}
+				role="progressbar"
+				aria-valuenow={value}
+				aria-valuemin={1}
+				aria-valuemax={4}
 			>
-				{value} / 4
+				<div
+					className={`flex flex-col justify-center overflow-hidden whitespace-nowrap rounded-full  ${themeColour?.catProgress} text-center text-xl ${themeColour?.catProgressText} py-1 font-medium duration-500`}
+					style={{
+						width: `${(value / 4) * 100}%`,
+						transition: `width 0.5s cubic-bezier(0.4, 0, 0.2, 1)`,
+					}}
+				>
+					{value} / 4
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

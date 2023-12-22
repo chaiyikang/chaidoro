@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../Theming/ThemeContext";
 
 function Progress({ ratioDone, children }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	// const RADIUS = 36;
 	const offsetValue = ratioDone * -101;
 	return (
@@ -21,7 +21,7 @@ function Progress({ ratioDone, children }) {
 						cy={18}
 						r={16}
 						fill="none"
-						className={`stroke-current text-${theme}-500`}
+						className={`stroke-current ${themeColour.progress}`}
 						strokeWidth={1}
 					/>
 					{/* Progress Circle inside a group with rotation */}
@@ -31,7 +31,7 @@ function Progress({ ratioDone, children }) {
 							cy={18}
 							r={16}
 							fill="none"
-							className={`stroke-current text-${theme}-700`}
+							className={`stroke-current ${themeColour.progressBackground}`}
 							strokeWidth={1}
 							strokeDasharray={101}
 							strokeDashoffset={offsetValue}

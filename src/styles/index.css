@@ -30,11 +30,11 @@ body {
 		"opsz" 48;
 }
 
-span.material-symbols-outlined:active {
+/* span.material-symbols-outlined:active {
 	font-variation-settings:
 		"FILL" 1,
 		"wght" 400;
-}
+} */
 
 @keyframes pulse {
 	0% {

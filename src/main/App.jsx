@@ -46,6 +46,11 @@ const themeColours = {
 		text: `text-indigo-200`,
 		textHover: `hover:text-indigo-300`,
 		textActive: `active:text-indigo-400`,
+		progressBackground: `text-indigo-900`,
+		progress: `text-indigo-400`,
+		catProgressBackground: `bg-indigo-900`,
+		catProgress: `bg-indigo-400`,
+		catProgressText: `text-indigo-900`,
 		// "button" means text buttons, for icon buttons text styles are used
 		button: `bg-indigo-700`,
 		buttonHover: `hover:bg-indigo-800`,
@@ -217,8 +222,8 @@ function App() {
 						)}
 					</Toaster>
 					<Background day={day} />
-					<Navbar navPage={navPage} setNavPage={setNavPage} />
 
+					<Navbar navPage={navPage} setNavPage={setNavPage} />
 					<Dashboard
 						navPage={navPage}
 						setNavPage={setNavPage}
@@ -229,6 +234,24 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 						day={day}
 						setDay={setDay}
+					/>
+					<Settings
+						settings={settings}
+						dispatchSettings={dispatchSettings}
+						timerRunning={timerRunning}
+						setTimeStampEnd={setTimeStampEnd}
+						activeType={activeType}
+						currentTimeStamp={currentTimeStamp}
+						secondsLeftCache={secondsLeftCache}
+						setSecondsLeftCache={setSecondsLeftCache}
+						settingsIsOpen={settingsIsOpen}
+						setSettingsIsOpen={setSettingsIsOpen}
+					/>
+					<AccountModal
+						accountIsOpen={accountIsOpen}
+						setAccountIsOpen={setAccountIsOpen}
+						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
 					<PomodoroApp navPage={navPage}>
 						<Stats
@@ -264,30 +287,13 @@ function App() {
 							setCatFoodStats={setCatFoodStats}
 							catFoodStatsLoaded={catFoodStatsLoaded}
 						/>
+
 						<SpinningToolBar
 							setSettingsIsOpen={setSettingsIsOpen}
 							setPomodoroIsOpen={setPomodoroIsOpen}
 							setStatsIsOpen={setStatsIsOpen}
 							setToDoIsOpen={setToDoIsOpen}
 							setAccountIsOpen={setAccountIsOpen}
-						/>
-						<Settings
-							settings={settings}
-							dispatchSettings={dispatchSettings}
-							timerRunning={timerRunning}
-							setTimeStampEnd={setTimeStampEnd}
-							activeType={activeType}
-							currentTimeStamp={currentTimeStamp}
-							secondsLeftCache={secondsLeftCache}
-							setSecondsLeftCache={setSecondsLeftCache}
-							settingsIsOpen={settingsIsOpen}
-							setSettingsIsOpen={setSettingsIsOpen}
-						/>
-						<AccountModal
-							accountIsOpen={accountIsOpen}
-							setAccountIsOpen={setAccountIsOpen}
-							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-							lifetimeWorkSessions={lifetimeWorkSessions}
 						/>
 					</PomodoroApp>
 					<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />
