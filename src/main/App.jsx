@@ -15,7 +15,7 @@ import useTitle from "../features/PomodoroApp/Pomodoro/useTitle.js";
 import PageLoadingSpinner from "../MiscComponents/PageLoadingSpinner.jsx";
 import AccountModal from "../features/Account/AccountModal.jsx";
 import Cat from "../features/Cat/Cat.jsx";
-import { isSameDate } from "./helpers.js";
+import { getColorWithoutOpacity, isSameDate } from "./helpers.js";
 import PomodoroApp from "../features/PomodoroApp/PomodoroApp.jsx";
 import Dashboard from "../features/Dashboard/Dashboard.jsx";
 import Navbar from "../features/Navbar/Navbar.jsx";
@@ -35,7 +35,7 @@ const updateMessage = `
 3. Implemented progress indicator for feeding and descriptions.
 4. Improved logic for page navigation and implemented keyboard navigation.`;
 
-// toast.success(updateMessage, { duration: 10000 });
+toast.success(updateMessage, { duration: 10000 });
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
@@ -46,6 +46,15 @@ const themeColours = {
 		text: `text-indigo-200`,
 		textHover: `hover:text-indigo-300`,
 		textActive: `active:text-indigo-400`,
+		textAccent: `text-lime-500`,
+		textAccentHover: `hover:text-lime-600`,
+		textAccentActive: `active:text-lime-700`,
+		background: `bg-indigo-700 bg-opacity-30`,
+		backgroundTranslucent: `bg-indigo-700 bg-opacity-75`,
+		backgroundOpaque: `bg-indigo-700 bg-opacity-100`,
+		modalInputBg: `bg-indigo-100`,
+		modalInputText: `text-indigo-900`,
+		modalButton: `bg-indigo-800 hover:bg-indigo-900`,
 		progressBackground: `text-indigo-900`,
 		progress: `text-indigo-400`,
 		catProgressBackground: `bg-indigo-900`,
@@ -59,9 +68,6 @@ const themeColours = {
 		button: `bg-indigo-700`,
 		buttonHover: `hover:bg-indigo-800`,
 		buttonActive: `active:bg-indigo-900`,
-		background: `bg-indigo-700 bg-opacity-30`,
-		backgroundTranslucent: `bg-indigo-700 bg-opacity-75`,
-		backgroundOpaque: `bg-indigo-700 bg-opacity-100`,
 		navIndicator: `bg-indigo-500`,
 		pageLoadingSpinner: `text-indigo-400`,
 		border: `border-indigo-700`,
@@ -189,8 +195,9 @@ function App() {
 
 	const element = document?.querySelector?.(".pomodoroDiv");
 	const toastBgColor = element
-		? getComputedStyle(element)?.getPropertyValue?.("background-color")
+		? getColorWithoutOpacity(getComputedStyle(element)?.backgroundColor)
 		: "#1e293b";
+
 	const toastFontColor = element
 		? getComputedStyle(element)?.getPropertyValue?.("color")
 		: "#94a3b8";
@@ -205,6 +212,7 @@ function App() {
 						toastOptions={{
 							style: {
 								background: `${toastBgColor}`,
+								opacity: 100,
 								color: `${toastFontColor}`,
 							},
 						}}

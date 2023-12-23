@@ -65,6 +65,17 @@ export function roundUpToNearestIntLimited(num, divisor, max) {
 	return quotient;
 }
 
+export function getColorWithoutOpacity(colorStr) {
+	if (colorStr.startsWith("#")) {
+		return colorStr;
+	} else if (colorStr.startsWith("rgba")) {
+		const [red, green, blue] = colorStr.slice(4).split(",");
+		return `rgb${red}, ${green}, ${blue})`;
+	} else {
+		return colorStr;
+	}
+}
+
 // export function getColourGradient(value) {
 // 	if (!value) return "fill-slate-50";
 // 	const roundedValue = 200 + roundUpToNearestIntLimited(value, 60 * 60, 5) * 100;

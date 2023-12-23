@@ -120,11 +120,7 @@ export function Settings({
 
 	return (
 		<>
-			<Modal
-				submitAndClose={handleSubmit(onSubmit, onError)}
-				settingsIsOpen={settingsIsOpen}
-				open={open}
-			>
+			<Modal closeHandler={handleSubmit(onSubmit, onError)} isOpen={settingsIsOpen}>
 				<form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
 					<h1 className="flex justify-start text-4xl">Settings</h1>
 					<div className="">
