@@ -24,6 +24,7 @@ import classListTable from "../features/Theming/classList.js";
 import shadesObject from "../features/Theming/classListGenerator.js";
 import { ThemeContext } from "../features/Theming/ThemeContext.js";
 import { initialSettings } from "./config.js";
+import { themeColours } from "../features/Theming/themeColours.js";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -35,62 +36,11 @@ const updateMessage = `
 3. Implemented progress indicator for feeding and descriptions.
 4. Improved logic for page navigation and implemented keyboard navigation.`;
 
-toast.success(updateMessage, { duration: 10000 });
+// toast.success(updateMessage, { duration: 10000 });
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
 }
-
-const themeColours = {
-	insideNight: {
-		text: `text-indigo-200`,
-		textHover: `hover:text-indigo-300`,
-		textActive: `active:text-indigo-400`,
-		textAccent: `text-lime-500`,
-		textAccentHover: `hover:text-lime-600`,
-		textAccentActive: `active:text-lime-700`,
-		background: `bg-indigo-700 bg-opacity-30`,
-		backgroundTranslucent: `bg-indigo-700 bg-opacity-75`,
-		backgroundOpaque: `bg-indigo-700 bg-opacity-100`,
-		modalInputBg: `bg-indigo-100`,
-		modalInputText: `text-indigo-900`,
-		modalButton: `bg-indigo-800 hover:bg-indigo-900`,
-		progressBackground: `text-indigo-900`,
-		progress: `text-indigo-400`,
-		catProgressBackground: `bg-indigo-900`,
-		catProgress: `bg-indigo-400`,
-		catProgressText: `text-indigo-900`,
-		// "button" means text buttons, for icon buttons text styles are used
-		toggleOff: `bg-indigo-900`,
-		toggleButtonOff: `before:bg-indigo-200`,
-		toggleOn: `checked:bg-indigo-400`,
-		toggleButtonOn: `checked:before:bg-indigo-50`,
-		button: `bg-indigo-700`,
-		buttonHover: `hover:bg-indigo-800`,
-		buttonActive: `active:bg-indigo-900`,
-		navIndicator: `bg-indigo-500`,
-		pageLoadingSpinner: `text-indigo-400`,
-		border: `border-indigo-700`,
-		fillEmpty: `fill-indigo-50`,
-		fill200: `fill-indigo-200`,
-		fill300: `fill-indigo-300`,
-		fill400: `fill-indigo-400`,
-		fill500: `fill-indigo-500`,
-		fill600: `fill-indigo-600`,
-		fill700: `fill-indigo-700`,
-		fill800: `fill-indigo-800`,
-		fill900: `fill-indigo-900`,
-		menu: `bg-indigo-200`,
-		menuHover: `bg-indigo-400`,
-		menuActive: `bg-indigo-500`,
-		menuBefore: `before:bg-indigo-200`,
-		menuHoverBefore: `before:bg-indigo-400`,
-		menuActiveBefore: `before:bg-indigo-500`,
-		menuAfter: `after:bg-indigo-200`,
-		menuHoverAfter: `after:bg-indigo-400`,
-		menuActiveAfter: `after:bg-indigo-500`,
-	},
-};
 
 function App() {
 	// * POMODORO LOGIC STATE //
@@ -113,8 +63,8 @@ function App() {
 
 	// * THEME //
 	const [staticTheme, setStaticTheme] = useState("slate");
-	const [theme, setTheme] = useState("insideNight");
-	const [day, setDay] = useState(false);
+	const [theme, setTheme] = useState("seoulInsideDay");
+	const [day, setDay] = useState(true);
 
 	// * CAT STATE //
 	const [catFoodStats, setCatFoodStats] = useState([]);
@@ -246,6 +196,7 @@ function App() {
 						lifetimeWorkSessions={lifetimeWorkSessions}
 						day={day}
 						setDay={setDay}
+						setTheme={setTheme}
 					/>
 					<Settings
 						settings={settings}

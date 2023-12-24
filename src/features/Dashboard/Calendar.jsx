@@ -70,35 +70,37 @@ function Calendar({ stats, setShowStatsDate, setNavPage }) {
 				<ControlButton handler={handlePrev}>navigate_before</ControlButton>
 				<ControlButton handler={handleNext}>navigate_next</ControlButton>
 			</div>
-			<CalendarHeatmap
-				startDate={new Date(startDate).setDate(startDate.getDate() - 1)} // for some reason not inclusive of start date
-				endDate={endDate}
-				// values={[
-				// 	{ date: "2023-01-01", totalLength: 12 },
-				// 	{ date: "2023-01-22", totalLength: 122 },
-				// 	{ date: "2023-01-30", totalLength: 38 },
-				// ]}
-				values={everyDayData}
-				onClick={handleClickDay}
-				classForValue={value => {
-					if (!value?.totalLength) return `${themeColour?.fillEmpty}`;
-					const roundedValue =
-						200 + roundUpToNearestIntLimited(value.totalLength, 60 * 60, 5) * 100;
-					return `${themeColour[`fill${roundedValue}`]}`;
-				}}
-				tooltipDataAttrs={value => {
-					// console.log(value);
-					return {
-						"data-tooltip-id": "my-tooltip",
-						"data-tooltip-content": `${formatDateDisplay(value.date)}: ${secondsToMins(
-							value.totalLength,
-						)} mins`,
-					};
-				}}
-				showWeekdayLabels={false}
-				showMonthLabels={false}
-				horizontal={false}
-			/>
+			<div className={`${themeColour?.calendarBackground}`}>
+				<CalendarHeatmap
+					startDate={new Date(startDate).setDate(startDate.getDate() - 1)} // for some reason not inclusive of start date
+					endDate={endDate}
+					// values={[
+					// 	{ date: "2023-01-01", totalLength: 12 },
+					// 	{ date: "2023-01-22", totalLength: 122 },
+					// 	{ date: "2023-01-30", totalLength: 38 },
+					// ]}
+					values={everyDayData}
+					onClick={handleClickDay}
+					classForValue={value => {
+						if (!value?.totalLength) return `${themeColour?.fillEmpty}`;
+						const roundedValue =
+							200 + roundUpToNearestIntLimited(value.totalLength, 60 * 60, 5) * 100;
+						return `${themeColour[`fill${roundedValue}`]}`;
+					}}
+					tooltipDataAttrs={value => {
+						// console.log(value);
+						return {
+							"data-tooltip-id": "my-tooltip",
+							"data-tooltip-content": `${formatDateDisplay(value.date)}: ${secondsToMins(
+								value.totalLength,
+							)} mins`,
+						};
+					}}
+					showWeekdayLabels={false}
+					showMonthLabels={false}
+					horizontal={false}
+				/>
+			</div>
 			<Tooltip id="my-tooltip" />
 		</div>
 	);

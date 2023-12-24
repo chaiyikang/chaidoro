@@ -39,6 +39,7 @@ export function Pomodoro({
 	catFoodStatsLoaded,
 }) {
 	const { themeColour } = useContext(ThemeContext);
+	console.log("🚀 ~ file: Pomodoro.jsx:42 ~ themeColour:", themeColour);
 
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -289,6 +290,9 @@ export function Pomodoro({
 		return "shortBreak";
 	}
 
+	let timerTheme;
+	timerTheme = themeColour?.name === `seoulInsideDay` ? "text-amber-300" : "";
+
 	return (
 		<>
 			<div
@@ -317,7 +321,7 @@ export function Pomodoro({
 					</button>
 				</div>
 				{/*  ? */}
-				<div className="row-end-8 col-span-3 row-start-3">
+				<div className={`row-end-8 col-span-3 row-start-3 ${timerTheme}`}>
 					<Progress
 						ratioDone={
 							(settings[`${activeType}LengthSec`] - secondsLeftCache) /
@@ -325,7 +329,7 @@ export function Pomodoro({
 						}
 					>
 						<time className="">
-							<span className="text-8xl">
+							<span className={`text-8xl `}>
 								{Math.floor(displayedSeconds / 60)
 									.toString()
 									.padStart(2, 0)}

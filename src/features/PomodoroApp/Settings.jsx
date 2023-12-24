@@ -187,7 +187,7 @@ function ToggleSettingRow({ children, settingName, register, id }) {
 }
 
 function SettingRow({ register, settingName, children, errorMessage, config }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	return (
 		<div className="my-2 flex justify-between">
 			<label className="">
@@ -198,7 +198,7 @@ function SettingRow({ register, settingName, children, errorMessage, config }) {
 				type="text"
 				inputMode="numeric"
 				autoComplete="off"
-				className={`h-7 w-14 rounded-xl border border-${theme}-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+				className={`h-7 w-14 rounded-xl border ${themeColour?.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
 			/>
 			{/* <span className="text-red-700 ">{errorMessage}</span> */}
 		</div>

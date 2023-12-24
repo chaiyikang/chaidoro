@@ -48,7 +48,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 				toDoIsOpen ? "translate-x-0" : " translate-x-full"
 			}`}
 		>
-			<h1 className="text-center text-4xl font-bold">To Do List</h1>
+			<h1 className="text-center text-4xl">To Do List</h1>
 			<div className="mt-4 flex items-center justify-center">
 				<input
 					type="text"
@@ -56,7 +56,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen }) {
 					onChange={handleNewTaskInputChange}
 					onKeyDown={handleEnter}
 					placeholder="Enter a new task"
-					className={`h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.backgroundTranslucent} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+					className={`h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.backgroundTranslucent} ${themeColour?.textPlaceholder} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 				/>
 				<Button onClick={handleAddTask} additionalClassName="ml-4">
 					Add

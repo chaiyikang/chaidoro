@@ -49,7 +49,7 @@ function Login({ handleClose, setSignUpIsOpen }) {
 							label="Email address"
 							autoComplete="username"
 							size="lg"
-							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 						></input>
 						<h3 className=" mt-[1rem] text-xl">Password</h3>
 						<input
@@ -58,7 +58,7 @@ function Login({ handleClose, setSignUpIsOpen }) {
 							type="password"
 							label="Password"
 							autoComplete="current-password"
-							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 							size="lg"
 						></input>
 						<div className="flex justify-start">

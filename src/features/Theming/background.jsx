@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import insideDay from "./videos/inside-day.mp4";
-import insideNight from "./videos/inside-night.mp4";
+import insideDay from "./videos/seoul-inside-day.mp4";
+import insideNight from "./videos/seoul-inside-night.mp4";
 import DayNightToggle from "./DayNightToggle";
 
 export function Background({ day }) {

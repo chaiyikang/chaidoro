@@ -3,7 +3,7 @@ import { ThemeContext } from "../Theming/ThemeContext";
 import ControlButton from "../../UtilityComponents/ControlButton";
 
 function ToDo({ index, toDos, setToDos }) {
-	const { theme } = useContext(ThemeContext);
+	const { themeColour } = useContext(ThemeContext);
 	const task = toDos[index];
 
 	const [isEditing, setIsEditing] = useState(false);
@@ -90,13 +90,15 @@ function ToDo({ index, toDos, setToDos }) {
 					}}
 					autoFocus
 					onBlur={handleSubmitEdit}
-					className={`h-7 w-auto rounded-xl border border-${theme}-400 bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+					className={`h-7 w-auto rounded-xl border ${themeColour.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
 				/>
 			) : (
 				<span
 					onClick={() => handleClickActive(index)}
 					className={`${task.done ? "line-through" : ""} ${
-						task.active ? `rounded border border-${theme}-600 bg-${theme}-700 p-1` : ""
+						task.active
+							? `rounded border ${themeColour?.border} ${themeColour?.backgroundTranslucent}  p-1`
+							: ""
 					}`}
 					onDoubleClick={() => {
 						clickCount.current = 0;

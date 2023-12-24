@@ -26,11 +26,11 @@ function SearchStats({ taskStats }) {
 				value={input}
 				onChange={handleInputChange}
 				placeholder="Search for a task"
-				className={`h-7 w-auto rounded-xl border ${themeColour?.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+				className={`h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.textPlaceholder} ${themeColour?.backgroundTranslucent} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 			/>
 			<ul className="search-results">
 				{searchResultArray?.map((result, i) => (
-					<li key={i}>
+					<li className={`font-bold`} key={i}>
 						You spent {secondsToHours(result.totalLength)} hours on &quot;{result.task}&quot;
 					</li>
 				))}

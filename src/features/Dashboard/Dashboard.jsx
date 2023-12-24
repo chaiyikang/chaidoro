@@ -27,11 +27,14 @@ function Dashboard({
 	lifetimeCurrentSecondsFocused,
 	day,
 	setDay,
+	setTheme,
 }) {
 	const { themeColour } = useContext(ThemeContext);
 
 	function handleCheck() {
 		setDay(check => !check);
+		if (day) setTheme("seoulInsideNight");
+		else setTheme("seoulInsideDay");
 	}
 
 	// * DERIVE ARRAY OF STATS OF EACH TASK //
@@ -104,6 +107,8 @@ function Dashboard({
 	// * UI //
 	const translation =
 		navPage === 0 ? "translate-x-0" : navPage === 2 ? "-translate-x-[200%]" : "-translate-x-full";
+	let timeTheme;
+	timeTheme = themeColour?.name === `seoulInsideDay` ? "text-amber-200" : "";
 
 	return (
 		<div
@@ -123,7 +128,9 @@ function Dashboard({
 					restart_alt
 				</ControlButton>
 			</h1>
-			<time className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full text-8xl">
+			<time
+				className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full text-8xl ${timeTheme}`}
+			>
 				{convertMillisTo12HourTime(currentTimeStamp)}
 			</time>
 			<Calendar stats={stats} setShowStatsDate={setShowStatsDate} setNavPage={setNavPage} />

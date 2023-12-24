@@ -52,7 +52,7 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 							label="Email address"
 							autoComplete="username"
 							size="lg"
-							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 						></input>
 						<h3 className=" mt-[1rem] text-xl">Password</h3>{" "}
 						<input
@@ -60,7 +60,7 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 							value={password}
 							type="password"
 							label="Password"
-							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 							size="lg"
 							autoComplete="current-password"
 						></input>
@@ -70,7 +70,7 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 							value={confirmPassword}
 							type="password"
 							label="Re-enter password"
-							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
+							className={`text-neutal-700 mt-2 h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.modalInputBg} ${themeColour?.modalInputText} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 							size="lg"
 						></input>
 						<button

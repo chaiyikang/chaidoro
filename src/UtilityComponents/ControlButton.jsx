@@ -9,10 +9,18 @@ function ControlButton({
 	iconClassName = "",
 }) {
 	const { themeColour } = useContext(ThemeContext);
+	const seoulInsideDay = themeColour?.name === "seoulInsideDay";
+	let ctrlBtnTheme;
+	if (seoulInsideDay)
+		ctrlBtnTheme = `${
+			themeColour?.ctrlBtn + themeColour?.ctrlBtnHover + themeColour?.ctrlBtnActive
+		}`;
+	else ctrlBtnTheme = `${themeColour?.textHover + themeColour?.textActive}`;
+
 	return (
 		<button onClick={handler} className={classes + "leading-none outline-none"}>
 			<span
-				className={`material-symbols-outlined align-middle ${fontSize} ${themeColour?.textHover} ${themeColour?.textActive} ${iconClassName}`}
+				className={`material-symbols-outlined align-middle ${ctrlBtnTheme} ${fontSize}  ${iconClassName}`}
 			>
 				{children}
 			</span>

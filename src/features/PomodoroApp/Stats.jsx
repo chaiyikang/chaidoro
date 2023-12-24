@@ -71,7 +71,7 @@ export function Stats({
 						.map((stat, index) => {
 							return (
 								<li
-									className={`mt-2 rounded-xl ${themeColour?.backgroundOpaque} p-2 text-xl`}
+									className={`mt-2 rounded-xl ${themeColour?.backgroundTranslucent} p-2 text-xl`}
 									key={index}
 									// TODO adjust minimum height
 									style={{
