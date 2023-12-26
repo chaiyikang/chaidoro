@@ -75,7 +75,9 @@ function App() {
 	const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 	const [pomodoroIsOpen, setPomodoroIsOpen] = useState(true);
 	const [statsIsOpen, setStatsIsOpen] = useState(true);
+	const [cacheStatsIsOpen, setCacheStatsIsOpen] = useState(true);
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
+	const [cacheToDoIsOpen, setCacheToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
 
 	// * EFFECTS //
@@ -86,19 +88,6 @@ function App() {
 	}, []);
 
 	useTitle(secondsLeftCache, activeType);
-
-	useEffect(
-		function arrowKeyNav() {
-			function handleKeyDown(e) {
-				// console.log(e.key);
-				if (e.key === "ArrowLeft" && navPage > 0) return setNavPage(page => page - 1);
-				if (e.key === "ArrowRight" && navPage < 2) return setNavPage(page => page + 1);
-			}
-			document.addEventListener("keydown", handleKeyDown);
-			return () => document.removeEventListener("keydown", handleKeyDown);
-		},
-		[navPage],
-	);
 
 	// * BACKEND //
 	const { data: userData, isLoading } = useQuery({
@@ -185,7 +174,14 @@ function App() {
 					</Toaster>
 					<Background day={day} />
 
-					<Navbar navPage={navPage} setNavPage={setNavPage} />
+					<Navbar
+						navPage={navPage}
+						setNavPage={setNavPage}
+						setStatsIsOpen={setStatsIsOpen}
+						setToDoIsOpen={setToDoIsOpen}
+						cacheStatsIsOpen={cacheStatsIsOpen}
+						cacheToDoIsOpen={cacheToDoIsOpen}
+					/>
 					<Dashboard
 						navPage={navPage}
 						setNavPage={setNavPage}
@@ -223,13 +219,22 @@ function App() {
 							setStats={setStats}
 							toDoIsOpen={toDoIsOpen}
 							statsIsOpen={statsIsOpen}
+							setStatsIsOpen={setStatsIsOpen}
 							lifetimeWorkSessions={lifetimeWorkSessions}
 							currentTimeStamp={currentTimeStamp}
 							showStatsDate={showStatsDate}
 							setShowStatsDate={setShowStatsDate}
+							navPage={navPage}
+							setCacheStatsIsOpen={setCacheStatsIsOpen}
 						/>
 						{/* <Music /> */}
-						<ToDoList toDos={toDos} setToDos={setToDos} toDoIsOpen={toDoIsOpen} />
+						<ToDoList
+							toDos={toDos}
+							setToDos={setToDos}
+							toDoIsOpen={toDoIsOpen}
+							setToDoIsOpen={setToDoIsOpen}
+							setCacheToDoIsOpen={setCacheToDoIsOpen}
+						/>
 						<Pomodoro
 							settings={settings}
 							timeStampEnd={timeStampEnd}
@@ -245,6 +250,8 @@ function App() {
 							setStats={setStats}
 							pomodoroIsOpen={pomodoroIsOpen}
 							setPomodoroIsOpen={setPomodoroIsOpen}
+							statsIsOpen={statsIsOpen}
+							toDoIsOpen={toDoIsOpen}
 							setLifetimeWorkSessions={setLifetimeWorkSessions}
 							catFoodStats={catFoodStats}
 							setCatFoodStats={setCatFoodStats}

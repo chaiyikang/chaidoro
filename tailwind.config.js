@@ -5,6 +5,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: { roboto: ["Roboto", "sans-serif", "serif"] },
+			screens: { overlap: { max: "930px" } },
 		},
 		fontSize: {
 			xs: "0.579rem",

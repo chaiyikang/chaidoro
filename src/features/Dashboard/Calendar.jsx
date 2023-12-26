@@ -85,7 +85,7 @@ function Calendar({ stats, setShowStatsDate, setNavPage }) {
 						if (!value?.totalLength) return `${themeColour?.fillEmpty}`;
 						const roundedValue =
 							200 + roundUpToNearestIntLimited(value.totalLength, 60 * 60, 5) * 100;
-						return `${themeColour[`fill${roundedValue}`]}`;
+						return `${themeColour[`fill${roundedValue}`]} outline-none`;
 					}}
 					tooltipDataAttrs={value => {
 						// console.log(value);

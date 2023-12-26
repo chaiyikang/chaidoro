@@ -90,14 +90,14 @@ function ToDo({ index, toDos, setToDos }) {
 					}}
 					autoFocus
 					onBlur={handleSubmitEdit}
-					className={`h-7 w-auto rounded-xl border ${themeColour.border} bg-transparent px-4 text-center text-xl focus:border-2 focus:outline-none`}
+					className={`h-7 w-1/2 rounded-xl border ${themeColour.border} bg-transparent ${themeColour?.overlapBackgroundContrast} px-4 text-center text-xl focus:border-2 focus:outline-none`}
 				/>
 			) : (
 				<span
 					onClick={() => handleClickActive(index)}
 					className={`${task.done ? "line-through" : ""} ${
 						task.active
-							? `rounded border ${themeColour?.border} ${themeColour?.backgroundTranslucent}  p-1`
+							? `rounded border ${themeColour?.border} ${themeColour?.backgroundTranslucent} ${themeColour?.overlapBackgroundContrast}  p-1`
 							: ""
 					}`}
 					onDoubleClick={() => {

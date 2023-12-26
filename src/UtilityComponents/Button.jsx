@@ -8,7 +8,7 @@ function Button({ onClick, children, additionalClassName }) {
 			type="button"
 			onClick={onClick}
 			className={
-				`${themeColour?.button} ${themeColour?.buttonHover} ${themeColour?.buttonActive} inline-flex items-center rounded  p-3 text-base font-bold` +
+				`${themeColour?.button} ${themeColour?.overlapButton} ${themeColour?.buttonHover} ${themeColour?.buttonActive} inline-flex items-center rounded  p-3 text-base font-bold` +
 				" " +
 				additionalClassName
 			}

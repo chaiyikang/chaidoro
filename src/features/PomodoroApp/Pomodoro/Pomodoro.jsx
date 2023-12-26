@@ -33,13 +33,15 @@ export function Pomodoro({
 	setStats,
 	pomodoroIsOpen,
 	setPomodoroIsOpen,
+	statsIsOpen,
+	toDoIsOpen,
 	setLifetimeWorkSessions,
 	catFoodStats,
 	setCatFoodStats,
 	catFoodStatsLoaded,
 }) {
 	const { themeColour } = useContext(ThemeContext);
-	console.log("🚀 ~ file: Pomodoro.jsx:42 ~ themeColour:", themeColour);
+	// console.log("🚀 ~ file: Pomodoro.jsx:42 ~ themeColour:", themeColour);
 
 	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
@@ -292,11 +294,14 @@ export function Pomodoro({
 
 	let timerTheme;
 	timerTheme = themeColour?.name === `seoulInsideDay` ? "text-amber-300" : "";
+	// grid-rows-[62.5px_62.5px_312.5px_62.5px
 
 	return (
 		<>
 			<div
-				className={`pomodoroDiv absolute left-1/2 top-[17rem] z-10 grid h-[500px] w-[460px] -translate-x-1/2 grid-cols-3  grid-rows-[62.5px_62.5px_312.5px_62.5px] items-center justify-items-center gap-0 rounded-xl ${
+				className={`pomodoroDiv absolute left-1/2 top-[17rem] z-10 grid h-[31.25rem] ${
+					!statsIsOpen && !toDoIsOpen ? "w-[90%]" : "w-1/3"
+				} min-w-[20rem]  -translate-x-1/2 grid-cols-3  grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl ${
 					themeColour?.background
 				} transition-transform duration-500 ease-in-out ${
 					pomodoroIsOpen ? "-translate-y-1/2" : " -translate-y-[170%]"
@@ -305,20 +310,36 @@ export function Pomodoro({
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>
-				<div className="row-start-2 justify-self-end text-3xl">
-					<button onClick={handleType} value="pomodoro" className="">
-						Pomodoro
-					</button>
-				</div>
-				<div className="row-start-2 text-3xl">
-					<button onClick={handleType} value="shortBreak" className="">
-						Short Break
-					</button>
-				</div>
-				<div className="row-start-2 justify-self-start text-3xl">
-					<button onClick={handleType} value="longBreak" className="">
-						Long Break
-					</button>
+				<div className="col-span-3 row-start-2 justify-self-center text-3xl">
+					<div className="flex gap-3">
+						<button
+							onClick={handleType}
+							value="pomodoro"
+							className={
+								activeType === "pomodoro" ? `${themeColour?.backgroundOpaque} rounded-full` : ""
+							}
+						>
+							Pomodoro
+						</button>
+						<button
+							onClick={handleType}
+							value="shortBreak"
+							className={
+								activeType === "shortBreak" ? `${themeColour?.backgroundOpaque} rounded-full` : ""
+							}
+						>
+							Short Break
+						</button>
+						<button
+							onClick={handleType}
+							value="longBreak"
+							className={
+								activeType === "longBreak" ? `${themeColour?.backgroundOpaque} rounded-full` : ""
+							}
+						>
+							Long Break
+						</button>
+					</div>
 				</div>
 				{/*  ? */}
 				<div className={`row-end-8 col-span-3 row-start-3 ${timerTheme}`}>

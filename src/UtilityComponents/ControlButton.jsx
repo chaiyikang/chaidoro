@@ -15,10 +15,10 @@ function ControlButton({
 		ctrlBtnTheme = `${
 			themeColour?.ctrlBtn + themeColour?.ctrlBtnHover + themeColour?.ctrlBtnActive
 		}`;
-	else ctrlBtnTheme = `${themeColour?.textHover + themeColour?.textActive}`;
+	else ctrlBtnTheme = ` ${themeColour?.textHover + " " + themeColour?.textActive} `;
 
 	return (
-		<button onClick={handler} className={classes + "leading-none outline-none"}>
+		<button onClick={handler} className={classes + " " + "leading-none outline-none"}>
 			<span
 				className={`material-symbols-outlined align-middle ${ctrlBtnTheme} ${fontSize}  ${iconClassName}`}
 			>
