@@ -299,7 +299,7 @@ export function Pomodoro({
 	return (
 		<>
 			<div
-				className={`pomodoroDiv absolute left-1/2 top-[17rem] z-10 grid h-[31.25rem] ${
+				className={`pomodoroDiv absolute left-1/2 top-[17rem] z-10 grid h-[31.25rem] pb-10 ${
 					!statsIsOpen && !toDoIsOpen ? "w-[90%]" : "w-1/3"
 				} min-w-[20rem]  -translate-x-1/2 grid-cols-3  grid-rows-[1fr_1fr_5fr_1fr] items-center justify-items-center gap-0 rounded-xl ${
 					themeColour?.background
@@ -307,6 +307,16 @@ export function Pomodoro({
 					pomodoroIsOpen ? "-translate-y-1/2" : " -translate-y-[170%]"
 				}`}
 			>
+				<ControlButton
+					classes={`absolute transition-all duration-500 ease-in-out ${
+						pomodoroIsOpen ? `bottom-0` : `bottom-[-25%]`
+					} left-1/2 -translate-x-1/2`}
+					handler={() => {
+						setPomodoroIsOpen(old => !old);
+					}}
+				>
+					{pomodoroIsOpen ? `expand_less` : `expand_more`}
+				</ControlButton>
 				<div className="col-span-3">
 					<h2 className="text-5xl">{activeTask}</h2>
 				</div>

@@ -6,7 +6,6 @@ import SearchStats from "./SearchStats";
 import ControlButton from "../../UtilityComponents/ControlButton";
 import { STATS_VS_QUOTE_PROB } from "../../main/config";
 import { ThemeContext } from "../Theming/ThemeContext";
-import { themes } from "../Theming/classListGenerator";
 import DayNightToggle from "../Theming/DayNightToggle";
 
 function chooseMessage(array1, array2, probability1) {
@@ -30,12 +29,6 @@ function Dashboard({
 	setTheme,
 }) {
 	const { themeColour } = useContext(ThemeContext);
-
-	function handleCheck() {
-		setDay(check => !check);
-		if (day) setTheme("seoulInsideNight");
-		else setTheme("seoulInsideDay");
-	}
 
 	// * DERIVE ARRAY OF STATS OF EACH TASK //
 	const taskStats = [];
@@ -115,8 +108,6 @@ function Dashboard({
 			id="Dashboard"
 			className={`absolute z-10 h-full w-full transition-all duration-500 ${translation}`}
 		>
-			<DayNightToggle handler={handleCheck} checked={day} />
-
 			{/* <select onChange={handleThemeChange} value={theme}>
 				{themes.map(theme => (
 					<option key={theme}>{theme}</option>

@@ -14,7 +14,7 @@ function Cat({ children, foodFedToday }) {
 
 	return (
 		<div
-			className={`myCatHehe absolute bottom-0 left-0 z-10 h-[15rem] w-[20rem] -translate-y-[5rem] translate-x-[15rem]
+			className={`myCatHehe absolute bottom-20 right-20 z-10 h-[15rem] w-[20rem] 	
 			transition-transform duration-500 ease-in-out`}
 		>
 			{/* <h1 className="absolute">

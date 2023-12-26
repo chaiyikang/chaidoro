@@ -11,7 +11,7 @@ function CatTunaBox({ children, handler }) {
 		<div
 			data-tooltip-id="cat-feeding-info"
 			data-tooltip-content={toolTipContent}
-			className="absolute bottom-0 left-0 w-[15rem] -translate-x-[100%]"
+			className="absolute -left-96 top-0 w-[15rem]"
 			onMouseDown={handler}
 		>
 			<Tooltip id="cat-feeding-info" />

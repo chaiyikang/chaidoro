@@ -20,11 +20,10 @@ import PomodoroApp from "../features/PomodoroApp/PomodoroApp.jsx";
 import Dashboard from "../features/Dashboard/Dashboard.jsx";
 import Navbar from "../features/Navbar/Navbar.jsx";
 import CatApp from "../features/Cat/CatApp.jsx";
-import classListTable from "../features/Theming/classList.js";
-import shadesObject from "../features/Theming/classListGenerator.js";
 import { ThemeContext } from "../features/Theming/ThemeContext.js";
 import { initialSettings } from "./config.js";
 import { themeColours } from "../features/Theming/themeColours.js";
+import DayNightToggle from "../features/Theming/DayNightToggle.jsx";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -182,6 +181,7 @@ function App() {
 						cacheStatsIsOpen={cacheStatsIsOpen}
 						cacheToDoIsOpen={cacheToDoIsOpen}
 					/>
+					<DayNightToggle day={day} setDay={setDay} setTheme={setTheme} />
 					<Dashboard
 						navPage={navPage}
 						setNavPage={setNavPage}

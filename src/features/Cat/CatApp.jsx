@@ -61,7 +61,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 				{foodOriginalPosition1 || foodBalance <= 0 ? (
 					"" // to destroy the element, resetting the translation state
 				) : (
-					<div className="tra absolute bottom-0 left-0 w-fit -translate-x-[210%] -translate-y-[70%]">
+					<div className="tra absolute bottom-0 left-0 w-fit -translate-x-[390%] -translate-y-[270%]">
 						<Draggable>
 							<div className="shieldDiv">
 								<div

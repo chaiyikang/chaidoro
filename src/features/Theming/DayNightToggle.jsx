@@ -1,13 +1,18 @@
-function DayNightToggle({ checked, handler }) {
+function DayNightToggle({ day, setDay, setTheme }) {
+	function handleCheck() {
+		setDay(check => !check);
+		if (day) setTheme("seoulInsideNight");
+		else setTheme("seoulInsideDay");
+	}
 	return (
-		<div className="absolute left-1/2 top-1/2">
+		<div className="absolute bottom-0 left-1/2 z-20 translate-x-full">
 			<div className="container flex h-auto w-auto items-center justify-center bg-transparent">
 				<div className="switch">
 					<label htmlFor="toggle">
 						<input
 							id="toggle"
-							onChange={handler}
-							checked={checked}
+							onChange={handleCheck}
+							checked={day}
 							className="toggle-switch"
 							type="checkbox"
 						/>
