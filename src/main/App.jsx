@@ -24,6 +24,7 @@ import { ThemeContext } from "../features/Theming/ThemeContext.js";
 import { initialSettings } from "./config.js";
 import { themeColours } from "../features/Theming/themeColours.js";
 import DayNightToggle from "../features/Theming/DayNightToggle.jsx";
+import FullscreenButton from "../features/Fullscreen/FullscreenButton.jsx";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -172,7 +173,7 @@ function App() {
 						)}
 					</Toaster>
 					<Background day={day} />
-
+					<FullscreenButton />
 					<Navbar
 						navPage={navPage}
 						setNavPage={setNavPage}
