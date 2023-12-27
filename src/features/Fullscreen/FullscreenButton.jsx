@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import ControlButton from "../../UtilityComponents/ControlButton";
 import { ThemeContext } from "../Theming/ThemeContext";
+import { Tooltip } from "react-tooltip";
 
 function FullscreenButton() {
 	const { themeColour } = useContext(ThemeContext);
@@ -26,8 +27,11 @@ function FullscreenButton() {
 	}
 	return (
 		<div
+			data-tooltip-id="fullscreen-info"
+			data-tooltip-content={`Press "Enter" to toggle fullscreen.`}
 			className={`absolute bottom-0 right-0 z-50 rounded-full p-3 ${themeColour?.backgroundOpaque}`}
 		>
+			<Tooltip id="fullscreen-info" />
 			<ControlButton handler={toggleFullScreen}>
 				{fullscreen ? "fullscreen_exit" : "fullscreen"}
 			</ControlButton>
