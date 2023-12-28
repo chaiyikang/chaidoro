@@ -2,6 +2,7 @@ import CalendarHeatmap from "react-calendar-heatmap";
 import {
 	formatDate,
 	formatDateDisplay,
+	getStreak,
 	roundUpToNearestIntLimited,
 	secondsToHours,
 	secondsToMins,
@@ -30,6 +31,7 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 }
 
 function Calendar({ stats, setShowStatsDate, setNavPage }) {
+	const [currentStreak, maxStreak] = getStreak(stats);
 	const { themeColour } = useContext(ThemeContext);
 	const [changeRange, setChangeRange] = useState(0);
 	// month
@@ -71,6 +73,8 @@ function Calendar({ stats, setShowStatsDate, setNavPage }) {
 				<ControlButton handler={handleNext}>navigate_next</ControlButton>
 			</div>
 			<div className={`${themeColour?.calendarBackground}`}>
+				<p className="">Longest Streak🔥: {maxStreak} days</p>
+				<p className="">Current Streak🔥: {currentStreak} days</p>
 				<CalendarHeatmap
 					startDate={new Date(startDate).setDate(startDate.getDate() - 1)} // for some reason not inclusive of start date
 					endDate={endDate}

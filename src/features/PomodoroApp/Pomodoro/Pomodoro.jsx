@@ -134,7 +134,7 @@ export function Pomodoro({
 				return;
 			}
 			// setTotalSecondsFocused(old => old + 1);
-			if (activeTask === lastTask) {
+			if (activeTask === lastTask && isSameDate(stats?.at(-1)?.timeStampCreated, new Date())) {
 				setStats(old => {
 					const currStat = old.at(-1);
 					// const staleTime = Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000);

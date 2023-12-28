@@ -1,3 +1,72 @@
+export function getStreak(stats) {
+	const dates = [
+		...new Set(
+			stats
+				.filter(stat => stat.task !== "Short Break" && stat.task !== "Long Break")
+				.sort((a, b) => a.timeStampCreated - b.timeStampCreated)
+				.map(stat => new Date(stat.timeStampCreated).toDateString()),
+		),
+	];
+	let tempStreak = 0;
+	let maxStreak = 0;
+	let currentStreak = 0;
+	dates.forEach((date, index, array) => {
+		// check if the previous day was an adjacent day
+		if (areAdjacentDays(date, array[index - 1])) {
+			// if so, increment the streak
+			tempStreak++;
+			// if this is the last date, finalise the streak and check if this is the current streak
+			if (index === array.length - 1) {
+				maxStreak = tempStreak > maxStreak ? tempStreak : maxStreak;
+				// if this is yesterday or today, set currentStreak
+				if (isYesterdayOrToday(date)) currentStreak = tempStreak;
+			}
+		} else {
+			// else the streak was broken and this is a new streak or the first day
+			maxStreak = tempStreak > maxStreak ? tempStreak : maxStreak;
+			// reset the streak as this is a new streak or the first day
+			tempStreak = 1;
+			// if this is the last date, finalise the streak and check if this is the current streak
+			if (index === array.length - 1) {
+				maxStreak = tempStreak > maxStreak ? tempStreak : maxStreak;
+				// if this is yesterday or today, set currentStreak
+				if (isYesterdayOrToday(date)) currentStreak = tempStreak;
+			}
+		}
+	});
+	console.log([currentStreak, maxStreak]);
+	return [currentStreak, maxStreak];
+}
+
+function isYesterdayOrToday(date) {
+	date = new Date(date);
+	const today = new Date();
+	const yesterday = new Date(today);
+	yesterday.setDate(yesterday.getDate() - 1);
+
+	// Check if the date is yesterday or today
+	if (
+		date.toDateString() === today.toDateString() ||
+		date.toDateString() === yesterday.toDateString()
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function areAdjacentDays(date1, date2) {
+	if (!date1 || !date2) return false;
+	date1 = new Date(date1);
+	date2 = new Date(date2);
+	// Convert the dates to time in milliseconds
+	const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+	const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
+
+	// Check if the time difference is exactly one day
+	return timeDiff === oneDayInMilliseconds;
+}
+
 export function isSameDate(timeStamp1, timeStamp2) {
 	return new Date(timeStamp1).toDateString() === new Date(timeStamp2).toDateString();
 }
