@@ -117,7 +117,7 @@ function Dashboard({
 	return (
 		<div
 			id="Dashboard"
-			className={`absolute z-10 h-full w-full transition-all duration-500 ${translation}`}
+			className={`absolute z-10 h-full w-full transition-transform duration-500 ${translation}`}
 		>
 			{/* <select onChange={handleThemeChange} value={theme}>
 				{themes.map(theme => (

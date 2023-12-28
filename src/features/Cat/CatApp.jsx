@@ -48,7 +48,10 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 	}
 
 	return (
-		<div id="CatApp" className={`h-screen w-screen transition-all duration-500 ${translation}`}>
+		<div
+			id="CatApp"
+			className={`h-screen w-screen transition-transform duration-500 ${translation}`}
+		>
 			<Cat foodFedToday={foodFedToday}>
 				<CatTunaBox handler={handleNoMoreFood}>
 					<div

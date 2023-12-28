@@ -136,9 +136,7 @@ function App() {
 
 	return (
 		<>
-			<ThemeContext.Provider
-				value={{ theme: staticTheme, setTheme: setStaticTheme, themeColour: themeColours[theme] }}
-			>
+			<ThemeContext.Provider value={{ themeColour: themeColours[theme] }}>
 				<div className={`select-none font-roboto font-light ${themeColours[theme].text}`}>
 					<Toaster
 						toastOptions={{

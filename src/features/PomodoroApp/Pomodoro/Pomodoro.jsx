@@ -308,7 +308,7 @@ export function Pomodoro({
 				}`}
 			>
 				<ControlButton
-					classes={`absolute transition-all duration-500 ease-in-out ${
+					classes={`absolute transition-transform duration-500 ease-in-out ${
 						pomodoroIsOpen ? `bottom-0` : `bottom-[-25%]`
 					} left-1/2 -translate-x-1/2`}
 					handler={() => {

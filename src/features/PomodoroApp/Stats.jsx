@@ -56,7 +56,7 @@ export function Stats({
 				}`}
 			>
 				<ControlButton
-					classes={`absolute transition-all duration-500 ease-in-out ${
+					classes={`absolute transition-transform duration-500 ease-in-out ${
 						statsIsOpen ? `right-[-5%]` : `right-[-18%]`
 					} top-1/2`}
 					handler={() => {

@@ -18,7 +18,7 @@ function ControlButton({
 	else ctrlBtnTheme = ` ${themeColour?.textHover + " " + themeColour?.textActive} `;
 
 	return (
-		<button onClick={handler} className={classes + " " + "leading-none outline-none"}>
+		<button onClick={handler} className={classes + " " + "leading-none outline-none duration-1000"}>
 			<span
 				className={`material-symbols-outlined align-middle ${ctrlBtnTheme} ${fontSize}  ${iconClassName}`}
 			>

@@ -4,7 +4,7 @@ function PomodoroApp({ children, navPage }) {
 	return (
 		<div
 			id="PomodoroApp"
-			className={`absolute h-screen w-screen transition-all duration-500 ${translation}`}
+			className={`absolute h-screen w-screen transition-transform duration-500 ${translation}`}
 		>
 			{children}
 		</div>

@@ -50,7 +50,7 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen, setToDoIsOpen, setCacheT
 			}`}
 		>
 			<ControlButton
-				classes={`absolute transition-all duration-500 ease-in-out z-10 ${
+				classes={`absolute transition-transform duration-500 ease-in-out z-10 ${
 					toDoIsOpen ? `left-1` : `left-[-10%]`
 				} top-1/2`}
 				handler={() => {
