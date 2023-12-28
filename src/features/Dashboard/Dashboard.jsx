@@ -7,6 +7,7 @@ import ControlButton from "../../UtilityComponents/ControlButton";
 import { STATS_VS_QUOTE_PROB } from "../../main/config";
 import { ThemeContext } from "../Theming/ThemeContext";
 import DayNightToggle from "../Theming/DayNightToggle";
+import ScaleText from "react-scale-text";
 
 function chooseMessage(array1, array2, probability1) {
 	if (Math.random() < probability1 && array1.length > 0) {
@@ -14,6 +15,15 @@ function chooseMessage(array1, array2, probability1) {
 	} else {
 		return array2[Math.floor(Math.random() * array2.length)];
 	}
+}
+
+function getFontSize(length) {
+	if (length <= 100) return `text-7xl`;
+	if (length <= 130) return `text-6xl`;
+	if (length <= 160) return `text-5xl`;
+	if (length <= 190) return `text-4xl`;
+	if (length <= 220) return `text-3xl`;
+	else return `text-3xl`;
 }
 
 function Dashboard({
@@ -102,6 +112,7 @@ function Dashboard({
 		navPage === 0 ? "translate-x-0" : navPage === 2 ? "-translate-x-[200%]" : "-translate-x-full";
 	let timeTheme;
 	timeTheme = themeColour?.name === `seoulInsideDay` ? "text-amber-200" : "";
+	const displayMessageSize = getFontSize(displayMessage.length);
 
 	return (
 		<div
@@ -113,12 +124,17 @@ function Dashboard({
 					<option key={theme}>{theme}</option>
 				))}
 			</select> */}
-			<h1 className={`${themeColour?.background} text-xl font-bold`}>
-				{displayMessage}
-				<ControlButton handler={handleRefresh} fontSize="text-3xl">
-					restart_alt
-				</ControlButton>
-			</h1>
+
+			<div
+				className={`${themeColour?.background} ${displayMessageSize} max-h-[40%] w-full text-center`}
+			>
+				<span className="w-full">
+					{displayMessage}
+					<ControlButton handler={handleRefresh} fontSize="text-7xl">
+						restart_alt
+					</ControlButton>
+				</span>
+			</div>
 			<time
 				className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full text-8xl ${timeTheme}`}
 			>

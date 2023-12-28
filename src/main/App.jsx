@@ -25,6 +25,7 @@ import { initialSettings } from "./config.js";
 import { themeColours } from "../features/Theming/themeColours.js";
 import DayNightToggle from "../features/Theming/DayNightToggle.jsx";
 import FullscreenButton from "../features/Fullscreen/FullscreenButton.jsx";
+import getDocumentColour from "../features/Theming/getDocumentColour.js";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -36,7 +37,7 @@ const updateMessage = `
 3. Implemented progress indicator for feeding and descriptions.
 4. Improved logic for page navigation and implemented keyboard navigation.`;
 
-// toast.success(updateMessage, { duration: 10000 });
+toast.success(updateMessage, { duration: 10000 });
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
@@ -65,6 +66,7 @@ function App() {
 	const [staticTheme, setStaticTheme] = useState("slate");
 	const [theme, setTheme] = useState("seoulInsideDay");
 	const [day, setDay] = useState(true);
+	const { toastBgColor, toastFontColor } = getDocumentColour();
 
 	// * CAT STATE //
 	const [catFoodStats, setCatFoodStats] = useState([]);
@@ -132,15 +134,6 @@ function App() {
 
 	// if (true) return <Test stats={stats} />;
 
-	const element = document?.querySelector?.(".pomodoroDiv");
-	const toastBgColor = element
-		? getColorWithoutOpacity(getComputedStyle(element)?.backgroundColor)
-		: "#1e293b";
-
-	const toastFontColor = element
-		? getComputedStyle(element)?.getPropertyValue?.("color")
-		: "#94a3b8";
-
 	return (
 		<>
 			<ThemeContext.Provider
@@ -194,6 +187,13 @@ function App() {
 						day={day}
 						setDay={setDay}
 						setTheme={setTheme}
+					/>
+					<SpinningToolBar
+						setSettingsIsOpen={setSettingsIsOpen}
+						setPomodoroIsOpen={setPomodoroIsOpen}
+						setStatsIsOpen={setStatsIsOpen}
+						setToDoIsOpen={setToDoIsOpen}
+						setAccountIsOpen={setAccountIsOpen}
 					/>
 					<Settings
 						settings={settings}
@@ -257,14 +257,6 @@ function App() {
 							catFoodStats={catFoodStats}
 							setCatFoodStats={setCatFoodStats}
 							catFoodStatsLoaded={catFoodStatsLoaded}
-						/>
-
-						<SpinningToolBar
-							setSettingsIsOpen={setSettingsIsOpen}
-							setPomodoroIsOpen={setPomodoroIsOpen}
-							setStatsIsOpen={setStatsIsOpen}
-							setToDoIsOpen={setToDoIsOpen}
-							setAccountIsOpen={setAccountIsOpen}
 						/>
 					</PomodoroApp>
 					<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />

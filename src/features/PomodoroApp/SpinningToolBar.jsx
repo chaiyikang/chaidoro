@@ -19,7 +19,7 @@ function SpinningToolBar({
 	const [hovering, setHovering] = useState(false);
 	const [active, setActive] = useState(false);
 	return (
-		<nav className="menu absolute bottom-[6rem] right-[21rem] z-40 h-[50px] w-[75px] ">
+		<nav className="menu absolute bottom-[10%] left-[25%] z-40 h-[50px] w-[75px] ">
 			<div
 				onMouseEnter={() => setHovering(true)}
 				onMouseLeave={() => setHovering(false)}
@@ -48,20 +48,26 @@ function SpinningToolBar({
 					</ControlButton>
 				</li>
 				<li className="menu-item">
-					<ControlButton handler={() => setCatIsOpen(old => !old)}>pets</ControlButton>
-				</li>
-				<li className="menu-item">
 					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>
 				</li>
 				<li className="menu-item">
+					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>info</ControlButton>
+				</li>
+				<li className="menu-item">
+					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>help</ControlButton>
+				</li>
+				{/* <li className="menu-item">
+					<ControlButton handler={() => setCatIsOpen(old => !old)}>pets</ControlButton>
+				</li> */}
+				{/* <li className="menu-item">
 					<ControlButton handler={() => setStatsIsOpen(old => !old)}>bar_chart</ControlButton>
-				</li>
-				<li className="menu-item">
+				</li> */}
+				{/* <li className="menu-item">
 					<ControlButton handler={() => setPomodoroIsOpen(old => !old)}>timer</ControlButton>
-				</li>
-				<li className="menu-item">
+				</li> */}
+				{/* <li className="menu-item">
 					<ControlButton handler={() => setToDoIsOpen(old => !old)}>checklist</ControlButton>
-				</li>
+				</li> */}
 			</ul>
 		</nav>
 

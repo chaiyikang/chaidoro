@@ -23,6 +23,7 @@
 		"react-hook-form": "^7.47.0",
 		"react-hot-toast": "^2.4.1",
 		"react-intersection-observer": "^9.5.3",
+		"react-scale-text": "^1.2.2",
 		"react-tooltip": "^5.25.0",
 		"tw-elements-react": "^1.0.0-alpha2",
 		"use-sound": "^4.0.1"
