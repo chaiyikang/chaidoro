@@ -26,6 +26,8 @@ import { themeColours } from "../features/Theming/themeColours.js";
 import DayNightToggle from "../features/Theming/DayNightToggle.jsx";
 import FullscreenButton from "../features/Fullscreen/FullscreenButton.jsx";
 import getDocumentColour from "../features/Theming/getDocumentColour.js";
+import Info from "../features/Info/Info.jsx";
+import Help from "../features/Help/Help.jsx";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -81,6 +83,8 @@ function App() {
 	const [toDoIsOpen, setToDoIsOpen] = useState(true);
 	const [cacheToDoIsOpen, setCacheToDoIsOpen] = useState(true);
 	const [accountIsOpen, setAccountIsOpen] = useState(false);
+	const [infoIsOpen, setInfoIsOpen] = useState(false);
+	const [helpIsOpen, setHelpIsOpen] = useState(false);
 
 	// * EFFECTS //
 	useEffect(function requestNotificationPermission() {
@@ -188,10 +192,9 @@ function App() {
 					/>
 					<SpinningToolBar
 						setSettingsIsOpen={setSettingsIsOpen}
-						setPomodoroIsOpen={setPomodoroIsOpen}
-						setStatsIsOpen={setStatsIsOpen}
-						setToDoIsOpen={setToDoIsOpen}
 						setAccountIsOpen={setAccountIsOpen}
+						setInfoIsOpen={setInfoIsOpen}
+						setHelpIsOpen={setHelpIsOpen}
 					/>
 					<Settings
 						settings={settings}
@@ -211,6 +214,8 @@ function App() {
 						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 						lifetimeWorkSessions={lifetimeWorkSessions}
 					/>
+					<Info infoIsOpen={infoIsOpen} setInfoIsOpen={setInfoIsOpen} />
+					<Help helpIsOpen={helpIsOpen} setHelpIsOpen={setHelpIsOpen} />
 					<PomodoroApp navPage={navPage}>
 						<Stats
 							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}

@@ -2,14 +2,7 @@ import { useContext, useState } from "react";
 import ControlButton from "../../UtilityComponents/ControlButton";
 import { ThemeContext } from "../Theming/ThemeContext";
 
-function SpinningToolBar({
-	setSettingsIsOpen,
-	setPomodoroIsOpen,
-	setStatsIsOpen,
-	setToDoIsOpen,
-	setAccountIsOpen,
-	setCatIsOpen,
-}) {
+function SpinningToolBar({ setSettingsIsOpen, setAccountIsOpen, setInfoIsOpen, setHelpIsOpen }) {
 	const { themeColour } = useContext(ThemeContext);
 	const labelColour = `${themeColour?.menu} ${themeColour?.menuBefore} ${themeColour?.menuAfter}`;
 	const labelColourHover = `${themeColour?.menuHover} ${themeColour?.menuHoverBefore} ${themeColour?.menuHoverAfter}`;
@@ -51,10 +44,10 @@ function SpinningToolBar({
 					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>settings</ControlButton>
 				</li>
 				<li className="menu-item">
-					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>info</ControlButton>
+					<ControlButton handler={() => setInfoIsOpen(old => !old)}>info</ControlButton>
 				</li>
 				<li className="menu-item">
-					<ControlButton handler={() => setSettingsIsOpen(old => !old)}>help</ControlButton>
+					<ControlButton handler={() => setHelpIsOpen(old => !old)}>help</ControlButton>
 				</li>
 				{/* <li className="menu-item">
 					<ControlButton handler={() => setCatIsOpen(old => !old)}>pets</ControlButton>
