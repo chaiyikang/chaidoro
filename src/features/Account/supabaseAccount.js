@@ -27,12 +27,12 @@ export async function supabaseSignUp({ email, password }) {
 	return data;
 }
 
-export async function supabaseSignUpCreateUserData({ email, password }) {
+export async function supabaseSignUpCreateUserData({ email, password, currentUserData }) {
 	try {
 		const {
 			user: { id, email: userEmail },
 		} = await supabaseSignUp({ email, password });
-		await supabaseCreateUserData({ id, email: userEmail });
+		await supabaseCreateUserData({ id, email: userEmail, currentUserData });
 	} catch (err) {
 		throw new Error(err);
 	}

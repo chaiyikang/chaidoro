@@ -16,16 +16,22 @@ const defaultUserData = {
 	seconds_left: 1500,
 	work_sets_completed: 0,
 	lifetime_work_sessions: 0,
-	cat_food_stats: [],
+	cat_food_stats: [
+		{
+			date: "1970-01-01",
+			foodFed: 0,
+			foodEarned: 10,
+		},
+	],
 };
 
-export async function supabaseCreateUserData({ id, email }) {
+export async function supabaseCreateUserData({ id, email, currentUserData }) {
 	console.log("🚀 ~ file: supabaseUserData.js:23 ~ supabaseCreateUserData ~ id:", id, email);
 	const { data, error } = await supabase
 		.from("userData")
 		.insert([
 			{
-				...defaultUserData,
+				...currentUserData,
 				USER_ID: id,
 				email,
 			},

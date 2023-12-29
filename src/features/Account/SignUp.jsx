@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { supabaseSignUpCreateUserData } from "./supabaseAccount";
 import { ThemeContext } from "../Theming/ThemeContext";
 import Modal from "../../UtilityComponents/Modal";
+import { CurrentUserDataContext } from "./currentUserDataContext";
 
 function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 	const { themeColour } = useContext(ThemeContext);
@@ -12,13 +13,15 @@ function SignUp({ handleCloseSignUp, handleCloseAccountModal }) {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const queryClient = useQueryClient();
 
+	const currentUserData = useContext(CurrentUserDataContext);
+
 	const {
 		mutate: mutateSignUp,
 		data,
 		isPending,
 	} = useMutation({
 		mutationFn: ({ email, password }) => {
-			return supabaseSignUpCreateUserData({ email, password });
+			return supabaseSignUpCreateUserData({ email, password, currentUserData });
 		},
 		onSuccess: () => {
 			toast.success("Account successfully created!");

@@ -39,11 +39,11 @@ export function Pomodoro({
 	catFoodStats,
 	setCatFoodStats,
 	catFoodStatsLoaded,
+	workSetsCompleted,
+	setWorkSetsCompleted,
 }) {
 	const { themeColour } = useContext(ThemeContext);
 	// console.log("🚀 ~ file: Pomodoro.jsx:42 ~ themeColour:", themeColour);
-
-	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
 	// * DERIVED STATE //
 	const runningSeconds = timerRunning

@@ -28,6 +28,7 @@ import FullscreenButton from "../features/Fullscreen/FullscreenButton.jsx";
 import getDocumentColour from "../features/Theming/getDocumentColour.js";
 import Info from "../features/Info/Info.jsx";
 import Help from "../features/Help/Help.jsx";
+import { CurrentUserDataContext } from "../features/Account/currentUserDataContext.js";
 
 const updateMessage = `
 18 Dec 2023 Updates:
@@ -52,6 +53,7 @@ function App() {
 	const [activeType, setActiveType] = useState("pomodoro");
 	const currentTimeStamp = useTimeState(); // returns the live time stamp which updates every 1s
 	const [secondsLeftCache, setSecondsLeftCache] = useState(settings.pomodoroLengthSec);
+	const [workSetsCompleted, setWorkSetsCompleted] = useState(0);
 
 	// * TO DOS, STATS STATE
 	const [toDos, setToDos] = useState([]);
@@ -71,7 +73,13 @@ function App() {
 	const { toastBgColor, toastFontColor } = getDocumentColour();
 
 	// * CAT STATE //
-	const [catFoodStats, setCatFoodStats] = useState([]);
+	const [catFoodStats, setCatFoodStats] = useState([
+		{
+			date: "1970-01-01",
+			foodFed: 0,
+			foodEarned: 10,
+		},
+	]);
 	const [catFoodStatsLoaded, setCatFoodStatsLoaded] = useState(false);
 
 	// * UI OPENING STATE //
@@ -208,12 +216,25 @@ function App() {
 						settingsIsOpen={settingsIsOpen}
 						setSettingsIsOpen={setSettingsIsOpen}
 					/>
-					<AccountModal
-						accountIsOpen={accountIsOpen}
-						setAccountIsOpen={setAccountIsOpen}
-						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-						lifetimeWorkSessions={lifetimeWorkSessions}
-					/>
+					<CurrentUserDataContext.Provider
+						value={{
+							to_do_list: toDos,
+							stats: stats,
+							active_type: activeType,
+							settings,
+							seconds_left: secondsLeftCache,
+							work_sets_completed: workSetsCompleted,
+							lifetime_work_sessions: lifetimeWorkSessions,
+							cat_food_stats: catFoodStats,
+						}}
+					>
+						<AccountModal
+							accountIsOpen={accountIsOpen}
+							setAccountIsOpen={setAccountIsOpen}
+							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+							lifetimeWorkSessions={lifetimeWorkSessions}
+						/>
+					</CurrentUserDataContext.Provider>
 					<Info infoIsOpen={infoIsOpen} setInfoIsOpen={setInfoIsOpen} />
 					<Help helpIsOpen={helpIsOpen} setHelpIsOpen={setHelpIsOpen} />
 					<PomodoroApp navPage={navPage}>
@@ -260,6 +281,8 @@ function App() {
 							catFoodStats={catFoodStats}
 							setCatFoodStats={setCatFoodStats}
 							catFoodStatsLoaded={catFoodStatsLoaded}
+							workSetsCompleted={workSetsCompleted}
+							setWorkSetsCompleted={setWorkSetsCompleted}
 						/>
 					</PomodoroApp>
 					<CatApp navPage={navPage} catFoodStats={catFoodStats} setCatFoodStats={setCatFoodStats} />

@@ -31,8 +31,8 @@ function populateMonthlyData(calendarData, startDate, endDate) {
 }
 
 function Calendar({ stats, setShowStatsDate, setNavPage }) {
-	const [currentStreak, maxStreak] = getStreak(stats);
 	const { themeColour } = useContext(ThemeContext);
+	const [currentStreak, maxStreak] = getStreak(stats);
 	const [changeRange, setChangeRange] = useState(0);
 	// month
 	const startDate = new Date(new Date().getFullYear(), new Date().getMonth() + changeRange, 1);

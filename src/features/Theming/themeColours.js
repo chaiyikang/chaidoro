@@ -2,9 +2,9 @@ export const themeColours = {
 	seoulInsideDay: {
 		name: `seoulInsideDay`,
 		textPlaceholder: `placeholder:text-amber-500`,
-		text: `text-amber-500`,
-		textHover: `hover:text-amber-600`,
-		textActive: `active:text-amber-700`,
+		text: `text-amber-600`,
+		textHover: `hover:text-amber-700`,
+		textActive: `active:text-amber-800`,
 		textAccent: `text-violet-300`,
 		textAccentHover: `hover:text-violet-400`,
 		textAccentActive: `active:text-violet-500`,
