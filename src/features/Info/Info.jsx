@@ -19,16 +19,17 @@ function Info({ infoIsOpen, setInfoIsOpen }) {
 					This app was developed with React, Tailwind, and many other libraries.
 				</p>
 				<p className={paraStyle}>
-					Website icon was generated using{" "}
+					Icons were obtained from
 					<a
-						href="https://designer.microsoft.com/"
+						href="https://fonts.google.com/icons"
 						className="hover:underline"
 						target="_blank"
 						rel="noreferrer"
 					>
-						Microsoft Designer
+						Google Fonts
 					</a>
 				</p>
+
 				<p className={paraStyle}>
 					Spinning toolbar was adapted from{" "}
 					<a
@@ -71,6 +72,17 @@ function Info({ infoIsOpen, setInfoIsOpen }) {
 						rel="noreferrer"
 					>
 						https://www.zapsplat.com
+					</a>
+				</p>
+				<p className={paraStyle}>
+					Website icon was generated using{" "}
+					<a
+						href="https://designer.microsoft.com/"
+						className="hover:underline"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Microsoft Designer
 					</a>
 				</p>
 			</div>
