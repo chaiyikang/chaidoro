@@ -134,7 +134,6 @@ function App() {
 		setCatFoodStatsLoaded,
 		isLoading,
 	);
-	adsfasdf;
 	if (isLoading)
 		return (
 			<>
