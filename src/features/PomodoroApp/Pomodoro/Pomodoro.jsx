@@ -182,9 +182,10 @@ export function Pomodoro({
 			// in case total length is 5 minutes from the start
 			if (settings[`${activeType}LengthSec`] === 5 * 60) return;
 			alertSound();
-			new Notification(`${formatIntervalString(activeType)}`, {
-				body: "5 minutes left!",
-			});
+			if ("Notification" in window)
+				new Notification(`${formatIntervalString(activeType)}`, {
+					body: "5 minutes left!",
+				});
 		},
 		[timerRunning, runningSeconds, alertSound, activeType, settings],
 	);
