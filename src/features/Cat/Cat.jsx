@@ -4,7 +4,7 @@ import meowSadSfx from "./meowSad.mp3";
 import meowFedSfx from "./meowwww.mp3";
 import CatFedSvgContent from "./CatFedSvgContent";
 
-function Cat({ children, foodFedToday }) {
+function Cat({ children, foodFedToday, show }) {
 	const [animate, setAnimate] = useState(false);
 	const [meowFed] = useSound(meowFedSfx, { interrupt: true });
 	const [meowSad] = useSound(meowSadSfx, { interrupt: true });
@@ -20,8 +20,8 @@ function Cat({ children, foodFedToday }) {
 
 	return (
 		<div
-			className={`myCatHehe absolute bottom-20 right-20 z-10 h-[15rem] w-[20rem] 	
-			transition-transform duration-500 ease-in-out`}
+			className={`myCatHehe absolute bottom-[10%] right-[5%] z-10 h-[15rem] w-[20rem] 	
+			transition-transform duration-500 ease-in-out ${show ? "opacity-100" : "opacity-0"}`}
 		>
 			<svg
 				onMouseEnter={handlePet}

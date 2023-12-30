@@ -19,6 +19,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 			: navPage === 2
 			? "translate-x-0" // o o x
 			: "translate-x-full"; // o x o
+	const catAppIsShowing = navPage === 2;
 	const foodBalance =
 		catFoodStats?.reduce((acc, curr) => acc + curr.foodEarned - curr.foodFed, 0) || 0;
 	const foodFedToday = catFoodStats?.find(ele => isSameDate(ele.date, new Date()))?.foodFed || 0;
@@ -50,7 +51,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 			id="CatApp"
 			className={`h-screen w-screen transition-transform duration-500 ${translation}`}
 		>
-			<Cat foodFedToday={foodFedToday}>
+			<Cat show={catAppIsShowing} foodFedToday={foodFedToday}>
 				<CatTunaBox handler={handleNoMoreFood}>
 					<div
 						className={`absolute bottom-0 right-0 w-auto -translate-x-[2rem] rounded-full bg-red-400 px-2 text-center text-4xl text-red-900`}
@@ -62,7 +63,7 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 				{foodOriginalPosition1 || foodBalance <= 0 ? (
 					"" // to destroy the element, resetting the translation state
 				) : (
-					<div className="tra absolute bottom-0 left-0 w-fit -translate-x-[390%] -translate-y-[270%]">
+					<div className=" absolute bottom-0 left-0 w-fit -translate-x-[390%] -translate-y-[270%]">
 						<Draggable>
 							<div className="shieldDiv">
 								<div
