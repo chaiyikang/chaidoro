@@ -34,8 +34,12 @@ function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
 }
 
+if (isMobile())
+	toast.error(
+		"It looks like you are on mobile. This app was developed for desktop only, hence most features will not work. For the best experience, please visit this app on a desktop browser.",
+	);
+
 function App() {
-	if (isMobile()) toast.error("you are on mobile?");
 	// * POMODORO LOGIC STATE //
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
