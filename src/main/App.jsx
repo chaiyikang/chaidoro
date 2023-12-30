@@ -83,8 +83,8 @@ function App() {
 
 	// * MISC EFFECTS //
 	useEffect(function requestNotificationPermission() {
-		if (Notification.permission !== "granted") {
-			Notification.requestPermission();
+		if (Notification?.permission !== "granted") {
+			Notification?.requestPermission();
 		}
 	}, []);
 
