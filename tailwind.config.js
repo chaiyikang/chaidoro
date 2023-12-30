@@ -22,5 +22,4 @@ export default {
 			icon: "3.2rem",
 		},
 	},
-	plugins: [require("tw-elements-react/dist/plugin.cjs")],
 };
