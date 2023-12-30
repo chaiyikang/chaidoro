@@ -1,7 +1,6 @@
 import "tailwindcss/tailwind.css";
 import { Stats } from "../features/PomodoroApp/Stats.jsx";
 import { ToDoList } from "../features/PomodoroApp/ToDoList.jsx";
-import { Music } from "../MiscComponents/Music.jsx";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { Pomodoro } from "../features/PomodoroApp/Pomodoro/Pomodoro.jsx";
 import { Settings } from "../features/PomodoroApp/Settings.jsx";
@@ -14,8 +13,7 @@ import { getUserData, useRetrieveOrUpdate } from "../features/Account/supabaseUs
 import useTitle from "../features/PomodoroApp/Pomodoro/useTitle.js";
 import PageLoadingSpinner from "../MiscComponents/PageLoadingSpinner.jsx";
 import AccountModal from "../features/Account/AccountModal.jsx";
-import Cat from "../features/Cat/Cat.jsx";
-import { getColorWithoutOpacity, isSameDate } from "./helpers.js";
+import { getInitThemeByTime } from "./helpers.js";
 import PomodoroApp from "../features/PomodoroApp/PomodoroApp.jsx";
 import Dashboard from "../features/Dashboard/Dashboard.jsx";
 import Navbar from "../features/Navbar/Navbar.jsx";
@@ -29,18 +27,7 @@ import getDocumentColour from "../features/Theming/getDocumentColour.js";
 import Info from "../features/Info/Info.jsx";
 import Help from "../features/Help/Help.jsx";
 import { CurrentUserDataContext } from "../features/Account/currentUserDataContext.js";
-
-const updateMessage = `
-18 Dec 2023 Updates:
-1. Implemented basic functionality cat feeding: earning food, feeding
-
-19 Dec 2023 Updates:
-1. IMPLEMENTED CAT CHONKINESS. HE GETS FAT WHEN YOU FEED HIMMMMMMM
-2. Fixed bug where guest user cat food was not being updated.
-3. Implemented progress indicator for feeding and descriptions.
-4. Improved logic for page navigation and implemented keyboard navigation.`;
-
-toast.success(updateMessage, { duration: 10000 });
+import { InputFocusContext } from "../features/Fullscreen/InputFocusContext.js";
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
@@ -60,6 +47,7 @@ function App() {
 	const [stats, setStats] = useState([]);
 	const [lifetimeWorkSessions, setLifetimeWorkSessions] = useState(0);
 	const [showStatsDate, setShowStatsDate] = useState(new Date());
+
 	// * DERIVED STATE //
 	const timerRunning = Boolean(timeStampEnd);
 	const lifetimeCurrentSecondsFocused = stats.reduce((acc, curr) => {
@@ -67,8 +55,7 @@ function App() {
 	}, 0);
 
 	// * THEME //
-	const [staticTheme, setStaticTheme] = useState("slate");
-	const [theme, setTheme] = useState("seoulInsideDay");
+	const [theme, setTheme] = useState(getInitThemeByTime());
 	const [day, setDay] = useState(true);
 	const { toastBgColor, toastFontColor } = getDocumentColour();
 
@@ -94,7 +81,7 @@ function App() {
 	const [infoIsOpen, setInfoIsOpen] = useState(false);
 	const [helpIsOpen, setHelpIsOpen] = useState(false);
 
-	// * EFFECTS //
+	// * MISC EFFECTS //
 	useEffect(function requestNotificationPermission() {
 		if (Notification.permission !== "granted") {
 			Notification.requestPermission();
@@ -102,6 +89,9 @@ function App() {
 	}, []);
 
 	useTitle(secondsLeftCache, activeType);
+
+	// * FULLSCREEN //
+	const [someInputIsFocused, setSomeInputIsFocused] = useState(false);
 
 	// * BACKEND //
 	const { data: userData, isLoading } = useQuery({
@@ -176,7 +166,9 @@ function App() {
 						)}
 					</Toaster>
 					<Background day={day} />
-					<FullscreenButton />
+					<InputFocusContext.Provider value={someInputIsFocused}>
+						<FullscreenButton />
+					</InputFocusContext.Provider>
 					<Navbar
 						navPage={navPage}
 						setNavPage={setNavPage}
@@ -186,18 +178,20 @@ function App() {
 						cacheToDoIsOpen={cacheToDoIsOpen}
 					/>
 					<DayNightToggle day={day} setDay={setDay} setTheme={setTheme} />
-					<Dashboard
-						navPage={navPage}
-						setNavPage={setNavPage}
-						currentTimeStamp={currentTimeStamp}
-						stats={stats}
-						setShowStatsDate={setShowStatsDate}
-						lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-						lifetimeWorkSessions={lifetimeWorkSessions}
-						day={day}
-						setDay={setDay}
-						setTheme={setTheme}
-					/>
+					<InputFocusContext.Provider value={setSomeInputIsFocused}>
+						<Dashboard
+							navPage={navPage}
+							setNavPage={setNavPage}
+							currentTimeStamp={currentTimeStamp}
+							stats={stats}
+							setShowStatsDate={setShowStatsDate}
+							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+							lifetimeWorkSessions={lifetimeWorkSessions}
+							day={day}
+							setDay={setDay}
+							setTheme={setTheme}
+						/>
+					</InputFocusContext.Provider>
 					<SpinningToolBar
 						setSettingsIsOpen={setSettingsIsOpen}
 						setAccountIsOpen={setAccountIsOpen}
@@ -252,14 +246,15 @@ function App() {
 							navPage={navPage}
 							setCacheStatsIsOpen={setCacheStatsIsOpen}
 						/>
-						{/* <Music /> */}
-						<ToDoList
-							toDos={toDos}
-							setToDos={setToDos}
-							toDoIsOpen={toDoIsOpen}
-							setToDoIsOpen={setToDoIsOpen}
-							setCacheToDoIsOpen={setCacheToDoIsOpen}
-						/>
+						<InputFocusContext.Provider value={setSomeInputIsFocused}>
+							<ToDoList
+								toDos={toDos}
+								setToDos={setToDos}
+								toDoIsOpen={toDoIsOpen}
+								setToDoIsOpen={setToDoIsOpen}
+								setCacheToDoIsOpen={setCacheToDoIsOpen}
+							/>
+						</InputFocusContext.Provider>
 						<Pomodoro
 							settings={settings}
 							timeStampEnd={timeStampEnd}

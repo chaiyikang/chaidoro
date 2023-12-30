@@ -1,15 +1,21 @@
 import { useState } from "react";
 import useSound from "use-sound";
-import meowSfx from "./meowwww.mp3";
+import meowSadSfx from "./meowSad.mp3";
+import meowFedSfx from "./meowwww.mp3";
 import CatFedSvgContent from "./CatFedSvgContent";
 
 function Cat({ children, foodFedToday }) {
 	const [animate, setAnimate] = useState(false);
-	const [meowSound] = useSound(meowSfx);
+	const [meowFed] = useSound(meowFedSfx, { interrupt: true });
+	const [meowSad] = useSound(meowSadSfx, { interrupt: true });
 
 	function handlePet() {
 		setAnimate(true);
-		meowSound();
+		if (foodFedToday <= 2) {
+			meowSad();
+		} else {
+			meowFed();
+		}
 	}
 
 	return (
@@ -17,9 +23,6 @@ function Cat({ children, foodFedToday }) {
 			className={`myCatHehe absolute bottom-20 right-20 z-10 h-[15rem] w-[20rem] 	
 			transition-transform duration-500 ease-in-out`}
 		>
-			{/* <h1 className="absolute">
-				{foodFedToday} / {CAT_FEED_MAX}
-			</h1> */}
 			<svg
 				onMouseEnter={handlePet}
 				onMouseLeave={() => setAnimate(false)}

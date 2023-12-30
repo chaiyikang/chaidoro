@@ -1,4 +1,5 @@
 import Modal from "../../UtilityComponents/Modal";
+import Cat from "./cat.png";
 
 function Info({ infoIsOpen, setInfoIsOpen }) {
 	const paraStyle = `text-xl pt-2`;
@@ -6,6 +7,14 @@ function Info({ infoIsOpen, setInfoIsOpen }) {
 		<Modal isOpen={infoIsOpen} closeHandler={() => setInfoIsOpen(false)}>
 			<div className="pt-4">
 				<h1 className="text-3xl">Acknowledgements</h1>
+				<h3 className="my-2 text-2xl font-bold">Model for cat illustration</h3>
+				<div className="my-2 flex items-center gap-4">
+					<img src={Cat} className="h-1/2 w-1/2" alt="cat" />
+					<p className="text-xl">
+						This guy may look majestic, but he&apos;s actually a tiny baby floofy chonk monster. I
+						apologise for not being able to accurately represent his floofiness.
+					</p>
+				</div>
 				<p className={paraStyle}>
 					This app was developed with React, Tailwind, and many other libraries.
 				</p>

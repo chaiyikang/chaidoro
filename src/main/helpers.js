@@ -38,6 +38,11 @@ export function getStreak(stats) {
 	return [currentStreak, maxStreak];
 }
 
+export function getInitThemeByTime() {
+	const currentHour = new Date().getHours();
+	return currentHour >= 7 && currentHour <= 19 ? "seoulInsideDay" : "seoulInsideNight";
+}
+
 function isYesterdayOrToday(date) {
 	date = new Date(date);
 	const today = new Date();

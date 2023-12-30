@@ -3,9 +3,11 @@ import Button from "../../UtilityComponents/Button";
 import ToDo from "./ToDo";
 import { ThemeContext } from "../Theming/ThemeContext";
 import ControlButton from "../../UtilityComponents/ControlButton";
+import { InputFocusContext } from "../Fullscreen/InputFocusContext";
 
 export function ToDoList({ toDos, setToDos, toDoIsOpen, setToDoIsOpen, setCacheToDoIsOpen }) {
 	const { themeColour } = useContext(ThemeContext);
+	const setSomeInputIsFocused = useContext(InputFocusContext);
 
 	const [input, setInput] = useState("");
 
@@ -66,6 +68,8 @@ export function ToDoList({ toDos, setToDos, toDoIsOpen, setToDoIsOpen, setCacheT
 					<input
 						type="text"
 						value={input}
+						onFocus={() => setSomeInputIsFocused(true)}
+						onBlur={() => setSomeInputIsFocused(false)}
 						onChange={handleNewTaskInputChange}
 						onKeyDown={handleEnter}
 						placeholder="Enter a new task"

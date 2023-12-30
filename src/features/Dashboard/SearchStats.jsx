@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import { secondsToHours } from "../../main/helpers";
 import { ThemeContext } from "../Theming/ThemeContext";
+import { InputFocusContext } from "../Fullscreen/InputFocusContext";
 
 function SearchStats({ taskStats }) {
 	const { themeColour } = useContext(ThemeContext);
+	const setSomeInputIsFocused = useContext(InputFocusContext);
 	const [input, setInput] = useState("");
 	let searchResultArray;
 	if (input !== "") {
@@ -24,6 +26,8 @@ function SearchStats({ taskStats }) {
 			<input
 				type="text"
 				value={input}
+				onFocus={() => setSomeInputIsFocused(true)}
+				onBlur={() => setSomeInputIsFocused(false)}
 				onChange={handleInputChange}
 				placeholder="Search for a task"
 				className={`h-7 w-auto rounded-xl border ${themeColour?.border} ${themeColour?.textPlaceholder} ${themeColour?.backgroundTranslucent} px-4 text-center text-xl focus:border-2 focus:outline-none`}
