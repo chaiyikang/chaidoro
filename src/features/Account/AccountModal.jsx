@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getUserData } from "./supabaseUserData";
 import LogOut from "./LogOut";
@@ -13,8 +13,6 @@ function AccountModal({
 	lifetimeWorkSessions,
 }) {
 	const [signUpIsOpen, setSignUpIsOpen] = useState(false);
-	// const { login, isPending } = useLogin();
-	const queryClient = useQueryClient();
 	const { data: userData } = useQuery({
 		queryKey: ["userData"],
 		queryFn: getUserData,

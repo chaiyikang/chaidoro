@@ -4,13 +4,10 @@ import {
 	formatDateDisplay,
 	getStreak,
 	roundUpToNearestIntLimited,
-	secondsToHours,
 	secondsToMins,
 } from "../../main/helpers";
 import { useContext, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { FormProvider } from "react-hook-form";
-
 import ControlButton from "../../UtilityComponents/ControlButton";
 import { ThemeContext } from "../Theming/ThemeContext";
 

@@ -1,19 +1,14 @@
 import Button from "../../UtilityComponents/Button";
 import { formatDateDisplay, isSameDate, secondsToHours, secondsToMins } from "../../main/helpers";
-import { useContext, useEffect, useState } from "react";
-import Calendar from "../Dashboard/Calendar";
-import SearchStats from "../Dashboard/SearchStats";
+import { useContext } from "react";
 import { ThemeContext } from "../Theming/ThemeContext";
 import ControlButton from "../../UtilityComponents/ControlButton";
 
 export function Stats({
-	lifetimeCurrentSecondsFocused,
 	stats,
 	setStats,
 	statsIsOpen,
 	setStatsIsOpen,
-	lifetimeWorkSessions,
-	currentTimeStamp,
 	showStatsDate,
 	setShowStatsDate,
 	setCacheStatsIsOpen,

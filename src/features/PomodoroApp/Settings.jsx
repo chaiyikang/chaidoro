@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useEffect, useMemo, useContext } from "react";
 import { useForm } from "react-hook-form";
 import ToggleSwitch from "../../UtilityComponents/ToggleSwitch";
-import toast, { Toaster } from "react-hot-toast";
-import { updateUserData } from "../Account/supabaseUserData";
+import toast from "react-hot-toast";
 import { ThemeContext } from "../Theming/ThemeContext";
 import Modal from "../../UtilityComponents/Modal";
 
@@ -39,7 +38,6 @@ export function Settings({
 	settingsIsOpen,
 	setSettingsIsOpen,
 }) {
-	const { themeColour } = useContext(ThemeContext);
 	const defaultValues = useMemo(
 		() => ({
 			pomodoroLengthMin: +(settings.pomodoroLengthSec / 60).toFixed(1),

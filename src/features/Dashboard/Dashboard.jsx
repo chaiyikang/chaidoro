@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { convertMillisTo12HourTime, secondsToHours } from "../../main/helpers";
 import quotesArray from "./quotes";
 import Calendar from "./Calendar";
@@ -6,8 +6,6 @@ import SearchStats from "./SearchStats";
 import ControlButton from "../../UtilityComponents/ControlButton";
 import { STATS_VS_QUOTE_PROB } from "../../main/config";
 import { ThemeContext } from "../Theming/ThemeContext";
-import DayNightToggle from "../Theming/DayNightToggle";
-import ScaleText from "react-scale-text";
 
 function chooseMessage(array1, array2, probability1) {
 	if (Math.random() < probability1 && array1.length > 0) {
@@ -34,9 +32,6 @@ function Dashboard({
 	setShowStatsDate,
 	lifetimeWorkSessions,
 	lifetimeCurrentSecondsFocused,
-	day,
-	setDay,
-	setTheme,
 }) {
 	const { themeColour } = useContext(ThemeContext);
 

@@ -1,32 +1,8 @@
 import { useEffect, useRef } from "react";
 import supabase from "./supabase";
 
-const defaultUserData = {
-	to_do_list: [],
-	stats: [],
-	active_type: "pomodoro",
-	settings: {
-		interval: 4,
-		autoBreaks: true,
-		autoPomodoro: true,
-		pomodoroLengthSec: 1500,
-		longBreakLengthSec: 900,
-		shortBreakLengthSec: 300,
-	},
-	seconds_left: 1500,
-	work_sets_completed: 0,
-	lifetime_work_sessions: 0,
-	cat_food_stats: [
-		{
-			date: "1970-01-01",
-			foodFed: 0,
-			foodEarned: 10,
-		},
-	],
-};
-
 export async function supabaseCreateUserData({ id, email, currentUserData }) {
-	console.log("🚀 ~ file: supabaseUserData.js:23 ~ supabaseCreateUserData ~ id:", id, email);
+	// console.log("🚀 ~ file: supabaseUserData.js:23 ~ supabaseCreateUserData ~ id:", id, email);
 	const { data, error } = await supabase
 		.from("userData")
 		.insert([
@@ -38,7 +14,7 @@ export async function supabaseCreateUserData({ id, email, currentUserData }) {
 		])
 		.select();
 	if (error) throw new Error(error.message);
-	console.log("🚀 ~ file: supabaseUserData.js:11 ~ supabaseCreateUserData ~ data:", data);
+	// console.log("🚀 ~ file: supabaseUserData.js:11 ~ supabaseCreateUserData ~ data:", data);
 	return data;
 }
 

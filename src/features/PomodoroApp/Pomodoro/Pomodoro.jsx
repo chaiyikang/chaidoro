@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ProgressDot from "./ProgressDot";
 import ControlButton from "../../../UtilityComponents/ControlButton";
 import useSound from "use-sound";
@@ -80,6 +80,7 @@ export function Pomodoro({
 			: "Long Break";
 
 	const lastTask = stats?.at(-1)?.task;
+	const lastTaskCreatedToday = isSameDate(stats?.at(-1)?.timeStampCreated, new Date());
 
 	// * BACKEND //
 	const { data: userData } = useQuery({
@@ -133,11 +134,9 @@ export function Pomodoro({
 				setStats(old => [...old.slice(0, -1), { ...old.at(-1), stale: true }]);
 				return;
 			}
-			// setTotalSecondsFocused(old => old + 1);
-			if (activeTask === lastTask && isSameDate(stats?.at(-1)?.timeStampCreated, new Date())) {
+			if (activeTask === lastTask && lastTaskCreatedToday) {
 				setStats(old => {
 					const currStat = old.at(-1);
-					// const staleTime = Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000);
 					const addSec = !currStat.stale
 						? Math.round((currentTimeStamp - currStat.lastUpdatedTimeStamp) / 1000)
 						: 0;
@@ -165,7 +164,15 @@ export function Pomodoro({
 				]);
 			}
 		},
-		[timerRunning, activeTask, lastTask, setStats, currentTimeStamp, stats.length],
+		[
+			timerRunning,
+			activeTask,
+			lastTask,
+			setStats,
+			currentTimeStamp,
+			stats.length,
+			lastTaskCreatedToday,
+		],
 	);
 
 	useEffect(
@@ -229,6 +236,7 @@ export function Pomodoro({
 			setLifetimeWorkSessions,
 			setPomodoroIsOpen,
 			setCatFoodStats,
+			setWorkSetsCompleted,
 		],
 	);
 

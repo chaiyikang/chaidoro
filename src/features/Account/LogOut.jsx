@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TERipple } from "tw-elements-react";
 import toast from "react-hot-toast";
 import { supabaseLogOut } from "./supabaseAccount";
 import { secondsToHours } from "../../main/helpers";
@@ -11,12 +10,8 @@ function LogOut({ handleClose, lifetimeCurrentSecondsFocused, lifetimeWorkSessio
 	const { themeColour } = useContext(ThemeContext);
 	const queryClient = useQueryClient();
 
-	const {
-		mutate: mutateLogOut,
-		data,
-		isPending,
-	} = useMutation({
-		mutationFn: ({ email, password }) => {
+	const { mutate: mutateLogOut, isPending } = useMutation({
+		mutationFn: () => {
 			return supabaseLogOut();
 		},
 		onSuccess: () => {

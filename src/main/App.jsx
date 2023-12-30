@@ -63,7 +63,7 @@ function App() {
 
 	// * THEME //
 	const [theme, setTheme] = useState(getInitThemeByTime());
-	const [day, setDay] = useState(true);
+	const [day, setDay] = useState(getInitThemeByTime() === "seoulInsideDay");
 	const { toastBgColor, toastFontColor } = getDocumentColour();
 
 	// * CAT STATE //
@@ -134,6 +134,7 @@ function App() {
 		setCatFoodStatsLoaded,
 		isLoading,
 	);
+	
 	if (isLoading)
 		return (
 			<>
@@ -194,9 +195,6 @@ function App() {
 							setShowStatsDate={setShowStatsDate}
 							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 							lifetimeWorkSessions={lifetimeWorkSessions}
-							day={day}
-							setDay={setDay}
-							setTheme={setTheme}
 						/>
 					</InputFocusContext.Provider>
 					<SpinningToolBar
@@ -229,25 +227,24 @@ function App() {
 							cat_food_stats: catFoodStats,
 						}}
 					>
-						<AccountModal
-							accountIsOpen={accountIsOpen}
-							setAccountIsOpen={setAccountIsOpen}
-							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
-							lifetimeWorkSessions={lifetimeWorkSessions}
-						/>
+						<InputFocusContext.Provider value={setSomeInputIsFocused}>
+							<AccountModal
+								accountIsOpen={accountIsOpen}
+								setAccountIsOpen={setAccountIsOpen}
+								lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
+								lifetimeWorkSessions={lifetimeWorkSessions}
+							/>
+						</InputFocusContext.Provider>
 					</CurrentUserDataContext.Provider>
 					<Info infoIsOpen={infoIsOpen} setInfoIsOpen={setInfoIsOpen} />
 					<Help helpIsOpen={helpIsOpen} setHelpIsOpen={setHelpIsOpen} />
 					<PomodoroApp navPage={navPage}>
 						<Stats
-							lifetimeCurrentSecondsFocused={lifetimeCurrentSecondsFocused}
 							stats={stats}
 							setStats={setStats}
 							toDoIsOpen={toDoIsOpen}
 							statsIsOpen={statsIsOpen}
 							setStatsIsOpen={setStatsIsOpen}
-							lifetimeWorkSessions={lifetimeWorkSessions}
-							currentTimeStamp={currentTimeStamp}
 							showStatsDate={showStatsDate}
 							setShowStatsDate={setShowStatsDate}
 							navPage={navPage}

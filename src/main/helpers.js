@@ -34,13 +34,12 @@ export function getStreak(stats) {
 			}
 		}
 	});
-	console.log([currentStreak, maxStreak]);
 	return [currentStreak, maxStreak];
 }
 
 export function getInitThemeByTime() {
 	const currentHour = new Date().getHours();
-	return currentHour >= 7 && currentHour <= 19 ? "seoulInsideDay" : "seoulInsideNight";
+	return currentHour >= 7 && currentHour < 19 ? "seoulInsideDay" : "seoulInsideNight";
 }
 
 function isYesterdayOrToday(date) {

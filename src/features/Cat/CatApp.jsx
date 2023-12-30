@@ -2,15 +2,13 @@ import Draggable from "react-draggable";
 import CatTuna from "./CatTuna";
 import Cat from "./Cat";
 import { useInView } from "react-intersection-observer";
-import { useContext, useRef, useState } from "react";
+import { useState } from "react";
 import CatTunaBox from "./CatTunaBox";
 import toast from "react-hot-toast";
 import CatProgress from "./CatProgress";
 import { isSameDate } from "../../main/helpers";
-import { ThemeContext } from "../Theming/ThemeContext";
 
 function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
-	const { themeColour } = useContext(ThemeContext);
 	// * STATE //
 	const [foodOriginalPosition1, setFoodOriginalPosition1] = useState(false);
 
@@ -25,10 +23,10 @@ function CatApp({ navPage, catFoodStats, setCatFoodStats }) {
 		catFoodStats?.reduce((acc, curr) => acc + curr.foodEarned - curr.foodFed, 0) || 0;
 	const foodFedToday = catFoodStats?.find(ele => isSameDate(ele.date, new Date()))?.foodFed || 0;
 
-	const { ref, inView, entry } = useInView({
+	const { ref } = useInView({
 		root: document.querySelector(".myCatHehe"),
 		threshold: 1,
-		onChange: (inView, entry) => {
+		onChange: inView => {
 			if (!inView) return;
 			if (foodBalance === 0) return toast.error("You don't have any food left.");
 			setCatFoodStats(stats =>
