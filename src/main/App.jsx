@@ -37,6 +37,7 @@ function settingsReducer(state, action) {
 if (isMobile())
 	toast.error(
 		"It looks like you are on mobile. This app was developed for desktop only, hence most features will not work. For the best experience, please visit this app on a desktop browser.",
+		{ duration: Infinity },
 	);
 
 function App() {
@@ -133,7 +134,7 @@ function App() {
 		setCatFoodStatsLoaded,
 		isLoading,
 	);
-
+	adsfasdf;
 	if (isLoading)
 		return (
 			<>

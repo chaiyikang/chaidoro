@@ -4,6 +4,7 @@ an operating system; the next Mark Zuckerberg won’t build a social network. Th
 innovator of the same caliber will build something unimagined to this point. Successful
 people don’t look for formulas or choose from existing options, they “rewrite the plan of
 the world.”`,
+	"More quotes will be added progressively from the books I read. 😛",
 ];
 
 export default quotesArray;
