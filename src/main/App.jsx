@@ -28,12 +28,14 @@ import Info from "../features/Info/Info.jsx";
 import Help from "../features/Help/Help.jsx";
 import { CurrentUserDataContext } from "../features/Account/currentUserDataContext.js";
 import { InputFocusContext } from "../features/Fullscreen/InputFocusContext.js";
+import isMobile from "is-mobile";
 
 function settingsReducer(state, action) {
 	return { ...state, ...action.payload };
 }
 
 function App() {
+	if (isMobile()) toast.error("you are on mobile?");
 	// * POMODORO LOGIC STATE //
 	const [timeStampEnd, setTimeStampEnd] = useState(undefined);
 	const [settings, dispatchSettings] = useReducer(settingsReducer, initialSettings);
