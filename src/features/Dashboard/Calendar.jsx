@@ -4,6 +4,7 @@ import {
 	formatDateDisplay,
 	getStreak,
 	roundUpToNearestIntLimited,
+	secondsToHours,
 	secondsToMins,
 } from "../../main/helpers";
 import { useContext, useState } from "react";
@@ -92,9 +93,9 @@ function Calendar({ stats, setShowStatsDate, setNavPage }) {
 						// console.log(value);
 						return {
 							"data-tooltip-id": "my-tooltip",
-							"data-tooltip-content": `${formatDateDisplay(value.date)}: ${secondsToMins(
+							"data-tooltip-content": `${formatDateDisplay(value.date)}: ${secondsToHours(
 								value.totalLength,
-							)} mins`,
+							)} hours`,
 						};
 					}}
 					showWeekdayLabels={false}
