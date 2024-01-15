@@ -1,11 +1,10 @@
 const quotesArray = [
 	`In business, each jump from 0 to 1 happens only once. The next Bill Gates won’t invent
-an operating system; the next Mark Zuckerberg won’t build a social network. The next
-innovator of the same caliber will build something unimagined to this point. Successful
-people don’t look for formulas or choose from existing options, they “rewrite the plan of
-the world.”`,
+	an operating system; the next Mark Zuckerberg won’t build a social network. The next
+	innovator of the same caliber will build something unimagined to this point. Successful
+	people don’t look for formulas or choose from existing options, they “rewrite the plan of
+	the world.”`,
 	"A need that's narrow but genuine is a better starting point than one that's broad but hypothetical.",
-	"If you have an account and have done some work, statistics about your productivity can be displayed here.",
 	"Now we look back on medieval peasants and wonder how they stood it. How grim it must have been to till the same fields your whole life with no hope of anything better, under the thumb of lords and priests you had to give all your surplus to and acknowledge as your masters. I wouldn't be surprised if one day people look back on what we consider a normal job in the same way. How grim it would be to commute every day to a cubicle in some soulless office complex, and be told what to do by someone you had to acknowledge as a boss—someone who could call you into their office and say \"take a seat,\" and you'd sit! Imagine having to ask permission to release software to users. Imagine being sad on Sunday afternoons because the weekend was almost over, and tomorrow you'd have to get up and go to work. How did they stand it?",
 	"Startups are so weird that if you trust your instincts, you'll make a lot of mistakes.",
 	`Startups are very counterintuitive. Whatever the reason, starting a startup is a task where you can't always trust your instincts. It's like skiing in that way. When you first try skiing and you want to slow down, your instinct is to lean back. But if you lean back on skis you fly down the hill out of control. So part of learning to ski is learning to suppress that impulse.`,
