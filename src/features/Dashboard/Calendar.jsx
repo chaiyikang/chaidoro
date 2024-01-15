@@ -5,7 +5,6 @@ import {
 	getStreak,
 	roundUpToNearestIntLimited,
 	secondsToHours,
-	secondsToMins,
 } from "../../main/helpers";
 import { useContext, useState } from "react";
 import { Tooltip } from "react-tooltip";
