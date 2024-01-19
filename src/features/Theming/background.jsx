@@ -11,6 +11,7 @@ export function Background({ day }) {
 				} `}
 				autoPlay
 				muted
+				loop
 			>
 				<source src={insideDay} type="video/mp4" />
 			</video>
@@ -20,6 +21,7 @@ export function Background({ day }) {
 				} `}
 				autoPlay
 				muted
+				loop
 			>
 				<source src={insideNight} type="video/mp4" />
 			</video>
